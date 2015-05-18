@@ -197,6 +197,8 @@ namespace zavrsni.Controllers
                 newContent.Text = model.Text;
                 newContent.IDauthor = user.IDuser;
                 newContent.Title = model.Title;
+                newContent.IDeditor = user.IDuser;
+                newContent.TimeChanged = DateTime.Now;
 
                 db.Content.Add(newContent);
 
