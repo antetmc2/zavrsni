@@ -13,8 +13,8 @@
                 <div class="thumbnail content" style="padding: 2px 2px 2px 2px !important;">
                     <div class="caption" style="padding: 3px 3px 3px 3px !important;">
                         <h2>@c.Title</h2>
-                        (@c.ContentType.Description)
                         @Html.Raw(c.Text)
+                           @c.ContentType.Description |
                            @Html.ActionLink("Edit", "Edit", new { IDcontent = c.IDcontent }) |
                            @Html.ActionLink("Details", "Details", new { IDcontent = c.IDcontent }) |
                            @Html.ActionLink("Delete", "Delete", new { IDcontent = c.IDcontent })

@@ -9,17 +9,17 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(model => model.Title, new { @class = "form-control" })
-        </div>
-    </div>
-
     @Html.TextAreaFor(m => m.Text, new {htmlAttributes = new {id = "editor1", name = "editor1"}})
 
 
     <div class="form-group" style="margin-top: 10px !important;">
+        @Html.LabelFor(model => model.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control", style = "font-size: 20px;" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Page, htmlAttributes: new {@class = "control-label col-md-2"})
         <div class="col-md-10">
             @Html.DropDownList("PageDropDown", Model.Page, "Select your page:", new {@class = "form-control"})
