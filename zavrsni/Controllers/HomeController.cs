@@ -16,6 +16,7 @@ namespace zavrsni.Controllers
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var allContents = (from c in db.Content
+                                   orderby c.TimeChanged descending 
                                    select c).Include(c => c.ContentType).ToList();
 
                 var model = new HomeContentModel()

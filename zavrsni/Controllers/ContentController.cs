@@ -52,8 +52,8 @@ namespace zavrsni.Controllers
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                     // Get the userprofile
 
-                    query.Title = model.Title;
-                    query.Text = model.Text;
+                    if (model.Title != null) query.Title = model.Title;
+                    else query.Title = "(no title)"; query.Text = model.Text;
                     query.IDeditor = user.IDuser;
                     query.TimeChanged = DateTime.Now;
 
@@ -143,6 +143,7 @@ namespace zavrsni.Controllers
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
                 var allContents = (from c in db.Content
                     where c.IDauthor == user.IDuser
+                    orderby c.TimeChanged descending 
                     select c).Include(c => c.ContentType).ToList();
 
                 var model = new IndexContentModel()
@@ -196,7 +197,8 @@ namespace zavrsni.Controllers
                 newContent.IDcontentType = Convert.ToInt32(contSel);
                 newContent.Text = model.Text;
                 newContent.IDauthor = user.IDuser;
-                newContent.Title = model.Title;
+                if (model.Title != null) newContent.Title = model.Title;
+                else newContent.Title = "(no title)";
                 newContent.IDeditor = user.IDuser;
                 newContent.TimeChanged = DateTime.Now;
 
