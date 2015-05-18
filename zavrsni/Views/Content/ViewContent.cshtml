@@ -14,13 +14,13 @@
                     <div class="caption" style="padding: 3px 3px 3px 3px !important;">
                         <h2>@c.Title</h2>
                         @Html.Raw(c.Text)
-                           @c.ContentType.Description |
-                           @Html.ActionLink("Edit", "Edit", new { IDcontent = c.IDcontent }) |
-                           @Html.ActionLink("Details", "Details", new { IDcontent = c.IDcontent }) |
-                           @Html.ActionLink("Delete", "Delete", new { IDcontent = c.IDcontent })
+                        <a href="@Url.Action("Edit", "Content", new {IDcontent = c.IDcontent})"><span class="btn btn-success glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent})"><span class="btn btn-info glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                        <a href="@Url.Action("Delete", "Content", new {IDcontent = c.IDcontent})"><span class="btn btn-danger glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+<a href="@Url.Action("Insert", "Content")"><span class="btn btn-primary btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>
