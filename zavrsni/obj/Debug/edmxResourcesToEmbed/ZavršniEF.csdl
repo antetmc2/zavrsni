@@ -39,6 +39,7 @@
     <NavigationProperty Name="Location" Relationship="Self.LocationContent" FromRole="Content" ToRole="Location" />
     <Property Name="IDauthor" Type="Int32" Nullable="false" />
     <NavigationProperty Name="User2" Relationship="ZavrsniEFmodel.FK_Content_User" FromRole="Content" ToRole="User" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>

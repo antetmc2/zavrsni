@@ -18,6 +18,9 @@ namespace zavrsni.Models
         [Display(Name = "Choose content type")]
         public SelectList ContentType { get; set; }
 
+        [Display(Name = "Title of your content")]
+        public string Title { get; set; }
+
         [Required]
         [Display(Name = "Text")]
         [DataType(DataType.Text)]
@@ -62,6 +65,9 @@ namespace zavrsni.Models
         [Required]
         public DateTime? TimeChanged { get; set; }
 
+        [Required]
+        public string Title { get; set; }
+
     }
 
     public class Contents
@@ -76,6 +82,9 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose content type")]
         public SelectList ContentType { get; set; }
+
+        [Display(Name = "Title of your content")]
+        public string Title { get; set; }
 
         [Required]
         [Display(Name = "Text")]
@@ -103,6 +112,9 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose content type")]
         public string ContentType { get; set; }
+
+        [Display(Name = "Title of your content")]
+        public string Title { get; set; }
 
         [Display(Name = "Text")]
         [DataType(DataType.Text)]

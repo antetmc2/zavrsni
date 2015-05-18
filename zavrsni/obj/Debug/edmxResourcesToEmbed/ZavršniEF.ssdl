@@ -36,6 +36,7 @@
     <Property Name="URL" Type="nvarchar" MaxLength="100" />
     <Property Name="IDeditor" Type="int" />
     <Property Name="TimeChanged" Type="datetime" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>

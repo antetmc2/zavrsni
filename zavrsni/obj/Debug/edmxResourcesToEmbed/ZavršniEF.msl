@@ -22,6 +22,7 @@
     <EntitySetMapping Name="Content">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.Content">
         <MappingFragment StoreEntitySet="Content">
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="IDauthor" ColumnName="IDauthor" />
           <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
           <ScalarProperty Name="IDcontentType" ColumnName="IDcontentType" />

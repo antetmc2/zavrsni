@@ -34,6 +34,7 @@ namespace zavrsni.Controllers
 
 
                 model.Text = query.Text;
+                model.Title = query.Title;
             }
             return View(model);
 
@@ -50,7 +51,8 @@ namespace zavrsni.Controllers
                     string username = User.Identity.GetUserName();
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                     // Get the userprofile
-                    
+
+                    query.Title = model.Title;
                     query.Text = model.Text;
                     query.IDeditor = user.IDuser;
                     query.TimeChanged = DateTime.Now;
@@ -81,6 +83,7 @@ namespace zavrsni.Controllers
                         IDcontent = cont.IDcontent,
                         Author = usernameAuthor.Username,
                         ContentType = contType.Description,
+                        Title = cont.Title,
                         Editor = usernameEditor.FirstOrDefault().Username,
                         TimeChanged = cont.TimeChanged,
                         Text = cont.Text
@@ -93,6 +96,7 @@ namespace zavrsni.Controllers
                     {
                         IDcontent = cont.IDcontent,
                         Author = usernameAuthor.Username,
+                        Title = cont.Title,
                         ContentType = contType.Description,
                         Text = cont.Text
                     };
@@ -192,6 +196,7 @@ namespace zavrsni.Controllers
                 newContent.IDcontentType = Convert.ToInt32(contSel);
                 newContent.Text = model.Text;
                 newContent.IDauthor = user.IDuser;
+                newContent.Title = model.Title;
 
                 db.Content.Add(newContent);
 
