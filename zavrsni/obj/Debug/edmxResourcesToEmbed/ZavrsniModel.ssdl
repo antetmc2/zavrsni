@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZavrsniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BelongsToGroup">
+    <Key>
+      <PropertyRef Name="IDgroup" />
+      <PropertyRef Name="IDuser" />
+    </Key>
+    <Property Name="IDgroup" Type="int" Nullable="false" />
+    <Property Name="IDuser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="IDcity" />
+    </Key>
+    <Property Name="IDcity" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDcountry" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="IDrecipient" />
+      <PropertyRef Name="IDsender" />
+    </Key>
+    <Property Name="IDrecipient" Type="int" Nullable="false" />
+    <Property Name="IDsender" Type="int" Nullable="false" />
+    <Property Name="Accepted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Content">
+    <Key>
+      <PropertyRef Name="IDcontent" />
+    </Key>
+    <Property Name="IDcontent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDcontentType" Type="int" Nullable="false" />
+    <Property Name="Text" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="URL" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IDeditor" Type="int" />
+    <Property Name="TimeChanged" Type="date" />
+  </EntityType>
+  <EntityType Name="ContentPage">
+    <Key>
+      <PropertyRef Name="IDcontent" />
+      <PropertyRef Name="IDpage" />
+    </Key>
+    <Property Name="IDcontent" Type="int" Nullable="false" />
+    <Property Name="IDpage" Type="int" Nullable="false" />
+    <Property Name="IDuser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContentType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contributor">
+    <Key>
+      <PropertyRef Name="IDpage" />
+      <PropertyRef Name="IDuser" />
+    </Key>
+    <Property Name="IDpage" Type="int" Nullable="false" />
+    <Property Name="IDuser" Type="int" Nullable="false" />
+    <Property Name="IsAuthor" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="IDgroup" />
+    </Key>
+    <Property Name="IDgroup" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDgroupType" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IDgroupOwner" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GroupType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="IDlocation" />
+    </Key>
+    <Property Name="IDlocation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDcity" Type="int" Nullable="false" />
+    <Property Name="IDlocationType" Type="int" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LocationContent">
+    <Key>
+      <PropertyRef Name="IDlocation" />
+      <PropertyRef Name="IDcontent" />
+    </Key>
+    <Property Name="IDlocation" Type="int" Nullable="false" />
+    <Property Name="IDcontent" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LocationType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="IDpage" />
+    </Key>
+    <Property Name="IDpage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IDprivacy" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="date" Nullable="false" />
+    <Property Name="PageView" Type="int" Nullable="false" />
+    <Property Name="IDeditor" Type="int" />
+    <Property Name="TimeChanged" Type="date" />
+  </EntityType>
+  <EntityType Name="PageReview">
+    <Key>
+      <PropertyRef Name="IDpage" />
+      <PropertyRef Name="IDreviewer" />
+    </Key>
+    <Property Name="IDpage" Type="int" Nullable="false" />
+    <Property Name="IDreviewer" Type="int" Nullable="false" />
+    <Property Name="Mark" Type="smallint" Nullable="false" />
+    <Property Name="ShortComment" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="PageTag">
+    <Key>
+      <PropertyRef Name="IDtag" />
+      <PropertyRef Name="IDpage" />
+    </Key>
+    <Property Name="IDtag" Type="int" Nullable="false" />
+    <Property Name="IDpage" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Privacy">
+    <Key>
+      <PropertyRef Name="IDprivacy" />
+    </Key>
+    <Property Name="IDprivacy" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CanEdit" Type="bit" Nullable="false" />
+    <Property Name="CanShare" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Travel">
+    <Key>
+      <PropertyRef Name="IDpage" />
+      <PropertyRef Name="IDlocation" />
+    </Key>
+    <Property Name="IDpage" Type="int" Nullable="false" />
+    <Property Name="IDlocation" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="IDuser" />
+    </Key>
+    <Property Name="IDuser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IDprofilePic" Type="int" />
+    <Property Name="IDcityFrom" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Grad_Drzava">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="IDcountry" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grupa_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Group" Type="Self.Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Group">
+        <PropertyRef Name="IDgroupOwner" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grupa_VrstaGrupe">
+    <End Role="GroupType" Type="Self.GroupType" Multiplicity="1" />
+    <End Role="Group" Type="Self.Group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Group">
+        <PropertyRef Name="IDgroupType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kontakti_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="IDrecipient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kontakti_Korisnik1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="IDsender" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Korisnik_Grad">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="IDcity" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IDcityFrom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Korisnik_Sadrzaj">
+    <End Role="Content" Type="Self.Content" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="IDcontent" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IDprofilePic" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lokacija_Grad">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="IDcity" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="IDcity" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lokacija_VrstaLokacije">
+    <End Role="LocationType" Type="Self.LocationType" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="IDlocationType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LokacijaSadrzaj_Lokacija">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="LocationContent" Type="Self.LocationContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="IDlocation" />
+      </Principal>
+      <Dependent Role="LocationContent">
+        <PropertyRef Name="IDlocation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LokacijaSadrzaj_Sadrzaj">
+    <End Role="Content" Type="Self.Content" Multiplicity="1" />
+    <End Role="LocationContent" Type="Self.LocationContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="IDcontent" />
+      </Principal>
+      <Dependent Role="LocationContent">
+        <PropertyRef Name="IDcontent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OcjenaStranice_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="PageReview" Type="Self.PageReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="PageReview">
+        <PropertyRef Name="IDreviewer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OcjenaStranice_Stranica">
+    <End Role="Page" Type="Self.Page" Multiplicity="1" />
+    <End Role="PageReview" Type="Self.PageReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="IDpage" />
+      </Principal>
+      <Dependent Role="PageReview">
+        <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PripadaGrupi_Grupa">
+    <End Role="Group" Type="Self.Group" Multiplicity="1" />
+    <End Role="BelongsToGroup" Type="Self.BelongsToGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="IDgroup" />
+      </Principal>
+      <Dependent Role="BelongsToGroup">
+        <PropertyRef Name="IDgroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PripadaGrupi_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="BelongsToGroup" Type="Self.BelongsToGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="BelongsToGroup">
+        <PropertyRef Name="IDuser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Putovanje_Lokacija">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="IDlocation" />
+      </Principal>
+      <Dependent Role="Travel">
+        <PropertyRef Name="IDlocation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Putovanje_Stranica">
+    <End Role="Page" Type="Self.Page" Multiplicity="1" />
+    <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="IDpage" />
+      </Principal>
+      <Dependent Role="Travel">
+        <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sadrzaj_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Content" Type="Self.Content" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="IDeditor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sadrzaj_VrstaSadrzaja">
+    <End Role="ContentType" Type="Self.ContentType" Multiplicity="1" />
+    <End Role="Content" Type="Self.Content" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContentType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="IDcontentType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SadrzajStranica_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ContentPage" Type="Self.ContentPage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="ContentPage">
+        <PropertyRef Name="IDuser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SadrzajStranica_Sadrzaj">
+    <End Role="Content" Type="Self.Content" Multiplicity="1" />
+    <End Role="ContentPage" Type="Self.ContentPage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="IDcontent" />
+      </Principal>
+      <Dependent Role="ContentPage">
+        <PropertyRef Name="IDcontent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SadrzajStranica_Stranica">
+    <End Role="Page" Type="Self.Page" Multiplicity="1" />
+    <End Role="ContentPage" Type="Self.ContentPage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="IDpage" />
+      </Principal>
+      <Dependent Role="ContentPage">
+        <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stranica_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Page" Type="Self.Page" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Page">
+        <PropertyRef Name="IDeditor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stranica_Privatnost">
+    <End Role="Privacy" Type="Self.Privacy" Multiplicity="1" />
+    <End Role="Page" Type="Self.Page" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Privacy">
+        <PropertyRef Name="IDprivacy" />
+      </Principal>
+      <Dependent Role="Page">
+        <PropertyRef Name="IDprivacy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SudionikStranice_Korisnik">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Contributor" Type="Self.Contributor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Contributor">
+        <PropertyRef Name="IDuser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SudionikStranice_Stranica">
+    <End Role="Page" Type="Self.Page" Multiplicity="1" />
+    <End Role="Contributor" Type="Self.Contributor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="IDpage" />
+      </Principal>
+      <Dependent Role="Contributor">
+        <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TagStranica_Stranica">
+    <End Role="Page" Type="Self.Page" Multiplicity="1" />
+    <End Role="PageTag" Type="Self.PageTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="IDpage" />
+      </Principal>
+      <Dependent Role="PageTag">
+        <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TagStranica_Tag">
+    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+    <End Role="PageTag" Type="Self.PageTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PageTag">
+        <PropertyRef Name="IDtag" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ZavrsniModelStoreContainer">
+    <EntitySet Name="BelongsToGroup" EntityType="Self.BelongsToGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentPage" EntityType="Self.ContentPage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentType" EntityType="Self.ContentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contributor" EntityType="Self.Contributor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GroupType" EntityType="Self.GroupType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationContent" EntityType="Self.LocationContent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationType" EntityType="Self.LocationType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PageReview" EntityType="Self.PageReview" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PageTag" EntityType="Self.PageTag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Privacy" EntityType="Self.Privacy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Travel" EntityType="Self.Travel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Grad_Drzava" Association="Self.FK_Grad_Drzava">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grupa_Korisnik" Association="Self.FK_Grupa_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="Group" EntitySet="Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grupa_VrstaGrupe" Association="Self.FK_Grupa_VrstaGrupe">
+      <End Role="GroupType" EntitySet="GroupType" />
+      <End Role="Group" EntitySet="Group" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kontakti_Korisnik" Association="Self.FK_Kontakti_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kontakti_Korisnik1" Association="Self.FK_Kontakti_Korisnik1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Korisnik_Grad" Association="Self.FK_Korisnik_Grad">
+      <End Role="City" EntitySet="City" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Korisnik_Sadrzaj" Association="Self.FK_Korisnik_Sadrzaj">
+      <End Role="Content" EntitySet="Content" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lokacija_Grad" Association="Self.FK_Lokacija_Grad">
+      <End Role="City" EntitySet="City" />
+      <End Role="Location" EntitySet="Location" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lokacija_VrstaLokacije" Association="Self.FK_Lokacija_VrstaLokacije">
+      <End Role="LocationType" EntitySet="LocationType" />
+      <End Role="Location" EntitySet="Location" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LokacijaSadrzaj_Lokacija" Association="Self.FK_LokacijaSadrzaj_Lokacija">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="LocationContent" EntitySet="LocationContent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LokacijaSadrzaj_Sadrzaj" Association="Self.FK_LokacijaSadrzaj_Sadrzaj">
+      <End Role="Content" EntitySet="Content" />
+      <End Role="LocationContent" EntitySet="LocationContent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OcjenaStranice_Korisnik" Association="Self.FK_OcjenaStranice_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="PageReview" EntitySet="PageReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OcjenaStranice_Stranica" Association="Self.FK_OcjenaStranice_Stranica">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="PageReview" EntitySet="PageReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PripadaGrupi_Grupa" Association="Self.FK_PripadaGrupi_Grupa">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="BelongsToGroup" EntitySet="BelongsToGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PripadaGrupi_Korisnik" Association="Self.FK_PripadaGrupi_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="BelongsToGroup" EntitySet="BelongsToGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Putovanje_Lokacija" Association="Self.FK_Putovanje_Lokacija">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Travel" EntitySet="Travel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Putovanje_Stranica" Association="Self.FK_Putovanje_Stranica">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="Travel" EntitySet="Travel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sadrzaj_Korisnik" Association="Self.FK_Sadrzaj_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="Content" EntitySet="Content" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sadrzaj_VrstaSadrzaja" Association="Self.FK_Sadrzaj_VrstaSadrzaja">
+      <End Role="ContentType" EntitySet="ContentType" />
+      <End Role="Content" EntitySet="Content" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SadrzajStranica_Korisnik" Association="Self.FK_SadrzajStranica_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="ContentPage" EntitySet="ContentPage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SadrzajStranica_Sadrzaj" Association="Self.FK_SadrzajStranica_Sadrzaj">
+      <End Role="Content" EntitySet="Content" />
+      <End Role="ContentPage" EntitySet="ContentPage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SadrzajStranica_Stranica" Association="Self.FK_SadrzajStranica_Stranica">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="ContentPage" EntitySet="ContentPage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stranica_Korisnik" Association="Self.FK_Stranica_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="Page" EntitySet="Page" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stranica_Privatnost" Association="Self.FK_Stranica_Privatnost">
+      <End Role="Privacy" EntitySet="Privacy" />
+      <End Role="Page" EntitySet="Page" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SudionikStranice_Korisnik" Association="Self.FK_SudionikStranice_Korisnik">
+      <End Role="User" EntitySet="User" />
+      <End Role="Contributor" EntitySet="Contributor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SudionikStranice_Stranica" Association="Self.FK_SudionikStranice_Stranica">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="Contributor" EntitySet="Contributor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TagStranica_Stranica" Association="Self.FK_TagStranica_Stranica">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="PageTag" EntitySet="PageTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TagStranica_Tag" Association="Self.FK_TagStranica_Tag">
+      <End Role="Tag" EntitySet="Tag" />
+      <End Role="PageTag" EntitySet="PageTag" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

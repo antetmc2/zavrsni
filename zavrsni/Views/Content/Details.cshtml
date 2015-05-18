@@ -1,0 +1,41 @@
+﻿@model zavrsni.Models.ContentDetails
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table class="table details">
+    <tr>
+        <th>IDcontent</th>
+        <td>@Model.IDcontent</td>
+    </tr>
+    <tr>
+        <th>Author</th>
+        <td>@Model.Author</td>
+    </tr>
+    <tr>
+        <th>Content Type</th>
+        <td>@Model.ContentType</td>
+    </tr>
+    <tr>
+        <th>Editor</th>
+        <td>@Model.Editor</td>
+    </tr>
+    <tr>
+        <th>Time changed</th>
+        <td>@Model.TimeChanged</td>
+    </tr>
+    <tr>
+        <th>Text</th>
+        <td class="details-text">@Html.Raw(Model.Text)
+        @Html.ActionLink("Edit", "Edit", new { IDcontent = Model.IDcontent }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Delete", "Delete", new { IDcontent = Model.IDcontent }, new { @class = "btn btn-danger" })</td>
+    </tr>
+</table>
+
+
+
+<p>
+    Do you want to see the other contents you have posted? @Html.ActionLink("Go back to the list of your posted contents!", "ViewContent")
+</p>

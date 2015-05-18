@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ZavrsniModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="ZavrsniModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="IDcity" ColumnName="IDcity" />
+          <ScalarProperty Name="IDcountry" ColumnName="IDcountry" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="ZavrsniModel.Contacts">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="IDrecipient" ColumnName="IDrecipient" />
+          <ScalarProperty Name="IDsender" ColumnName="IDsender" />
+          <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Content">
+      <EntityTypeMapping TypeName="ZavrsniModel.Content">
+        <MappingFragment StoreEntitySet="Content">
+          <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+          <ScalarProperty Name="IDcontentType" ColumnName="IDcontentType" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="IDeditor" ColumnName="IDeditor" />
+          <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContentPage">
+      <EntityTypeMapping TypeName="ZavrsniModel.ContentPage">
+        <MappingFragment StoreEntitySet="ContentPage">
+          <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+          <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+          <ScalarProperty Name="IDuser" ColumnName="IDuser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContentType">
+      <EntityTypeMapping TypeName="ZavrsniModel.ContentType">
+        <MappingFragment StoreEntitySet="ContentType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contributor">
+      <EntityTypeMapping TypeName="ZavrsniModel.Contributor">
+        <MappingFragment StoreEntitySet="Contributor">
+          <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+          <ScalarProperty Name="IDuser" ColumnName="IDuser" />
+          <ScalarProperty Name="IsAuthor" ColumnName="IsAuthor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="ZavrsniModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Group">
+      <EntityTypeMapping TypeName="ZavrsniModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="IDgroup" ColumnName="IDgroup" />
+          <ScalarProperty Name="IDgroupType" ColumnName="IDgroupType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IDgroupOwner" ColumnName="IDgroupOwner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupType">
+      <EntityTypeMapping TypeName="ZavrsniModel.GroupType">
+        <MappingFragment StoreEntitySet="GroupType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Location">
+      <EntityTypeMapping TypeName="ZavrsniModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="IDlocation" ColumnName="IDlocation" />
+          <ScalarProperty Name="IDcity" ColumnName="IDcity" />
+          <ScalarProperty Name="IDlocationType" ColumnName="IDlocationType" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationType">
+      <EntityTypeMapping TypeName="ZavrsniModel.LocationType">
+        <MappingFragment StoreEntitySet="LocationType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Page">
+      <EntityTypeMapping TypeName="ZavrsniModel.Page">
+        <MappingFragment StoreEntitySet="Page">
+          <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="IDprivacy" ColumnName="IDprivacy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="PageView" ColumnName="PageView" />
+          <ScalarProperty Name="IDeditor" ColumnName="IDeditor" />
+          <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PageReview">
+      <EntityTypeMapping TypeName="ZavrsniModel.PageReview">
+        <MappingFragment StoreEntitySet="PageReview">
+          <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+          <ScalarProperty Name="IDreviewer" ColumnName="IDreviewer" />
+          <ScalarProperty Name="Mark" ColumnName="Mark" />
+          <ScalarProperty Name="ShortComment" ColumnName="ShortComment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Privacy">
+      <EntityTypeMapping TypeName="ZavrsniModel.Privacy">
+        <MappingFragment StoreEntitySet="Privacy">
+          <ScalarProperty Name="IDprivacy" ColumnName="IDprivacy" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
+          <ScalarProperty Name="CanShare" ColumnName="CanShare" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tag">
+      <EntityTypeMapping TypeName="ZavrsniModel.Tag">
+        <MappingFragment StoreEntitySet="Tag">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="ZavrsniModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="IDuser" ColumnName="IDuser" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="IDprofilePic" ColumnName="IDprofilePic" />
+          <ScalarProperty Name="IDcityFrom" ColumnName="IDcityFrom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BelongsToGroup" TypeName="ZavrsniModel.BelongsToGroup" StoreEntitySet="BelongsToGroup">
+      <EndProperty Name="Group">
+        <ScalarProperty Name="IDgroup" ColumnName="IDgroup" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="IDuser" ColumnName="IDuser" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LocationContent" TypeName="ZavrsniModel.LocationContent" StoreEntitySet="LocationContent">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="IDlocation" ColumnName="IDlocation" />
+      </EndProperty>
+      <EndProperty Name="Content">
+        <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PageTag" TypeName="ZavrsniModel.PageTag" StoreEntitySet="PageTag">
+      <EndProperty Name="Page">
+        <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+      </EndProperty>
+      <EndProperty Name="Tag">
+        <ScalarProperty Name="ID" ColumnName="IDtag" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Travel" TypeName="ZavrsniModel.Travel" StoreEntitySet="Travel">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="IDlocation" ColumnName="IDlocation" />
+      </EndProperty>
+      <EndProperty Name="Page">
+        <ScalarProperty Name="IDpage" ColumnName="IDpage" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

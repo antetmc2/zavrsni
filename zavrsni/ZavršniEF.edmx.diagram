@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9a522f054921488aad5c704beb633754" Name="Diagram1">
+        <EntityTypeShape EntityType="ZavrsniEFmodel.City" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Contacts" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Content" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentPage" Width="1.5" PointX="9.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentType" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Contributor" Width="1.5" PointX="9.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Country" Width="1.5" PointX="1.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Group" Width="1.5" PointX="12.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.GroupType" Width="1.5" PointX="10.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Location" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.LocationType" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Page" Width="1.5" PointX="12.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.PageReview" Width="1.5" PointX="15" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Privacy" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Tag" Width="1.5" PointX="15" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.User" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Grad_Drzava" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Korisnik_Grad" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Lokacija_Grad" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Kontakti_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Kontakti_Korisnik1" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Korisnik_Sadrzaj" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Sadrzaj_VrstaSadrzaja" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_SadrzajStranica_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_SadrzajStranica_Stranica" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_SudionikStranice_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_SudionikStranice_Stranica" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Grupa_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Grupa_VrstaGrupe" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Lokacija_VrstaLokacije" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_OcjenaStranice_Stranica" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Stranica_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Stranica_Privatnost" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_OcjenaStranice_Korisnik" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.BelongsToGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.LocationContent" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.PageTag" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.Travel" ManuallyRouted="false" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_Content_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

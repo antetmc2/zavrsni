@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="@Url.Content("~/Content/masonry-docs.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/select2.css")" rel="stylesheet" type="text/css"/>
+        @RenderSection("Styles", false)
+    <script src="@Url.Content("~/Scripts/masonry.pkgd.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/select2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/AdditionalScripts.js")" type="text/javascript"></script>
+    <script src="~/ckeditor/ckeditor.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Traveler", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents <b class="caret" style="border-top-color: black !important; border-bottom-color: black !important;"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View your contents", "ViewContent", "Content")</li>
+                                <li>@Html.ActionLink("Add a new content", "Insert", "Content")</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret" style="border-top-color: black !important; border-bottom-color: black !important;"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View all your pages", "Index", "Page")</li>
+                                <li>@Html.ActionLink("Add a new page", "NewPage", "Page")</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+</div>
+
+<!--<footer>
+    <div class="navbar2 navbar-fixed-bottom">
+        <p style="font-size: 12px" class="text-center">&copy; @DateTime.Now.Year - ZAVRŠNI RAD: Ante Tomić, Mentor: Igor Mekterović</p>
+    </div>
+</footer>-->
+
+@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

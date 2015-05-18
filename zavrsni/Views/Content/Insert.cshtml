@@ -1,0 +1,37 @@
+﻿@model zavrsni.Models.AddNewContentModel
+@{
+    ViewBag.Title = "Insert";
+}
+
+<h2>Add the new content:</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.TextAreaFor(m => m.Text, new {htmlAttributes = new {id = "editor1", name = "editor1"}})
+
+
+    <div class="form-group" style="margin-top: 10px !important;">
+        @Html.LabelFor(model => model.Page, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownList("PageDropDown", Model.Page, "Select your page:", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Page, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ContentType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ContentTypeDropDown", Model.ContentType, "Select your content type:", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Insert" />
+        </div>
+    </div>
+}
+
+<script type="text/javascript"> CKEDITOR.replace("@Html.IdFor(m => m.Text)", {});</script>

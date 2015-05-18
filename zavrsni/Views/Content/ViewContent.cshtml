@@ -1,0 +1,25 @@
+﻿@model zavrsni.Models.IndexContentModel
+@{
+    ViewBag.Title = "ViewContent";
+}
+
+<h4>View all your published contents:</h4>
+
+<div class="row">
+    <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 280, "itemSelector": ".item" }'>
+        @foreach (Content c in Model.contents)
+        {
+            <div class="col-md-4 col-sm-6 item">
+                <div class="thumbnail content" style="padding: 2px 2px 2px 2px !important;">
+                    <div class="caption" style="padding: 3px 3px 3px 3px !important;">
+                        <h2>@c.ContentType.Description</h2>
+                        @Html.Raw(c.Text)
+                           @Html.ActionLink("Edit", "Edit", new { IDcontent = c.IDcontent }) |
+                           @Html.ActionLink("Details", "Details", new { IDcontent = c.IDcontent }) |
+                           @Html.ActionLink("Delete", "Delete", new { IDcontent = c.IDcontent })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

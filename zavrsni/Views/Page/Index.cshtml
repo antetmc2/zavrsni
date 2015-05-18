@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Identity
+@model zavrsni.Models.IndexPageModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="margin-bottom: 30px;">All pages published by @User.Identity.GetUserName():</h2>
+
+<table class="table">
+    <tr>
+        <th>Page title</th>
+        <th>Created at</th>
+    </tr>
+
+    @foreach (var item in Model.pages)
+    {
+        <tr>
+            <td>
+                @item.name
+            </td>
+            <td>
+                @item.CreatedAt
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    Are you planning another vacation? @Html.ActionLink("Make a new page!", "NewPage")
+</p>
