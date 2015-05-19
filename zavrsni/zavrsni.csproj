@@ -614,6 +614,7 @@
     <Content Include="Views\Page\Edit.cshtml" />
     <Content Include="Views\Page\Details.cshtml" />
     <Content Include="Views\Page\Delete.cshtml" />
+    <Content Include="Views\Home\Cities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,84 @@
+﻿@model zavrsni.Models.CityCountryListModel
+@{
+    ViewBag.Title = "Cities";
+}
+
+<h2>Cities</h2>
+
+<div class="row">
+    <div class="col-md-3 scrollbar">
+        <div class="force-overflow">
+            <table class="table">
+                @foreach (var c in Model.Cities)
+                {
+                    <tr>
+                        <td>
+                            <strong>@c.CityName</strong> (@c.Country.CountryName)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <p>Add the new city here:</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group" style="margin-top: 10px !important;">
+                <div class="row">
+                    <div class="col-md-5">
+                        @Html.LabelFor(model => model.CityName, new {@class = "control-label"})
+                    </div>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CityName, new {@class = "form-control"})
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5">
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new {@class = "control-label"})
+                    </div>
+                    <div class="col-md-7">
+                        @Html.DropDownList("CountryDropDown", Model.Country, "Select your country:", new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 text-center">
+                    <input type="submit" class="btn btn-default" value="Submit"/>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4">
+        <p>Necessary country is not on the list? Add it here:</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group" style="margin-top: 10px !important;">
+                <div class="row">
+                    <div class="col-md-5">
+                        @Html.LabelFor(model => model.CountryName, new {@class = "control-label"})
+                    </div>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(model => model.CountryName, new {@class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 text-center">
+                    <input type="submit" class="btn btn-default" value="Submit"/>
+                </div>
+            </div>
+        }
+    </div>
+</div>

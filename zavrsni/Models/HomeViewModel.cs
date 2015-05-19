@@ -13,4 +13,18 @@ namespace zavrsni.Models
         [Key]
         public IList<Content> contents { get; set; }
     }
+
+    public class CityCountryListModel
+    {
+        public IList<City> Cities { get; set; }
+
+        [Display(Name = "Choose a country")]
+        public SelectList Country { get; set; }
+
+        [Display(Name = "City name")]
+        public string CityName { get; set; }
+
+        [Display(Name = "Country name")]
+        public string CountryName { get; set; }
+    }
 }
