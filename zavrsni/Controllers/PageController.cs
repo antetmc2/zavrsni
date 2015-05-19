@@ -40,6 +40,48 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
+        public ActionResult Edit(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Edit")]
+        public async Task<ActionResult> EditPage(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Details(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Details")]
+        public async Task<ActionResult> ViewDetails(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Delete(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        public async Task<ActionResult> DeletePage(int IDpage)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
         public ActionResult NewPage()
         {
             return View();
