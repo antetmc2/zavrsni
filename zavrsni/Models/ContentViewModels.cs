@@ -29,6 +29,8 @@ namespace zavrsni.Models
         [Display(Name = "Choose a page")]
         public SelectList Page { get; set; }
 
+        [Display(Name = "Choose a location")]
+        public SelectList Location { get; set; }
 
     }
 
@@ -99,6 +101,9 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose a page")]
         public SelectList Page { get; set; }
+
+        [Display(Name = "Choose a location")]
+        public SelectList Location { get; set; }
 
     }
     public class ContentDetails

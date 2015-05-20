@@ -32,6 +32,11 @@ namespace zavrsni.Controllers
                               select p).ToList();
                 model.ContentType = new SelectList(query2, "ID", "Description", query.IDcontentType);
 
+                var query3 = (from c in db.City
+                              orderby c.CityName
+                              select c).ToList();
+                model.Location = new SelectList(query3, "IDcity", "CityName");
+
 
                 model.Text = query.Text;
                 model.Title = query.Title;
@@ -175,6 +180,11 @@ namespace zavrsni.Controllers
                              orderby p.Description
                              select p).ToList();
                 model.ContentType = new SelectList(query2, "ID", "Description");
+
+                var query3 = (from c in db.City
+                              orderby c.CityName
+                              select c).ToList();
+                model.Location = new SelectList(query3, "IDcity", "CityName");
             }
             return View(model);
         }
@@ -203,6 +213,11 @@ namespace zavrsni.Controllers
                 newContent.TimeChanged = DateTime.Now;
 
                 db.Content.Add(newContent);
+
+                if (Request["LocationInsert"] != null)
+                {
+                    var newLocation = "a";
+                }
 
                 if (Request["PageDropDown"].Any())
                 {
