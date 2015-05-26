@@ -16,16 +16,16 @@ namespace zavrsni
     {
         public User()
         {
+            this.BelongsToGroup = new HashSet<BelongsToGroup>();
             this.Contacts = new HashSet<Contacts>();
             this.Contacts1 = new HashSet<Contacts>();
-            this.Content1 = new HashSet<Content>();
+            this.Content = new HashSet<Content>();
+            this.Content2 = new HashSet<Content>();
             this.ContentPage = new HashSet<ContentPage>();
             this.Contributor = new HashSet<Contributor>();
             this.Group = new HashSet<Group>();
             this.Page = new HashSet<Page>();
             this.PageReview = new HashSet<PageReview>();
-            this.Group1 = new HashSet<Group>();
-            this.Content2 = new HashSet<Content>();
         }
     
         public int IDuser { get; set; }
@@ -37,17 +37,17 @@ namespace zavrsni
         public Nullable<int> IDprofilePic { get; set; }
         public int IDcityFrom { get; set; }
     
+        public virtual ICollection<BelongsToGroup> BelongsToGroup { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<Contacts> Contacts { get; set; }
         public virtual ICollection<Contacts> Contacts1 { get; set; }
-        public virtual Content Content { get; set; }
-        public virtual ICollection<Content> Content1 { get; set; }
+        public virtual ICollection<Content> Content { get; set; }
+        public virtual Content Content1 { get; set; }
+        public virtual ICollection<Content> Content2 { get; set; }
         public virtual ICollection<ContentPage> ContentPage { get; set; }
         public virtual ICollection<Contributor> Contributor { get; set; }
         public virtual ICollection<Group> Group { get; set; }
         public virtual ICollection<Page> Page { get; set; }
         public virtual ICollection<PageReview> PageReview { get; set; }
-        public virtual ICollection<Group> Group1 { get; set; }
-        public virtual ICollection<Content> Content2 { get; set; }
     }
 }

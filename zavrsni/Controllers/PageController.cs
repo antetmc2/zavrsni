@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -56,7 +57,19 @@ namespace zavrsni.Controllers
         [HttpGet]
         public ActionResult Details(int IDpage)
         {
-            return View();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                List<LocationContent> query = (from c in db.LocationContent
+                    join p in db.ContentPage on c.IDcontent equals p.IDcontent
+                    where p.IDpage == IDpage
+                    select c).Include(c => c.Content).Include(c => c.Location).ToList();
+
+                var model = new PageDetailModel
+                {
+                    PageContents = query
+                };
+                return View(model);
+            }
         }
 
         [Authorize]
@@ -77,7 +90,16 @@ namespace zavrsni.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<ActionResult> DeletePage(int IDpage)
         {
-            return View();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var page = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
+
+                var pageDelete = db.Page.Find(IDpage);
+                db.Page.Remove(pageDelete);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Page");
         }
 
         [Authorize]

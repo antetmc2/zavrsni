@@ -16,12 +16,12 @@ namespace zavrsni
     {
         public Tag()
         {
-            this.Page = new HashSet<Page>();
+            this.PageTag = new HashSet<PageTag>();
         }
     
         public int ID { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<Page> Page { get; set; }
+        public virtual ICollection<PageTag> PageTag { get; set; }
     }
 }

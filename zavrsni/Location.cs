@@ -16,8 +16,8 @@ namespace zavrsni
     {
         public Location()
         {
-            this.Content = new HashSet<Content>();
-            this.Page = new HashSet<Page>();
+            this.LocationContent = new HashSet<LocationContent>();
+            this.Travel = new HashSet<Travel>();
         }
     
         public int IDlocation { get; set; }
@@ -28,7 +28,7 @@ namespace zavrsni
     
         public virtual City City { get; set; }
         public virtual LocationType LocationType { get; set; }
-        public virtual ICollection<Content> Content { get; set; }
-        public virtual ICollection<Page> Page { get; set; }
+        public virtual ICollection<LocationContent> LocationContent { get; set; }
+        public virtual ICollection<Travel> Travel { get; set; }
     }
 }

@@ -30,4 +30,10 @@ namespace zavrsni.Models
         [Display(Name = "Number of Views")]
         public int PageViews { get; set; }
     }
+
+    public class PageDetailModel
+    {
+        [Key]
+        public List<LocationContent> PageContents { get; set; }
+    }
 }

@@ -25,6 +25,7 @@ namespace zavrsni
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BelongsToGroup> BelongsToGroup { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<Content> Content { get; set; }
@@ -35,11 +36,14 @@ namespace zavrsni
         public virtual DbSet<Group> Group { get; set; }
         public virtual DbSet<GroupType> GroupType { get; set; }
         public virtual DbSet<Location> Location { get; set; }
+        public virtual DbSet<LocationContent> LocationContent { get; set; }
         public virtual DbSet<LocationType> LocationType { get; set; }
         public virtual DbSet<Page> Page { get; set; }
         public virtual DbSet<PageReview> PageReview { get; set; }
+        public virtual DbSet<PageTag> PageTag { get; set; }
         public virtual DbSet<Privacy> Privacy { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
+        public virtual DbSet<Travel> Travel { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

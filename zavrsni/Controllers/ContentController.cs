@@ -21,6 +21,7 @@ namespace zavrsni.Controllers
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
+                var queryLocation = db.LocationContent.FirstOrDefault(l => l.IDcontent.Equals(query.IDcontent));
 
                 var query1 = (from p in db.Page
                               orderby p.name
@@ -35,8 +36,25 @@ namespace zavrsni.Controllers
                 var query3 = (from c in db.City
                               orderby c.CityName
                               select c).ToList();
-                model.Location = new SelectList(query3, "IDcity", "CityName");
+                if (queryLocation != null)
+                    model.Location = new SelectList(query3, "IDcity", "CityName", queryLocation.IDlocation);
+                else model.Location = new SelectList(query3, "IDcity", "CityName");
 
+                var query4 = (from c in db.Content
+                    join d in db.ContentPage on c.IDcontent equals d.IDcontent
+                    join p in db.Page on d.IDpage equals p.IDpage
+                    where c.IDcontent == IDcontent
+                    select p).ToList();
+
+                model.Pages = query4;
+
+                var query5 = (from c in db.Content
+                              join d in db.LocationContent on c.IDcontent equals d.IDcontent
+                              join l in db.City on d.IDlocation equals l.IDcity
+                              where c.IDcontent == IDcontent
+                              select l).ToList();
+
+                model.Locations = query5;
 
                 model.Text = query.Text;
                 model.Title = query.Title;
@@ -51,6 +69,8 @@ namespace zavrsni.Controllers
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
+                //var queryLocation = db.LocationContent.FirstOrDefault(l => l.IDcontent.Equals(IDcontent));
+                //var queryPage = db.ContentPage.FirstOrDefault(l => l.IDcontent.Equals(IDcontent));
                 if (ModelState.IsValid)
                 {
                     string username = User.Identity.GetUserName();
@@ -62,7 +82,72 @@ namespace zavrsni.Controllers
                     query.IDeditor = user.IDuser;
                     query.TimeChanged = DateTime.Now;
 
+                    if (Request["PageDropDown"].Any())
+                    {
+                        var pageSel = Request["PageDropDown"];
+                        var page = Convert.ToInt32(pageSel);
+
+                        var exists = from cp in db.ContentPage
+                                     where cp.IDpage == page
+                                     && cp.IDcontent == IDcontent
+                                     select cp;
+                        if (!exists.Any())
+                        {
+                            var newPage = db.ContentPage.Create();
+                            newPage.IDcontent = IDcontent;
+                            newPage.IDpage = Convert.ToInt32(pageSel);
+                            newPage.IDuser = user.IDuser;
+                            db.ContentPage.Add(newPage);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            return RedirectToAction("ViewContent", "Content");
+                        }
+                    }
+
+                    if (Request["ContentTypeDropDown"].Any())
+                    {
+                        var contSel = Request["ContentTypeDropDown"];
+                        query.IDcontentType = Convert.ToInt32(contSel);
+                    }
+
+                    /*if (Request["LocationEdit"].Any())// && queryLocation != null)
+                    {
+                        var locationSel = Request["LocationEdit"];
+                        queryLocation.IDlocation = Convert.ToInt32(locationSel);
+                        //db.Entry(queryLocation).State = EntityState.Modified;
+                    }*/
+
+                    if (Request["LocationEdit"].Any())
+                    {
+                        var locationSel = Request["LocationEdit"];
+                        var loc = Convert.ToInt32(locationSel);
+
+                        var exists = from lc in db.LocationContent
+                                     where lc.IDlocation == loc
+                                     && lc.IDcontent == IDcontent
+                                     select lc;
+
+                        if (!exists.Any())
+                        {
+                            var location = db.LocationContent.Create();
+                            location.IDlocation = Convert.ToInt32(locationSel);
+                            location.IDcontent = IDcontent;
+                            location.TimeChanged = DateTime.Now;
+                            db.LocationContent.Add(location);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "The selected location already contains this content.");
+                            return RedirectToAction("ViewContent", "Content");
+                        }
+
+                    }
+
                     db.Entry(query).State = EntityState.Modified;
+                    //db.Entry(queryPage).State = EntityState.Modified;
 
                     db.SaveChanges();
                     return RedirectToAction("ViewContent", "Content"); // or whatever
@@ -214,10 +299,6 @@ namespace zavrsni.Controllers
 
                 db.Content.Add(newContent);
 
-                if (Request["LocationInsert"] != null)
-                {
-                    var newLocation = "a";
-                }
 
                 if (Request["PageDropDown"].Any())
                 {
@@ -227,6 +308,17 @@ namespace zavrsni.Controllers
                     content.IDpage = Convert.ToInt32(pageSel);
                     content.IDcontent = newContent.IDcontent;
                     db.ContentPage.Add(content);
+                    db.SaveChanges();
+                }
+
+                if (Request["LocationInsert"].Any())
+                {
+                    var location = db.LocationContent.Create();
+                    var locationSelect = Request["LocationInsert"];
+                    location.IDlocation = Convert.ToInt32(locationSelect);
+                    location.IDcontent = newContent.IDcontent;
+                    location.TimeChanged = DateTime.Now;
+                    db.LocationContent.Add(location);
                     db.SaveChanges();
                 }
 

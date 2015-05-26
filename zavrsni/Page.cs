@@ -19,8 +19,8 @@ namespace zavrsni
             this.ContentPage = new HashSet<ContentPage>();
             this.Contributor = new HashSet<Contributor>();
             this.PageReview = new HashSet<PageReview>();
-            this.Tag = new HashSet<Tag>();
-            this.Location = new HashSet<Location>();
+            this.Travel = new HashSet<Travel>();
+            this.PageTag = new HashSet<PageTag>();
         }
     
         public int IDpage { get; set; }
@@ -34,9 +34,9 @@ namespace zavrsni
         public virtual ICollection<ContentPage> ContentPage { get; set; }
         public virtual ICollection<Contributor> Contributor { get; set; }
         public virtual ICollection<PageReview> PageReview { get; set; }
+        public virtual ICollection<Travel> Travel { get; set; }
         public virtual User User { get; set; }
         public virtual Privacy Privacy { get; set; }
-        public virtual ICollection<Tag> Tag { get; set; }
-        public virtual ICollection<Location> Location { get; set; }
+        public virtual ICollection<PageTag> PageTag { get; set; }
     }
 }

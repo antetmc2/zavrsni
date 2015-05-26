@@ -7,6 +7,7 @@
     </Key>
     <Property Name="IDgroup" Type="int" Nullable="false" />
     <Property Name="IDuser" Type="int" Nullable="false" />
+    <Property Name="TimeChanged" Type="datetime" />
   </EntityType>
   <EntityType Name="City">
     <Key>
@@ -93,8 +94,8 @@
     <Property Name="IDlocation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IDcity" Type="int" Nullable="false" />
     <Property Name="IDlocationType" Type="int" Nullable="false" />
-    <Property Name="Longitude" Type="float" Nullable="false" />
     <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="LocationContent">
     <Key>
@@ -103,6 +104,7 @@
     </Key>
     <Property Name="IDlocation" Type="int" Nullable="false" />
     <Property Name="IDcontent" Type="int" Nullable="false" />
+    <Property Name="TimeChanged" Type="datetime" />
   </EntityType>
   <EntityType Name="LocationType">
     <Key>
@@ -140,6 +142,7 @@
     </Key>
     <Property Name="IDtag" Type="int" Nullable="false" />
     <Property Name="IDpage" Type="int" Nullable="false" />
+    <Property Name="TimeChanged" Type="datetime" />
   </EntityType>
   <EntityType Name="Privacy">
     <Key>
@@ -164,6 +167,7 @@
     </Key>
     <Property Name="IDpage" Type="int" Nullable="false" />
     <Property Name="IDlocation" Type="int" Nullable="false" />
+    <Property Name="AlternateName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="User">
     <Key>

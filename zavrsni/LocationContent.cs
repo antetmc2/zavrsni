@@ -12,20 +12,13 @@ namespace zavrsni
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class LocationContent
     {
-        public Group()
-        {
-            this.BelongsToGroup = new HashSet<BelongsToGroup>();
-        }
+        public int IDlocation { get; set; }
+        public int IDcontent { get; set; }
+        public Nullable<System.DateTime> TimeChanged { get; set; }
     
-        public int IDgroup { get; set; }
-        public int IDgroupType { get; set; }
-        public string Name { get; set; }
-        public int IDgroupOwner { get; set; }
-    
-        public virtual ICollection<BelongsToGroup> BelongsToGroup { get; set; }
-        public virtual User User { get; set; }
-        public virtual GroupType GroupType { get; set; }
+        public virtual Content Content { get; set; }
+        public virtual Location Location { get; set; }
     }
 }

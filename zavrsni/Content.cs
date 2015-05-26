@@ -16,25 +16,25 @@ namespace zavrsni
     {
         public Content()
         {
-            this.User = new HashSet<User>();
+            this.User1 = new HashSet<User>();
+            this.LocationContent = new HashSet<LocationContent>();
             this.ContentPage = new HashSet<ContentPage>();
-            this.Location = new HashSet<Location>();
         }
     
         public int IDcontent { get; set; }
         public int IDcontentType { get; set; }
+        public int IDauthor { get; set; }
         public string Text { get; set; }
         public string URL { get; set; }
         public Nullable<int> IDeditor { get; set; }
         public Nullable<System.DateTime> TimeChanged { get; set; }
-        public int IDauthor { get; set; }
         public string Title { get; set; }
     
-        public virtual ICollection<User> User { get; set; }
-        public virtual User User1 { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<User> User1 { get; set; }
+        public virtual ICollection<LocationContent> LocationContent { get; set; }
+        public virtual User User2 { get; set; }
         public virtual ContentType ContentType { get; set; }
         public virtual ICollection<ContentPage> ContentPage { get; set; }
-        public virtual ICollection<Location> Location { get; set; }
-        public virtual User User2 { get; set; }
     }
 }

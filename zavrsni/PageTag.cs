@@ -12,20 +12,13 @@ namespace zavrsni
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class PageTag
     {
-        public Group()
-        {
-            this.BelongsToGroup = new HashSet<BelongsToGroup>();
-        }
+        public int IDtag { get; set; }
+        public int IDpage { get; set; }
+        public Nullable<System.DateTime> TimeChanged { get; set; }
     
-        public int IDgroup { get; set; }
-        public int IDgroupType { get; set; }
-        public string Name { get; set; }
-        public int IDgroupOwner { get; set; }
-    
-        public virtual ICollection<BelongsToGroup> BelongsToGroup { get; set; }
-        public virtual User User { get; set; }
-        public virtual GroupType GroupType { get; set; }
+        public virtual Page Page { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }
