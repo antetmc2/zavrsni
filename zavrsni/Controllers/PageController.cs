@@ -62,11 +62,17 @@ namespace zavrsni.Controllers
                 List<LocationContent> query = (from c in db.LocationContent
                     join p in db.ContentPage on c.IDcontent equals p.IDcontent
                     where p.IDpage == IDpage
-                    select c).Include(c => c.Content).Include(c => c.Location).ToList();
+                    select c).Include(c => c.Content).Include(c => c.Location).Include(c => c.City).ToList();
+
+                var PageInfo = (from p in db.Page
+                    where p.IDpage == IDpage
+                    select p);
 
                 var model = new PageDetailModel
                 {
-                    PageContents = query
+                    PageContents = query,
+                    PageName = PageInfo.First().name,
+                    IDpage = PageInfo.First().IDpage
                 };
                 return View(model);
             }
@@ -96,6 +102,25 @@ namespace zavrsni.Controllers
 
                 var pageDelete = db.Page.Find(IDpage);
                 db.Page.Remove(pageDelete);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Page");
+        }
+
+        public ActionResult DeleteContent(int IDpage, int IDcontent)
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateInput(false), ActionName("DeleteContent")]
+        public async Task<ActionResult> DeleteContentConfirm(int IDpage, int IDcontent)
+        {
+
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var contentDelete = db.ContentPage.Find(IDcontent, IDpage);
+                db.ContentPage.Remove(contentDelete);
                 db.SaveChanges();
             }
 

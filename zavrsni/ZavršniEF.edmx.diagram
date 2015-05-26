@@ -54,6 +54,7 @@
         <AssociationConnector Association="ZavrsniEFmodel.FK_TagStranica_Stranica" />
         <AssociationConnector Association="ZavrsniEFmodel.FK_OcjenaStranice_Korisnik" />
         <AssociationConnector Association="ZavrsniEFmodel.FK_TagStranica_Tag" />
+        <AssociationConnector Association="ZavrsniEFmodel.FK_LocationContent_City" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

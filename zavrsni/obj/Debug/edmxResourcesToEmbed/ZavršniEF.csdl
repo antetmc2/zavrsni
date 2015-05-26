@@ -137,6 +137,10 @@
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PageTag" EntitySet="PageTag" />
     </AssociationSet>
+    <AssociationSet Name="FK_LocationContent_City" Association="ZavrsniEFmodel.FK_LocationContent_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="LocationContent" EntitySet="LocationContent" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="BelongsToGroup">
     <Key>
@@ -159,6 +163,7 @@
     <NavigationProperty Name="Country" Relationship="ZavrsniEFmodel.FK_Grad_Drzava" FromRole="City" ToRole="Country" />
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Korisnik_Grad" FromRole="City" ToRole="User" />
     <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="City" ToRole="Location" />
+    <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="City" ToRole="LocationContent" />
   </EntityType>
   <EntityType Name="Contacts">
     <Key>
@@ -273,6 +278,7 @@
     <Property Name="TimeChanged" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Content" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Sadrzaj" FromRole="LocationContent" ToRole="Content" />
     <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Lokacija" FromRole="LocationContent" ToRole="Location" />
+    <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="LocationContent" ToRole="City" />
   </EntityType>
   <EntityType Name="LocationType">
     <Key>
@@ -737,6 +743,18 @@
       </Principal>
       <Dependent Role="PageTag">
         <PropertyRef Name="IDtag" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationContent_City">
+    <End Type="ZavrsniEFmodel.City" Role="City" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.LocationContent" Role="LocationContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="IDcity" />
+      </Principal>
+      <Dependent Role="LocationContent">
+        <PropertyRef Name="IDlocation" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

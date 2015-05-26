@@ -278,6 +278,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LocationContent_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="LocationContent" Type="Self.LocationContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="IDcity" />
+      </Principal>
+      <Dependent Role="LocationContent">
+        <PropertyRef Name="IDlocation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Lokacija_Grad">
     <End Role="City" Type="Self.City" Multiplicity="1" />
     <End Role="Location" Type="Self.Location" Multiplicity="*" />
@@ -596,6 +608,10 @@
     <AssociationSet Name="FK_Korisnik_Sadrzaj" Association="Self.FK_Korisnik_Sadrzaj">
       <End Role="Content" EntitySet="Content" />
       <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationContent_City" Association="Self.FK_LocationContent_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="LocationContent" EntitySet="LocationContent" />
     </AssociationSet>
     <AssociationSet Name="FK_Lokacija_Grad" Association="Self.FK_Lokacija_Grad">
       <End Role="City" EntitySet="City" />

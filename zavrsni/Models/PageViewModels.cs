@@ -35,5 +35,8 @@ namespace zavrsni.Models
     {
         [Key]
         public List<LocationContent> PageContents { get; set; }
+        public string PageName { get; set; }
+        public int IDpage { get; set; }
+
     }
 }

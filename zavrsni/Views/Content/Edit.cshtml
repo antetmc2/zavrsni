@@ -30,6 +30,10 @@
                     <span>@p.name; </span>
                 }
             }
+            @if (Model.Pages.Count == 0)
+            {
+                <span>No pages with this content are found! </span>
+            }
         </div>
     </div>
 
@@ -58,6 +62,10 @@
                     {
                         <span>@l.CityName; </span>
                     }
+                }
+                @if(Model.Locations.Count == 0)
+                {
+                    <span>No locations with this content are found! </span>
                 }
             </div>
         </div>

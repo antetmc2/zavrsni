@@ -32,9 +32,12 @@
     </tr>
     <tr>
         <th>Text</th>
-        <td class="details-text">@Html.Raw(Model.Text)
-        @Html.ActionLink("Edit", "Edit", new { IDcontent = Model.IDcontent }, new { @class = "btn btn-success" })
-        @Html.ActionLink("Delete", "Delete", new { IDcontent = Model.IDcontent }, new { @class = "btn btn-danger" })</td>
+        <td class="details-text">@Html.Raw(Model.Text)</td>
+    </tr>
+    <tr>
+        <th>Actions</th>
+        <td><a href="@Url.Action("Edit", "Content", new { IDcontent = Model.IDcontent })"><span class="btn btn-special glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+            <a href="@Url.Action("Delete", "Content", new { IDcontent = Model.IDcontent })"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
     </tr>
 </table>
 
