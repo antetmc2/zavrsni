@@ -1,7 +1,66 @@
-﻿
+﻿@using Page = zavrsni.Page
+@model zavrsni.Models.EditPageModel
+
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit existing content:</h2>
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group" style="margin-top: 10px !important;">
+        @Html.LabelFor(model => model.PageTitle, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.PageTitle, new { @class = "form-control", style = "font-size: 20px;" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Privacy, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownList("PrivacyDropDown", Model.Privacy, "Select your page:", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Privacy, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <span class="control-label col-md-2">Added tags: </span>
+        <div class="col-md-10" style="margin-bottom: 10px;">
+            @foreach (PageTag p in Model.TagList)
+            {
+                if (p.Tag.name != null)
+                {
+                    <span>@p.Tag.name; </span>
+                }
+            }
+            @if (Model.TagList.Count == 0)
+            {
+                <span>No tags are added ... yet! </span>
+            }
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 10px !important;">
+        @Html.LabelFor(model => model.Tag, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Tag, new {@class = "form-control", style = "font-size: 20px;"})
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 10px !important;">
+        @Html.LabelFor(model => model.Contributor, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Contributor, new { @class = "form-control", style = "font-size: 20px;" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-default" value="Save" />
+            @Html.ActionLink("Return to pages list", "Index", new { area = "" }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}

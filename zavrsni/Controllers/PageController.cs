@@ -43,14 +43,83 @@ namespace zavrsni.Controllers
         [HttpGet]
         public ActionResult Edit(int IDpage)
         {
-            return View();
+            EditPageModel model = new EditPageModel();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                model.IDpage = IDpage;
+                var selPage = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
+                var query = (from p in db.Privacy
+                    orderby p.Description
+                    select p).ToList();
+                model.PageTitle = selPage.name;
+                model.Privacy = new SelectList(query, "IDprivacy", "description", selPage.IDprivacy);
+
+                var tagList = (from t in db.PageTag
+                    where t.IDpage == IDpage
+                    select t).Include(t => t.Tag).ToList();
+                model.TagList = tagList;
+            }
+            return View(model);
         }
 
         [Authorize]
         [HttpPost, ActionName("Edit")]
-        public async Task<ActionResult> EditPage(int IDpage)
+        public async Task<ActionResult> EditPage(int IDpage, EditPageModel model)
         {
-            return View();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var selPage = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
+                if (ModelState.IsValid)
+                {
+                    string username = User.Identity.GetUserName();
+                    var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+                    selPage.name = model.PageTitle;
+
+                    if (Request["PrivacyDropDown"].Any())
+                    {
+                        var privSel = Request["PrivacyDropDown"];
+                        var privacy = Convert.ToInt32(privSel);
+
+                        selPage.IDprivacy = privacy;
+                    }
+
+                    selPage.IDeditor = user.IDuser;
+                    selPage.TimeChanged = DateTime.Now;
+
+                    if (model.Tag.Any())
+                    {
+                        var tagModel = model.Tag.ToLower();
+                        var existsInPage = from p in db.PageTag
+                            join t in db.Tag on p.IDtag equals t.ID
+                            where t.name == tagModel
+                            select t;
+                        var existsTag = from t in db.Tag
+                            where t.name == tagModel
+                            select t;
+
+                        if (!existsTag.Any())
+                        {
+                            var newTag = db.Tag.Create();
+                            newTag.name = tagModel;
+                            db.Tag.Add(newTag);
+                            db.SaveChanges();
+                        }
+                        if (!existsInPage.Any())
+                        {
+                            var newPageTag = db.PageTag.Create();
+                            newPageTag.IDtag = existsTag.First().ID;
+                            newPageTag.IDpage = IDpage;
+                            db.PageTag.Add(newPageTag);
+                            db.SaveChanges();
+                        }
+                    }
+
+                    db.Entry(selPage).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Edit", new { IDpage = IDpage });
+                }
+            }
+            return RedirectToAction("Edit", new { IDpage = IDpage });
         }
 
         [Authorize]

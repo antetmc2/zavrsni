@@ -12,6 +12,8 @@
     @Html.AntiForgeryToken()
     @Html.TextAreaFor(m => m.Text, new {htmlAttributes = new {id = "editor1", name = "editor1"}})
 
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 
     <div class="form-group" style="margin-top: 10px !important;">
         @Html.LabelFor(model => model.Title, new {@class = "col-md-2 control-label"})
@@ -80,7 +82,8 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" class="btn btn-default" value="Save" />
+                <input type="submit" class="btn btn-default" value="Save"/>
+                @Html.ActionLink("Return", "ViewContent", new { area = "" }, new { @class = "btn btn-default" })
             </div>
         </div>
         }

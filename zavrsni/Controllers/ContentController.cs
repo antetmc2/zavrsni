@@ -102,7 +102,8 @@ namespace zavrsni.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("ViewContent", "Content");
+                            ModelState.AddModelError("", "The selected page already contains this content.");
+                            return RedirectToAction("Edit", new { IDcontent = IDcontent });
                         }
                     }
 
@@ -141,7 +142,7 @@ namespace zavrsni.Controllers
                         else
                         {
                             ModelState.AddModelError("", "The selected location already contains this content.");
-                            return RedirectToAction("ViewContent", "Content");
+                            return RedirectToAction("Edit", new { IDcontent = IDcontent });
                         }
 
                     }
@@ -150,7 +151,7 @@ namespace zavrsni.Controllers
                     //db.Entry(queryPage).State = EntityState.Modified;
 
                     db.SaveChanges();
-                    return RedirectToAction("ViewContent", "Content"); // or whatever
+                    return RedirectToAction("Edit", new { IDcontent = IDcontent });
                 }
             }
             return View(model);

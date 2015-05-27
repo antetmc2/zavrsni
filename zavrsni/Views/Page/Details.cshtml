@@ -5,6 +5,12 @@
 
 <h2>@Model.PageName</h2>
 
+<div class="form-group">
+    <div class="col-md-10">
+        @Html.ActionLink("Return to pages list", "Index", new { area = "" }, new { @class = "btn btn-default" })
+    </div>
+</div>
+
 @foreach (var c in Model.PageContents.GroupBy(a => a.City.CityName))
 {
     <p><h3>@c.Key</h3></p>
