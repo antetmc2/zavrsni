@@ -7,38 +7,54 @@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Account info: </h4>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="viewUserInfo">Username: </span><span class="viewUserInfoValue">@User.Identity.GetUserName()</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="viewUserInfo">E-mail address: </span><span class="viewUserInfoValue">@Model.Email</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="viewUserInfo">First name: </span><span class="viewUserInfoValue">@Model.FirstName</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="viewUserInfo">Last name: </span><span class="viewUserInfoValue">@Model.LastName</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span class="viewUserInfo">City name: </span><span class="viewUserInfoValue">@Model.City</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Edit your user info", "Edit", "Manage", null, new {@class = "text-navigation"})
-        </div>
-    </div>
+
+<h4>Account info: </h4>
+<table class="table">
+    <tr>
+        <th style="width: 15%;">Username</th>
+        <td>@User.Identity.GetUserName()</td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">E-mail address</th>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">First name</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">Last name</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">Member of groups</th>
+        <td>
+
+            @foreach (BelongsToGroup b in Model.GroupMember)
+            {
+                if (b.Group.Name != null)
+                {
+                    <p>@b.Group.Name; </p>
+                }
+            }
+            @if (Model.GroupMember.Count == 0)
+            {
+                <span>No groups are added ... yet! </span>
+            }
+            <span>(Click on the group to remove the member from that group!)</span>
+
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">City</th>
+        <td>@Model.City</td>
+    </tr>
+    <tr>
+        <th style="width: 15%;">Or other actions:</th>
+        <td><a href="@Url.Action("Edit", "Manage")"><span class="btn btn-special glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+        </td>
+    </tr>
+</table>
 
     @*<h4>Change your account settings</h4>
         <hr />
@@ -114,4 +130,3 @@
                     }
             </dd>
         </dl>*@
-</div>

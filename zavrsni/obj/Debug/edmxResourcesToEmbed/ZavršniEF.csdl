@@ -37,6 +37,10 @@
       <End Role="City" EntitySet="City" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
+    <AssociationSet Name="FK_LocationContent_City" Association="ZavrsniEFmodel.FK_LocationContent_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="LocationContent" EntitySet="LocationContent" />
+    </AssociationSet>
     <AssociationSet Name="FK_Lokacija_Grad" Association="ZavrsniEFmodel.FK_Lokacija_Grad">
       <End Role="City" EntitySet="City" />
       <End Role="Location" EntitySet="Location" />
@@ -137,10 +141,6 @@
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PageTag" EntitySet="PageTag" />
     </AssociationSet>
-    <AssociationSet Name="FK_LocationContent_City" Association="ZavrsniEFmodel.FK_LocationContent_City">
-      <End Role="City" EntitySet="City" />
-      <End Role="LocationContent" EntitySet="LocationContent" />
-    </AssociationSet>
   </EntityContainer>
   <EntityType Name="BelongsToGroup">
     <Key>
@@ -162,8 +162,8 @@
     <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Country" Relationship="ZavrsniEFmodel.FK_Grad_Drzava" FromRole="City" ToRole="Country" />
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Korisnik_Grad" FromRole="City" ToRole="User" />
-    <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="City" ToRole="Location" />
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="City" ToRole="LocationContent" />
+    <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="City" ToRole="Location" />
   </EntityType>
   <EntityType Name="Contacts">
     <Key>
@@ -241,7 +241,7 @@
     <Property Name="IDgroup" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IDgroupType" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IDgroupOwner" Type="Int32" Nullable="false" />
+    <Property Name="IDgroupOwner" Type="Int32" />
     <NavigationProperty Name="BelongsToGroup" Relationship="ZavrsniEFmodel.FK_PripadaGrupi_Grupa" FromRole="Group" ToRole="BelongsToGroup" />
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Grupa_Korisnik" FromRole="Group" ToRole="User" />
     <NavigationProperty Name="GroupType" Relationship="ZavrsniEFmodel.FK_Grupa_VrstaGrupe" FromRole="Group" ToRole="GroupType" />
@@ -261,8 +261,8 @@
     <Property Name="IDlocation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IDcity" Type="Int32" Nullable="false" />
     <Property Name="IDlocationType" Type="Int32" Nullable="false" />
-    <Property Name="Longitude" Type="Double" Nullable="false" />
     <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
     <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="Location" ToRole="City" />
     <NavigationProperty Name="LocationType" Relationship="ZavrsniEFmodel.FK_Lokacija_VrstaLokacije" FromRole="Location" ToRole="LocationType" />
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Lokacija" FromRole="Location" ToRole="LocationContent" />
@@ -276,9 +276,9 @@
     <Property Name="IDlocation" Type="Int32" Nullable="false" />
     <Property Name="IDcontent" Type="Int32" Nullable="false" />
     <Property Name="TimeChanged" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="LocationContent" ToRole="City" />
     <NavigationProperty Name="Content" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Sadrzaj" FromRole="LocationContent" ToRole="Content" />
     <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Lokacija" FromRole="LocationContent" ToRole="Location" />
-    <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="LocationContent" ToRole="City" />
   </EntityType>
   <EntityType Name="LocationType">
     <Key>
@@ -429,6 +429,18 @@
       </Principal>
       <Dependent Role="User">
         <PropertyRef Name="IDcityFrom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationContent_City">
+    <End Type="ZavrsniEFmodel.City" Role="City" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.LocationContent" Role="LocationContent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="IDcity" />
+      </Principal>
+      <Dependent Role="LocationContent">
+        <PropertyRef Name="IDlocation" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -597,7 +609,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Grupa_Korisnik">
-    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="0..1" />
     <End Type="ZavrsniEFmodel.Group" Role="Group" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -743,18 +755,6 @@
       </Principal>
       <Dependent Role="PageTag">
         <PropertyRef Name="IDtag" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_LocationContent_City">
-    <End Type="ZavrsniEFmodel.City" Role="City" Multiplicity="1" />
-    <End Type="ZavrsniEFmodel.LocationContent" Role="LocationContent" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="City">
-        <PropertyRef Name="IDcity" />
-      </Principal>
-      <Dependent Role="LocationContent">
-        <PropertyRef Name="IDlocation" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

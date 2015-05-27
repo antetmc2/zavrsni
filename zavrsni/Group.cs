@@ -22,7 +22,7 @@ namespace zavrsni
         public int IDgroup { get; set; }
         public int IDgroupType { get; set; }
         public string Name { get; set; }
-        public int IDgroupOwner { get; set; }
+        public Nullable<int> IDgroupOwner { get; set; }
     
         public virtual ICollection<BelongsToGroup> BelongsToGroup { get; set; }
         public virtual User User { get; set; }

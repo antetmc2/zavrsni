@@ -12,7 +12,7 @@
                     <div class="caption" style="padding: 3px 3px 3px 3px !important;">
                         <h2>@c.Title</h2>
                         @Html.Raw(c.Text)
-                        <p style="margin-top: 15px;">@c.ContentType.Description</p>
+                        <div class="text-right"><a href="@Url.Action("Details", "Content", new { IDcontent = c.IDcontent })"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a></div>
                     </div>
                 </div>
             </div>

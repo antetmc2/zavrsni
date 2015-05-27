@@ -44,6 +44,7 @@ namespace zavrsni.Models
         public string City { get; set; }
 
         public IList<City> CurrentCities { get; set; }
+        public IList<BelongsToGroup> GroupMember { get; set; } 
 
     }
 
@@ -68,6 +69,11 @@ namespace zavrsni.Models
         /*[Required]
         [Display(Name = "City")]
         public string City { get; set; }*/
+    }
+
+    public class GroupListModel
+    {
+        public IList<Group> GroupList { get; set; } 
     }
 
 

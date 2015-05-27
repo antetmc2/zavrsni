@@ -23,8 +23,8 @@ namespace zavrsni
         public int IDlocation { get; set; }
         public int IDcity { get; set; }
         public int IDlocationType { get; set; }
-        public double Longitude { get; set; }
         public double Latitude { get; set; }
+        public double Longitude { get; set; }
     
         public virtual City City { get; set; }
         public virtual LocationType LocationType { get; set; }

@@ -78,7 +78,7 @@
     <Property Name="IDgroup" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IDgroupType" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
-    <Property Name="IDgroupOwner" Type="int" Nullable="false" />
+    <Property Name="IDgroupOwner" Type="int" />
   </EntityType>
   <EntityType Name="GroupType">
     <Key>
@@ -207,7 +207,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Grupa_Korisnik">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="Group" Type="Self.Group" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">

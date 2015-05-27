@@ -44,7 +44,8 @@ namespace zavrsni.Controllers
                     join d in db.ContentPage on c.IDcontent equals d.IDcontent
                     join p in db.Page on d.IDpage equals p.IDpage
                     where c.IDcontent == IDcontent
-                    select p).ToList();
+                    orderby p.name
+                    select d).Include(d => d.Page).ToList();
 
                 model.Pages = query4;
 
@@ -52,7 +53,8 @@ namespace zavrsni.Controllers
                               join d in db.LocationContent on c.IDcontent equals d.IDcontent
                               join l in db.City on d.IDlocation equals l.IDcity
                               where c.IDcontent == IDcontent
-                              select l).ToList();
+                              orderby l.CityName
+                              select d).Include(d => d.City).ToList();
 
                 model.Locations = query5;
 
@@ -155,6 +157,20 @@ namespace zavrsni.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult DeleteLocation(int IDlocation, int IDcontent)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var deleteLocationContent = db.LocationContent.Find(IDlocation, IDcontent);
+                db.LocationContent.Remove(deleteLocationContent);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Edit", new { IDcontent = IDcontent });
         }
 
         public ActionResult Details(int IDcontent)

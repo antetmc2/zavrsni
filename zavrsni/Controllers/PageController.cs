@@ -55,9 +55,18 @@ namespace zavrsni.Controllers
                 model.Privacy = new SelectList(query, "IDprivacy", "description", selPage.IDprivacy);
 
                 var tagList = (from t in db.PageTag
+                    join a in db.Tag on t.IDtag equals a.ID
                     where t.IDpage == IDpage
+                    orderby a.name
                     select t).Include(t => t.Tag).ToList();
                 model.TagList = tagList;
+
+                var contribList = (from c in db.Contributor
+                    join u in db.User on c.IDuser equals u.IDuser
+                    orderby u.Username
+                    where c.IDpage == IDpage
+                    select c).Include(c => c.User).ToList();
+                model.ContributorList = contribList;
             }
             return View(model);
         }
@@ -86,7 +95,7 @@ namespace zavrsni.Controllers
                     selPage.IDeditor = user.IDuser;
                     selPage.TimeChanged = DateTime.Now;
 
-                    if (model.Tag.Any())
+                    if (model.Tag != null)
                     {
                         var tagModel = model.Tag.ToLower();
                         var existsInPage = from p in db.PageTag
@@ -114,11 +123,66 @@ namespace zavrsni.Controllers
                         }
                     }
 
+                    if (model.Contributor != null)
+                    {
+                        var userExists = from u in db.User
+                            where u.Username == model.Contributor
+                            select u;
+
+                        if (!userExists.Any()) return RedirectToAction("Edit", new { IDpage = IDpage });
+
+                        var exists = from t in db.Contributor
+                            join u in db.User on t.IDuser equals u.IDuser
+                            where u.Username == model.Contributor
+                            select t;
+
+                        if (!exists.Any())
+                        {
+                            var contribUser = db.User.FirstOrDefault(u => u.Username.Equals(model.Contributor));
+                            var newContributor = db.Contributor.Create();
+                            newContributor.IDpage = IDpage;
+                            newContributor.IDuser = contribUser.IDuser;
+                            newContributor.IsAuthor = false;
+                            db.Contributor.Add(newContributor);
+                            db.SaveChanges();
+                        }
+
+
+                    }
+
                     db.Entry(selPage).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Edit", new { IDpage = IDpage });
                 }
             }
+            return RedirectToAction("Edit", new { IDpage = IDpage });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult DeleteTag(int IDpage, int IDtag)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var tagDelete = db.PageTag.Find(IDtag, IDpage);
+                db.PageTag.Remove(tagDelete);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Edit", new { IDpage = IDpage });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult DeleteContributor(int IDpage, int IDuser)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var contributorDelete = db.Contributor.Find(IDpage, IDuser);
+                db.Contributor.Remove(contributorDelete);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Edit", new { IDpage = IDpage });
         }
 

@@ -17,8 +17,8 @@ namespace zavrsni
         public City()
         {
             this.User = new HashSet<User>();
-            this.Location = new HashSet<Location>();
             this.LocationContent = new HashSet<LocationContent>();
+            this.Location = new HashSet<Location>();
         }
     
         public int IDcity { get; set; }
@@ -27,7 +27,7 @@ namespace zavrsni
     
         public virtual Country Country { get; set; }
         public virtual ICollection<User> User { get; set; }
-        public virtual ICollection<Location> Location { get; set; }
         public virtual ICollection<LocationContent> LocationContent { get; set; }
+        public virtual ICollection<Location> Location { get; set; }
     }
 }

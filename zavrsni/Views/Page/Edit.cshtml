@@ -33,13 +33,15 @@
             {
                 if (p.Tag.name != null)
                 {
-                    <span>@p.Tag.name; </span>
+                    <a href="@Url.Action("DeleteTag", "Page", new { IDtag = p.IDtag, IDpage = p.IDpage })">@p.Tag.name; </a>
+
                 }
             }
             @if (Model.TagList.Count == 0)
             {
                 <span>No tags are added ... yet! </span>
             }
+            <span>(Click on the tag to remove it from this page!)</span>
         </div>
     </div>
 
@@ -47,6 +49,31 @@
         @Html.LabelFor(model => model.Tag, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
             @Html.TextBoxFor(model => model.Tag, new {@class = "form-control", style = "font-size: 20px;"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <span class="control-label col-md-2">Added contributors: </span>
+        <div class="col-md-10" style="margin-bottom: 10px;">
+            @foreach (Contributor p in Model.ContributorList)
+            {
+                if (p.User.Username != null)
+                {
+                    if (p.IsAuthor == true)
+                    {
+                        <span style="font-weight: bolder;">@p.User.Username (author); </span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("DeleteContributor", "Page", new { IDpage = p.IDpage, IDuser = p.IDuser })">@p.User.Username; </a>
+                    }
+                }
+            }
+            @if (Model.ContributorList.Count == 0)
+            {
+                <span>No contributors are added ... yet! </span>
+            }
+            <span>(Click on the contributor to remove him/her from this page!)</span>
         </div>
     </div>
 

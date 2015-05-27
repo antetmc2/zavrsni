@@ -225,6 +225,18 @@ namespace zavrsni.Controllers
                     {
                         db.User.Add(newUser);
                         db.SaveChanges();
+
+                        var userGroup = db.BelongsToGroup.Create();
+                        userGroup.IDgroup = 1;
+                        userGroup.IDuser = newUser.IDuser;
+                        userGroup.TimeChanged = DateTime.Now;
+                        db.BelongsToGroup.Add(userGroup);
+                        db.SaveChanges();
+
+                        FormsAuthentication.SetAuthCookie(model.Username, false);
+                        var FormsAuthCookie = Response.Cookies[FormsAuthentication.FormsCookieName];
+                        var ExistingTicket = FormsAuthentication.Decrypt(FormsAuthCookie.Value).Name;
+
                         return RedirectToAction("Index", "Home");
                     }
                     else

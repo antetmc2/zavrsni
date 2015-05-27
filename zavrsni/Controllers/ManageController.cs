@@ -57,16 +57,8 @@ namespace zavrsni.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(IndexViewModel model)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
 
             /*var model = new IndexViewModel
             {
@@ -88,16 +80,41 @@ namespace zavrsni.Controllers
                     join c in db.City on u.IDcityFrom equals c.IDcity
                     select c;
 
-                var model = new IndexViewModel()
-                {
-                    Username = User.Identity.GetUserName(),
-                    Email = user.Email,
-                    Password = user.Password,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    City = city.First().CityName,
-                    CurrentCities = test
-                };
+                model.Username = User.Identity.GetUserName();
+                model.Email = user.Email;
+                model.Password = user.Password;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                model.City = city.First().CityName;
+                model.CurrentCities = test;
+
+                var query = (from b in db.BelongsToGroup
+                    join g in db.Group on b.IDgroup equals g.IDgroup
+                    where b.IDuser == user.IDuser
+                    orderby g.Name
+                    select b).Include(b => b.Group).ToList();
+                model.GroupMember = query;
+
+                return View(model);
+
+            }
+
+        }
+
+        public async Task<ActionResult> Groups(GroupListModel model)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var currentUser = User.Identity.GetUserName();
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+
+                var groups = (from u in db.Group
+                    join b in db.BelongsToGroup on u.IDgroup equals b.IDgroup
+                    where b.IDuser == user.IDuser
+                    select u).Include(u => u.GroupType).Include(u => u.User).ToList();
+
+                model.GroupList = groups;
+
                 return View(model);
 
             }

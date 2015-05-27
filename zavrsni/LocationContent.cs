@@ -18,8 +18,8 @@ namespace zavrsni
         public int IDcontent { get; set; }
         public Nullable<System.DateTime> TimeChanged { get; set; }
     
+        public virtual City City { get; set; }
         public virtual Content Content { get; set; }
         public virtual Location Location { get; set; }
-        public virtual City City { get; set; }
     }
 }

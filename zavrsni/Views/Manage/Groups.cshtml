@@ -1,0 +1,33 @@
+﻿@model zavrsni.Models.GroupListModel
+@{
+    ViewBag.Title = "Groups";
+}
+
+<h2>Groups</h2>
+
+<table class="table">
+    <tr>
+        <th>Group name</th>
+        <th>Group type</th>
+        <th>Owner</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (Group g in Model.GroupList)
+    {
+        <tr>
+            <td>@g.Name</td>
+            <td>@g.GroupType.Name</td>
+            <td>@if (g.IDgroupOwner != null)
+                {
+                    @g.User.Username
+                }
+                else
+                {
+                    <p>N/A</p>
+                }
+            </td>
+            <td>Soon ....</td>
+        </tr>
+    }
+</table>

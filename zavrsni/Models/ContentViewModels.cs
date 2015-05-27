@@ -105,8 +105,8 @@ namespace zavrsni.Models
         [Display(Name = "Choose a location")]
         public SelectList Location { get; set; }
 
-        public IList<Page> Pages { get; set; }
-        public IList<City> Locations { get; set; } 
+        public IList<ContentPage> Pages { get; set; }
+        public IList<LocationContent> Locations { get; set; } 
 
     }
     public class ContentDetails

@@ -25,11 +25,11 @@
     <div class="form-group">
         <span class="control-label col-md-2">Used in pages: </span>
         <div class="col-md-10" style="margin-bottom: 10px;">
-            @foreach (Page p in Model.Pages)
+            @foreach (ContentPage p in Model.Pages)
             {
-                if (p.name != null)
+                if (p.Page.name != null)
                 {
-                    <span>@p.name; </span>
+                    <span>@p.Page.name; </span>
                 }
             }
             @if (Model.Pages.Count == 0)
@@ -58,17 +58,18 @@
         <div class="form-group">
             <span class="control-label col-md-2">Used in locations: </span>
             <div class="col-md-10" style="margin-bottom: 10px;">
-                @foreach (City l in Model.Locations)
+                @foreach (LocationContent l in Model.Locations)
                 {
-                    if (l.CityName != null)
+                    if (l.City.CityName != null)
                     {
-                        <span>@l.CityName; </span>
+                        <a href="@Url.Action("DeleteLocation", "Content", new { IDlocation = l.IDlocation, IDcontent = l.IDcontent })">@l.City.CityName; </a>
                     }
                 }
                 @if(Model.Locations.Count == 0)
                 {
                     <span>No locations with this content are found! </span>
                 }
+                <span>(Click on the location to remove it from this content!)</span>
             </div>
         </div>
 

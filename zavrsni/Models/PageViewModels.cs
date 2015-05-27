@@ -57,4 +57,9 @@ namespace zavrsni.Models
         public int IDpage { get; set; }
 
     }
+
+    public class PageRemoveModel
+    {
+        public int IDpage { get; set; }
+    }
 }
