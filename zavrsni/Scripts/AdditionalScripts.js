@@ -2,4 +2,3 @@
 
     $('.dropdown-toggle').dropdown();
 });
-

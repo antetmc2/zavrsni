@@ -18,12 +18,10 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="row">
             @Html.LabelFor(model => model.Privacy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PrivacyDropDown", Model.Privacy, "Select your page:", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Privacy, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-10">
+            @Html.DropDownList("PrivacyDropDown", Model.Privacy, "Select your page:", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Privacy, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="form-group">

@@ -257,7 +257,7 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Page");
+            return RedirectToAction("Details", new { IDpage = IDpage });
         }
 
         [Authorize]

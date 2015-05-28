@@ -62,14 +62,14 @@
                 {
                     if (l.City.CityName != null)
                     {
-                        <a href="@Url.Action("DeleteLocation", "Content", new { IDlocation = l.IDlocation, IDcontent = l.IDcontent })">@l.City.CityName; </a>
+                        <span>@l.City.CityName (</span><a href="@Url.Action("DeleteLocation", "Content", new {IDlocation = l.IDlocation, IDcontent = l.IDcontent})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a><span>);</span>
                     }
                 }
                 @if(Model.Locations.Count == 0)
                 {
                     <span>No locations with this content are found! </span>
                 }
-                <span>(Click on the location to remove it from this content!)</span>
+                <span>(Click on the <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> to remove it from this content!)</span>
             </div>
         </div>
 
@@ -89,4 +89,8 @@
         </div>
         }
 
-        <script type="text/javascript"> CKEDITOR.replace("@Html.IdFor(m => m.Text)", {});</script>
+        <script type="text/javascript">
+ CKEDITOR.replace("@Html.IdFor(m => m.Text)", {
+     filebrowserImageBrowseUrl: '/home/uploadPartial',
+     filebrowserImageUploadUrl: '/home/uploadnow'
+ });</script>
