@@ -35,8 +35,10 @@
             <td>
                 @if (item.IDgroup != 1 && item.User.Username != User.Identity.GetUserName())
                 {
-                    <a href="@Url.Action("DeleteMember", "Group", new { IDgroup = item.IDgroup, IDuser = item.IDuser })"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    <a href="@Url.Action("DeleteMember", "Group", new {IDgroup = item.IDgroup, IDuser = item.IDuser})"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                 }
+                <a href="@Url.Action("ViewContent", "Content", new {Username = item.User.Username})">Contents</a><span> | </span>
+                <a href="@Url.Action("Index", "Page", new { Username = item.User.Username })">Pages</a>
             </td>
         </tr>
     }
@@ -51,6 +53,8 @@
             <td><span>@item.FirstName </span><span>@item.LastName</span></td>
             <td>
                 <a href="@Url.Action("AddMember", "Group", new {IDgroup = Model.IDgroup, IDuser = item.IDuser})"><span class="btn btn-special glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                <a href="@Url.Action("ViewContent", "Content", new {Username = item.Username})">Contents</a><span> | </span>
+                <a href="@Url.Action("Index", "Page", new { Username = item.Username })">Pages</a>
             </td>
         </tr>
     }

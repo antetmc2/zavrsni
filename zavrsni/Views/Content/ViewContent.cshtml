@@ -1,5 +1,6 @@
 ﻿@model zavrsni.Models.IndexContentModel
 @using Microsoft.AspNet.Identity
+@using zavrsni.Helpers
 @{
     ViewBag.Title = "ViewContent";
 }
@@ -14,7 +15,7 @@
                 <div class="thumbnail content" style="padding: 2px 2px 2px 2px !important;">
                     <div class="caption" style="padding: 3px 3px 3px 3px !important;">
                         <h2>@c.Title</h2>
-                        @Html.Raw(c.Text)
+                        @c.Text.RemoveHTMLTags().Truncate()
                         <div class="text-right">
                             @if (User.Identity.GetUserName() == Model.Username)
                             {

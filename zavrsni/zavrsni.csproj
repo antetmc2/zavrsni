@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -187,7 +191,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
@@ -200,6 +203,7 @@
     <Compile Include="GroupType.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Location.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
@@ -638,7 +642,6 @@
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Contacts.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

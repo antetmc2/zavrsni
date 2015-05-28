@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
 using System.Data.Entity.Infrastructure;
+using System.Text.RegularExpressions;
 
 namespace zavrsni.Controllers
 {
@@ -396,17 +397,6 @@ namespace zavrsni.Controllers
             }
             return View(model);
         }
-
-        public void UploadNow (HttpPostedFileWrapper upload)
-        {
-            if (upload != null)
-            {
-                string ImageName = upload.FileName;
-                string path = System.IO.Path.Combine(Server.MapPath("~/Images/uploads"), ImageName);
-                upload.SaveAs(path);
-            }
-        }
-
 
         public class RequiresParameterAttribute : ActionMethodSelectorAttribute
         {
