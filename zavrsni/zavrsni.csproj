@@ -187,6 +187,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Country.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
@@ -637,10 +638,10 @@
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Contacts.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
