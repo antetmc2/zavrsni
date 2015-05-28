@@ -634,6 +634,8 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Add.cshtml" />
     <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Contacts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

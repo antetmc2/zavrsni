@@ -21,14 +21,12 @@ namespace zavrsni.Models
         [DataType(DataType.Text)]
         public string PageTitle { get; set; }
         [Required]
-        [Display(Name = "Privacy")]
-        public int Privacy { get; set; }
-        [Required]
         [Display(Name = "Date created")]
         public DateTime CreatedAt { get; set; }
         [Required]
         [Display(Name = "Number of Views")]
         public int PageViews { get; set; }
+        public SelectList Privacy { get; set; }
     }
 
     public class EditPageModel

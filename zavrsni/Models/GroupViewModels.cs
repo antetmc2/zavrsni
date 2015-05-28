@@ -28,6 +28,16 @@ namespace zavrsni.Models
         public int IDgroup { get; set; }
         public string GroupType { get; set; }
         public string Name { get; set; }
-        public IList<BelongsToGroup> Members { get; set; } 
+        public IList<BelongsToGroup> Members { get; set; }
+        public IList<User> MembersNotInList { get; set; } 
+    }
+
+    public class GroupEditDetailsModel
+    {
+        public int IDgroup { get; set; }
+        [Display(Name = "Choose a group type")]
+        public SelectList GroupType { get; set; }
+        [Display(Name = "Group name")]
+        public string Name { get; set; }
     }
 }

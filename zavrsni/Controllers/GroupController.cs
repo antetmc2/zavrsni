@@ -104,6 +104,13 @@ namespace zavrsni.Controllers
                     where b.IDgroup == IDgroup
                     select b).Include(b => b.User).ToList();
                 model.Members = membersQuery;
+
+                var otherUsers = (from u in db.User
+                    select u).Except(from b in db.BelongsToGroup
+                        join s in db.User on b.IDuser equals s.IDuser
+                                         where b.IDgroup == IDgroup
+                                         select s).ToList();
+                model.MembersNotInList = otherUsers;
             }
             return View(model);
         }
@@ -121,6 +128,65 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Details", new { IDgroup = IDgroup });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddMember(int IDgroup, int IDuser)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                if (IDgroup == 1) return RedirectToAction("Index", "Group");
+
+                var newGroupMember = db.BelongsToGroup.Create();
+                newGroupMember.IDgroup = IDgroup;
+                newGroupMember.IDuser = IDuser;
+                newGroupMember.TimeChanged = DateTime.Now;
+                db.BelongsToGroup.Add(newGroupMember);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", new { IDgroup = IDgroup });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Edit(int IDgroup)
+        {
+            GroupEditDetailsModel model = new GroupEditDetailsModel();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var queryType = db.Group.FirstOrDefault(u => u.IDgroup.Equals(IDgroup));
+                var query = (from g in db.GroupType
+                    select g).ToList();
+                model.GroupType = new SelectList(query, "ID", "Name", queryType.IDgroupType);
+                model.IDgroup = IDgroup;
+                model.Name = queryType.Name;
+            }
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateInput(false)]
+        public async Task<ActionResult> Edit(int IDgroup, GroupEditDetailsModel model)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                if (ModelState.IsValid)
+                {
+                    var group = db.Group.Find(IDgroup);
+                    group.Name = model.Name;
+                    if (Request["GroupTypeDropDown"].Any())
+                    {
+                        var groupTypeSel = Request["GroupTypeDropDown"];
+                        var gt = Convert.ToInt32(groupTypeSel);
+                        group.IDgroupType = gt;
+                    }
+                    db.Entry(group).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Edit", new { IDgroup = IDgroup });
         }
     }
 }

@@ -23,6 +23,11 @@ namespace zavrsni.Controllers
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
                 var queryLocation = db.LocationContent.FirstOrDefault(l => l.IDcontent.Equals(query.IDcontent));
 
+                string username = User.Identity.GetUserName();
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+
+                if (query.IDauthor != user.IDuser) return RedirectToAction("Index", "Home");
+
                 var query1 = (from p in db.Page
                               orderby p.name
                               select p).ToList();
@@ -249,6 +254,16 @@ namespace zavrsni.Controllers
 
         public ActionResult Delete(int IDcontent)
         {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
+
+                string username = User.Identity.GetUserName();
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+
+                if (query.IDauthor != user.IDuser) return RedirectToAction("Index", "Home");
+
+            }
             return View();
         }
 

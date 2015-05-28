@@ -264,7 +264,14 @@ namespace zavrsni.Controllers
         [HttpGet]
         public ActionResult NewPage()
         {
-            return View();
+            NewPageModel model = new NewPageModel();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var query = (from p in db.Privacy
+                    select p).ToList();
+                model.Privacy = new SelectList(query, "IDprivacy", "description");
+            }
+            return View(model);
         }
         [Authorize]
         [HttpPost]
@@ -276,7 +283,13 @@ namespace zavrsni.Controllers
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(author));
                 var newPage = db.Page.Create();
                 newPage.name = model.PageTitle;
-                newPage.IDprivacy = 1;
+                if (Request["PrivacyDropDown"].Any())
+                {
+                    var privSel = Request["PrivacyDropDown"];
+                    var privacy = Convert.ToInt32(privSel);
+
+                    newPage.IDprivacy = privacy;
+                }
                 newPage.CreatedAt = DateTime.Now;
                 newPage.PageView = 0;
 
