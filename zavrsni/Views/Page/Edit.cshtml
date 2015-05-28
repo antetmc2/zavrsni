@@ -33,7 +33,7 @@
             {
                 if (p.Tag.name != null)
                 {
-                    <a href="@Url.Action("DeleteTag", "Page", new { IDtag = p.IDtag, IDpage = p.IDpage })">@p.Tag.name; </a>
+                    <a href="@Url.Action("DeleteTag", "Page", new { IDtag = p.IDtag, IDpage = p.IDpage, Username = Model.Username })">@p.Tag.name; </a>
 
                 }
             }
@@ -65,7 +65,7 @@
                     }
                     else
                     {
-                        <a href="@Url.Action("DeleteContributor", "Page", new { IDpage = p.IDpage, IDuser = p.IDuser })">@p.User.Username; </a>
+                        <a href="@Url.Action("DeleteContributor", "Page", new { IDpage = p.IDpage, IDuser = p.IDuser, Username = Model.Username })">@p.User.Username; </a>
                     }
                 }
             }
@@ -87,7 +87,8 @@
     <div class="form-group">
         <div class="col-md-10">
             <input type="submit" class="btn btn-default" value="Save" />
-            @Html.ActionLink("Return to pages list", "Index", new { area = "" }, new { @class = "btn btn-default" })
+            <a href="@Url.Action("Index", "Page", new { Username = Model.Username })"><span class="btn btn-default">Return to pages list</span></a>
+
         </div>
     </div>
 }

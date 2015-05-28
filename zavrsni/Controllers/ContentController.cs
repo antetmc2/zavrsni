@@ -15,7 +15,7 @@ namespace zavrsni.Controllers
 {
     public class ContentController : Controller
     {
-        public ActionResult Edit(int IDcontent)
+        public ActionResult Edit(int IDcontent, string username)
         {
             Contents model = new Contents();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
@@ -23,7 +23,6 @@ namespace zavrsni.Controllers
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
                 var queryLocation = db.LocationContent.FirstOrDefault(l => l.IDcontent.Equals(query.IDcontent));
 
-                string username = User.Identity.GetUserName();
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
 
                 if (query.IDauthor != user.IDuser) return RedirectToAction("Index", "Home");
@@ -65,13 +64,14 @@ namespace zavrsni.Controllers
 
                 model.Text = query.Text;
                 model.Title = query.Title;
+                model.Username = username;
             }
             return View(model);
 
         }
 
         [HttpPost, ValidateInput(false)]
-        public async Task<ActionResult> Edit(int IDcontent, Contents model)
+        public async Task<ActionResult> Edit(int IDcontent, string username, Contents model)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -80,9 +80,10 @@ namespace zavrsni.Controllers
                 //var queryPage = db.ContentPage.FirstOrDefault(l => l.IDcontent.Equals(IDcontent));
                 if (ModelState.IsValid)
                 {
-                    string username = User.Identity.GetUserName();
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                     // Get the userprofile
+
+                    model.Username = username;
 
                     if (model.Title != null) query.Title = model.Title;
                     else query.Title = "(no title)"; query.Text = model.Text;
@@ -110,7 +111,7 @@ namespace zavrsni.Controllers
                         else
                         {
                             ModelState.AddModelError("", "The selected page already contains this content.");
-                            return RedirectToAction("Edit", new { IDcontent = IDcontent });
+                            return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
                         }
                     }
 
@@ -158,7 +159,7 @@ namespace zavrsni.Controllers
                     //db.Entry(queryPage).State = EntityState.Modified;
 
                     db.SaveChanges();
-                    return RedirectToAction("Edit", new { IDcontent = IDcontent });
+                    return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
                 }
             }
             return View(model);
@@ -166,8 +167,10 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult DeleteLocation(int IDlocation, int IDcontent)
+        public ActionResult DeleteLocation(int IDlocation, int IDcontent, string username)
         {
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var deleteLocationContent = db.LocationContent.Find(IDlocation, IDcontent);
@@ -175,10 +178,10 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Edit", new { IDcontent = IDcontent });
+            return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
         }
 
-        public ActionResult Details(int IDcontent)
+        public ActionResult Details(int IDcontent, string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -210,7 +213,8 @@ namespace zavrsni.Controllers
                         TimeChanged = cont.TimeChanged,
                         Text = cont.Text,
                         Locations = locations,
-                        Page = new SelectList(pages, "IDpage", "name")
+                        Page = new SelectList(pages, "IDpage", "name"),
+                        Username = username
                     };
                     return View(model);
                 }
@@ -223,7 +227,8 @@ namespace zavrsni.Controllers
                         Title = cont.Title,
                         ContentType = contType.Description,
                         Text = cont.Text,
-                        Locations = locations
+                        Locations = locations,
+                        Username = username
                     };
                     return View(model);
                 }
@@ -232,7 +237,7 @@ namespace zavrsni.Controllers
         }
 
         [HttpPost, ValidateInput(false), ActionName("Details")]
-        public async Task<ActionResult> ShowDetails(int IDcontent, ContentDetails model)
+        public async Task<ActionResult> ShowDetails(int IDcontent, string username, ContentDetails model)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -244,31 +249,34 @@ namespace zavrsni.Controllers
                 if (Request["PageDropDown"].Any())
                 {
                     var pageSel = Request["PageDropDown"];
-                    contPage.IDcontent = Convert.ToInt32(pageSel);
+                    contPage.IDpage = Convert.ToInt32(pageSel);
                     db.ContentPage.Add(contPage);
                     db.SaveChanges();
                 }
             }
-            return RedirectToAction("Edit", new { IDcontent = IDcontent });
+            return RedirectToAction("Details", new { IDcontent = IDcontent, Username = username });
         }
 
-        public ActionResult Delete(int IDcontent)
+        public ActionResult Delete(int IDcontent, string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
+
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
 
-                string username = User.Identity.GetUserName();
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
 
                 if (query.IDauthor != user.IDuser) return RedirectToAction("Index", "Home");
 
             }
-            return View();
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
+
+            return View(model);
         }
 
         [HttpPost, ValidateInput(false), ActionName("Delete")]
-        public async Task<ActionResult> DeleteConfirm(int IDcontent)
+        public async Task<ActionResult> DeleteConfirm(int IDcontent, string username)
         {
 
             using (ZavrsniEFentities db = new ZavrsniEFentities())
@@ -280,17 +288,17 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("ViewContent", "Content");
+            return RedirectToAction("ViewContent", new { Username = username });
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ViewContent()
+        public ActionResult ViewContent(string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var currentUser = User.Identity.GetUserName();
-                var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                 var allContents = (from c in db.Content
                     where c.IDauthor == user.IDuser
                     orderby c.TimeChanged descending 
@@ -298,20 +306,21 @@ namespace zavrsni.Controllers
 
                 var model = new IndexContentModel()
                 {
-                    contents = allContents
+                    contents = allContents,
+                    Username = username
                 };
                 return View(model);
             }
         }
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> ViewContent(IndexContentModel model)
+        public async Task<ActionResult> ViewContent(string username, IndexContentModel model)
         {
             return View();
         }
         [Authorize]
         [HttpGet]
-        public ActionResult Insert()
+        public ActionResult Insert(string username)
         {
             AddNewContentModel model = new AddNewContentModel();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
@@ -330,23 +339,23 @@ namespace zavrsni.Controllers
                               orderby c.CityName
                               select c).ToList();
                 model.Location = new SelectList(query3, "IDcity", "CityName");
+                model.Username = username;
             }
             return View(model);
         }
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<ActionResult> Insert(AddNewContentModel model)
+        public async Task<ActionResult> Insert(string username, AddNewContentModel model)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
-                var author = User.Identity.GetUserName();
-                var user = db.User.FirstOrDefault(u => u.Username.Equals(author));
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                 var newContent = db.Content.Create();
                 if (!Request["ContentTypeDropDown"].Any())
                 {
                     ModelState.AddModelError("", "Incorrect content.");
-                    return RedirectToAction("Insert", "Content");
+                    return RedirectToAction("Insert", new { Username = username });
                 }
                 var contSel = Request["ContentTypeDropDown"];
                 newContent.IDcontentType = Convert.ToInt32(contSel);
@@ -383,7 +392,7 @@ namespace zavrsni.Controllers
                 }
 
                 db.SaveChanges();
-                return RedirectToAction("ViewContent", "Content");
+                return RedirectToAction("ViewContent", new { Username = username });
             }
             return View(model);
         }

@@ -18,22 +18,23 @@ namespace zavrsni.Controllers
     public class PageController : Controller
     {
         // GET: Page
-        public ActionResult Index()
+        public ActionResult Index(string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var currentUser = User.Identity.GetUserName();
-                var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                 var allPages = (from p in db.Page
                     join c in db.Contributor
                         on p.IDpage equals c.IDpage
                         where c.IDuser == user.IDuser
-                        && c.IsAuthor
+                        //&& c.IsAuthor
                     select p).ToList();
 
                 var model = new IndexPageModel()
                 {
-                    pages = allPages
+                    pages = allPages,
+                    Username = username
                 };
                 return View(model);
             }
@@ -41,9 +42,10 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult Edit(int IDpage)
+        public ActionResult Edit(int IDpage, string username)
         {
             EditPageModel model = new EditPageModel();
+            model.Username = username;
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 model.IDpage = IDpage;
@@ -73,14 +75,13 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpPost, ActionName("Edit")]
-        public async Task<ActionResult> EditPage(int IDpage, EditPageModel model)
+        public async Task<ActionResult> EditPage(int IDpage, string username, EditPageModel model)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var selPage = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
                 if (ModelState.IsValid)
                 {
-                    string username = User.Identity.GetUserName();
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                     selPage.name = model.PageTitle;
 
@@ -129,7 +130,7 @@ namespace zavrsni.Controllers
                             where u.Username == model.Contributor
                             select u;
 
-                        if (!userExists.Any()) return RedirectToAction("Edit", new { IDpage = IDpage });
+                        if (!userExists.Any()) return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
 
                         var exists = from t in db.Contributor
                             join u in db.User on t.IDuser equals u.IDuser
@@ -152,16 +153,18 @@ namespace zavrsni.Controllers
 
                     db.Entry(selPage).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Edit", new { IDpage = IDpage });
+                    return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
                 }
             }
-            return RedirectToAction("Edit", new { IDpage = IDpage });
+            return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult DeleteTag(int IDpage, int IDtag)
+        public ActionResult DeleteTag(int IDpage, int IDtag, string username)
         {
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var tagDelete = db.PageTag.Find(IDtag, IDpage);
@@ -169,13 +172,15 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Edit", new { IDpage = IDpage });
+            return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult DeleteContributor(int IDpage, int IDuser)
+        public ActionResult DeleteContributor(int IDpage, int IDuser, string username)
         {
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var contributorDelete = db.Contributor.Find(IDpage, IDuser);
@@ -183,12 +188,12 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Edit", new { IDpage = IDpage });
+            return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult Details(int IDpage)
+        public ActionResult Details(int IDpage, string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -205,7 +210,8 @@ namespace zavrsni.Controllers
                 {
                     PageContents = query,
                     PageName = PageInfo.First().name,
-                    IDpage = PageInfo.First().IDpage
+                    IDpage = PageInfo.First().IDpage,
+                    Username = username
                 };
                 return View(model);
             }
@@ -213,21 +219,23 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpPost, ActionName("Details")]
-        public async Task<ActionResult> ViewDetails(int IDpage)
+        public async Task<ActionResult> ViewDetails(int IDpage, string username)
         {
             return View();
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult Delete(int IDpage)
+        public ActionResult Delete(int IDpage, string username)
         {
-            return View();
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
+            return View(model);
         }
 
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        public async Task<ActionResult> DeletePage(int IDpage)
+        public async Task<ActionResult> DeletePage(int IDpage, string username)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -238,16 +246,18 @@ namespace zavrsni.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Page");
+            return RedirectToAction("Index", new { Username = username });
         }
 
-        public ActionResult DeleteContent(int IDpage, int IDcontent)
+        public ActionResult DeleteContent(int IDpage, int IDcontent, string username)
         {
-            return View();
+            UsernameModel model = new UsernameModel();
+            model.Username = username;
+            return View(model);
         }
 
         [HttpPost, ValidateInput(false), ActionName("DeleteContent")]
-        public async Task<ActionResult> DeleteContentConfirm(int IDpage, int IDcontent)
+        public async Task<ActionResult> DeleteContentConfirm(int IDpage, int IDcontent, string username)
         {
 
             using (ZavrsniEFentities db = new ZavrsniEFentities())
@@ -262,7 +272,7 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult NewPage()
+        public ActionResult NewPage(string username)
         {
             NewPageModel model = new NewPageModel();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
@@ -270,17 +280,17 @@ namespace zavrsni.Controllers
                 var query = (from p in db.Privacy
                     select p).ToList();
                 model.Privacy = new SelectList(query, "IDprivacy", "description");
+                model.Username = username;
+                return View(model);
             }
-            return View(model);
         }
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> NewPage(NewPageModel model)
+        public async Task<ActionResult> NewPage(string username, NewPageModel model)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
-                var author = User.Identity.GetUserName();
-                var user = db.User.FirstOrDefault(u => u.Username.Equals(author));
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                 var newPage = db.Page.Create();
                 newPage.name = model.PageTitle;
                 if (Request["PrivacyDropDown"].Any())
@@ -304,7 +314,7 @@ namespace zavrsni.Controllers
                 db.Contributor.Add(newContributor);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", "Page");
+                return RedirectToAction("Index", new { Username = username });
 
 
             }

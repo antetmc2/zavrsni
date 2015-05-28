@@ -10,9 +10,8 @@ namespace zavrsni.Models
 {
     public class AddNewContentModel
     {
-        [Required]
         [Display(Name = "Username")]
-        public int Username { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [Display(Name = "Choose content type")]
@@ -39,9 +38,14 @@ namespace zavrsni.Models
     public class IndexContentModel
     {
         [Key]
-        public IList<Content> contents { get; set; }  
+        public IList<Content> contents { get; set; }
+        public string Username { get; set; }
     }
 
+    public class UsernameModel
+    {
+        public string Username { get; set; }
+    }
 
     public class ContentDelete
     {
@@ -82,7 +86,7 @@ namespace zavrsni.Models
 
         [Required]
         [Display(Name = "Username")]
-        public int Username { get; set; }
+        public string Username { get; set; }
 
         [Display(Name = "Choose content type")]
         public SelectList ContentType { get; set; }
@@ -138,7 +142,8 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose a page")]
         public SelectList Page { get; set; }
-        public IList<LocationContent> Locations { get; set; } 
+        public IList<LocationContent> Locations { get; set; }
+        public string Username { get; set; }
 
     }
 }

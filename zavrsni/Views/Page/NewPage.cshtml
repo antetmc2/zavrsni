@@ -5,7 +5,7 @@
 
 <h2>Add a new page:</h2>
 
-@using (Html.BeginForm("NewPage", "Page", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <h4>Create a new page.</h4>

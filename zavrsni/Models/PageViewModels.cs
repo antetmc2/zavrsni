@@ -12,6 +12,7 @@ namespace zavrsni.Models
     {
         [Key]
         public IList<Page> pages { get; set; }
+        public string Username { get; set; }
     }
 
     public class NewPageModel
@@ -27,6 +28,7 @@ namespace zavrsni.Models
         [Display(Name = "Number of Views")]
         public int PageViews { get; set; }
         public SelectList Privacy { get; set; }
+        public string Username { get; set; }
     }
 
     public class EditPageModel
@@ -44,7 +46,8 @@ namespace zavrsni.Models
         [Display(Name = "List of added tags")]
         public IList<PageTag> TagList { get; set; }
         [Display(Name = "List of added contributors")]
-        public IList<Contributor> ContributorList { get; set; } 
+        public IList<Contributor> ContributorList { get; set; }
+        public string Username { get; set; }
     }
 
     public class PageDetailModel
@@ -53,6 +56,7 @@ namespace zavrsni.Models
         public List<LocationContent> PageContents { get; set; }
         public string PageName { get; set; }
         public int IDpage { get; set; }
+        public string Username { get; set; }
 
     }
 

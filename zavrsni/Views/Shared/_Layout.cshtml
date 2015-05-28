@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -41,16 +42,14 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contents <b class="caret" style="border-top-color: black !important; border-bottom-color: black !important;"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("View your contents", "ViewContent", "Content")</li>
-                                <li>@Html.ActionLink("Add a new content", "Insert", "Content")</li>
+                                <li><a href="@Url.Action("ViewContent", "Content", new {Username = @User.Identity.GetUserName()})">View your contents</a></li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret" style="border-top-color: black !important; border-bottom-color: black !important;"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("View all your pages", "Index", "Page")</li>
-                                <li>@Html.ActionLink("Add a new page", "NewPage", "Page")</li>
+                                <li><a href="@Url.Action("Index", "Page", new { Username = @User.Identity.GetUserName() })">View all your pages</a></li>
                             </ul>
                         </li>
                     }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model zavrsni.Models.UsernameModel
+@{
     ViewBag.Title = "Delete";
 }
 
@@ -8,7 +9,8 @@
     @Html.AntiForgeryToken()
     <div class="text-center">
         <input type="submit" class="btn btn-success" value="Yes, delete the selected page" />
-        @Html.ActionLink("No, take me back to the list of pages", "Index", new { area = "" }, new { @class = "btn btn-danger" })
+        <a href="@Url.Action("Index", "Page", new { Username = Model.Username })"><span class="btn btn-danger">No, take me back to the list of pages</span></a>
+
     </div>
 }
 <br />

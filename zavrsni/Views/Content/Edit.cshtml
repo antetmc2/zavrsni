@@ -62,7 +62,7 @@
                 {
                     if (l.City.CityName != null)
                     {
-                        <span>@l.City.CityName (</span><a href="@Url.Action("DeleteLocation", "Content", new {IDlocation = l.IDlocation, IDcontent = l.IDcontent})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a><span>);</span>
+                        <span>@l.City.CityName (</span><a href="@Url.Action("DeleteLocation", "Content", new {IDlocation = l.IDlocation, IDcontent = l.IDcontent, Username = Model.Username})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a><span>);</span>
                     }
                 }
                 @if(Model.Locations.Count == 0)
@@ -84,7 +84,8 @@
         <div class="form-group">
             <div class="col-md-10">
                 <input type="submit" class="btn btn-default" value="Save"/>
-                @Html.ActionLink("Return", "ViewContent", new { area = "" }, new { @class = "btn btn-default" })
+                <a href="@Url.Action("ViewContent", "Content", new {Username = Model.Username})"><span class="btn btn-default">Return</span></a>
+
             </div>
         </div>
         }
