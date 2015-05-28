@@ -53,3 +53,6 @@ C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\Microsoft.Owin.Security.Micro
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\obj\Debug\zavrsni.dll
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\obj\Debug\zavrsni.pdb
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\obj\Debug\zavrsni.csprojResolveAssemblyReference.cache
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.pdb
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.xml

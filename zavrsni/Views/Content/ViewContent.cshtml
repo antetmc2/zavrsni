@@ -15,7 +15,11 @@
                 <div class="thumbnail content" style="padding: 2px 2px 2px 2px !important;">
                     <div class="caption" style="padding: 3px 3px 3px 3px !important;">
                         <h2>@c.Title</h2>
-                        @c.Text.RemoveHTMLTags().Truncate()
+                        @Html.Raw(c.Text.ParseHTML().Truncate())
+                        @if (c.Text.ParseHTML().Truncate().Contains("..."))
+                        {
+                            <span>(<a href="@Url.Action("Details", "Content", new { IDcontent = c.IDcontent, Username = Model.Username })">more</a>)</span>
+                        }
                         <div class="text-right">
                             @if (User.Identity.GetUserName() == Model.Username)
                             {
