@@ -372,7 +372,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PripadaGrupi_Grupa">
-          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BelongsToGroup" Type="Self.BelongsToGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">

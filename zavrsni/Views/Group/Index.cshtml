@@ -1,0 +1,41 @@
+﻿@model zavrsni.Models.GroupListModel
+@{
+    ViewBag.Title = "Groups";
+}
+
+<h2>Groups</h2>
+
+<table class="table">
+    <tr>
+        <th>Group name</th>
+        <th style="width: 12%;">Group type</th>
+        <th style="width: 12%;">Owner</th>
+        <th style="width: 12%;">Actions</th>
+    </tr>
+
+    @foreach (Group g in Model.GroupList)
+    {
+        <tr>
+            <td>@g.Name</td>
+            <td>@g.GroupType.Name</td>
+            <td>
+                @if (g.IDgroupOwner != null)
+                {
+                    @g.User.Username
+                }
+                else
+                {
+                    <p>N/A</p>
+                }
+            </td>
+            <td><a href="@Url.Action("Details", "Group", new { IDgroup = g.IDgroup })"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                @if (g.IDgroup != 1)
+                     {
+                         <a href="@Url.Action("Delete", "Group", new {IDgroup = g.IDgroup})"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                     }
+            </td>
+
+        </tr>
+    }
+</table>
+<a href="@Url.Action("Add", "Group")"><span class="btn btn-primary btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>

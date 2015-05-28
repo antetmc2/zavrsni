@@ -71,12 +71,6 @@ namespace zavrsni.Models
         public string City { get; set; }*/
     }
 
-    public class GroupListModel
-    {
-        public IList<Group> GroupList { get; set; } 
-    }
-
-
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

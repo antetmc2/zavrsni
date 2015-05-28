@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PageController.cs" />
@@ -209,6 +210,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ContentViewModels.cs" />
+    <Compile Include="Models\GroupViewModels.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -629,7 +631,9 @@
     <Content Include="Views\Page\Delete.cshtml" />
     <Content Include="Views\Home\Cities.cshtml" />
     <Content Include="Views\Page\DeleteContent.cshtml" />
-    <Content Include="Views\Manage\Groups.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Add.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

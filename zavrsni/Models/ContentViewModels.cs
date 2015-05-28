@@ -32,6 +32,8 @@ namespace zavrsni.Models
         [Display(Name = "Choose a location")]
         public SelectList Location { get; set; }
 
+        public string Url { get; set; }
+
     }
 
     public class IndexContentModel
@@ -136,6 +138,7 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose a page")]
         public SelectList Page { get; set; }
+        public IList<LocationContent> Locations { get; set; } 
 
     }
 }

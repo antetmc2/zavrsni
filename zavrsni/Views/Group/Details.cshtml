@@ -1,0 +1,45 @@
+﻿@model zavrsni.Models.GroupDetailsModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table class="table">
+    <tr>
+        <th>Group name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Group type</th>
+        <td>@Model.GroupType</td>
+    </tr>
+</table>
+<table class="table">
+    <tr>
+        <th colspan="4" class="text-center">Members</th>
+    </tr>
+    <tr>
+        <th style="width: 25%;">Username</th>
+        <th style="width: 25%;">E-mail</th>
+        <th style="width: 25%;">Name</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model.Members)
+    {
+        <tr>
+            <th>@item.User.Username</th>
+            <td>@item.User.Email</td>
+            <td><span>@item.User.FirstName </span><span>@item.User.LastName</span></td>
+            <td>
+                @if (item.IDgroup != 1)
+                {
+                    <a href="@Url.Action("DeleteMember", "Group", new { IDgroup = item.IDgroup, IDuser = item.IDuser })"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                }
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="4" class="text-center">@Html.ActionLink("Return", "Index", new { area = "" }, new { @class = "btn btn-special" })</td>
+    </tr>
+</table>

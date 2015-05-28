@@ -101,26 +101,6 @@ namespace zavrsni.Controllers
 
         }
 
-        public async Task<ActionResult> Groups(GroupListModel model)
-        {
-            using (ZavrsniEFentities db = new ZavrsniEFentities())
-            {
-                var currentUser = User.Identity.GetUserName();
-                var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
-
-                var groups = (from u in db.Group
-                    join b in db.BelongsToGroup on u.IDgroup equals b.IDgroup
-                    where b.IDuser == user.IDuser
-                    select u).Include(u => u.GroupType).Include(u => u.User).ToList();
-
-                model.GroupList = groups;
-
-                return View(model);
-
-            }
-
-        }
-
         public ActionResult Edit()
         {
             UserEditModel model = new UserEditModel();

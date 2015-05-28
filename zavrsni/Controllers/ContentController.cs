@@ -144,7 +144,7 @@ namespace zavrsni.Controllers
                         else
                         {
                             ModelState.AddModelError("", "The selected location already contains this content.");
-                            return RedirectToAction("Edit", new { IDcontent = IDcontent });
+                            //return RedirectToAction("Edit", new { IDcontent = IDcontent });
                         }
 
                     }
@@ -183,6 +183,16 @@ namespace zavrsni.Controllers
                     where u.IDuser == cont.IDeditor
                     select u).ToList();
                 var contType = db.ContentType.FirstOrDefault(c => c.ID.Equals(cont.IDcontentType));
+                var locations = (from l in db.LocationContent
+                    join c in db.City on l.IDlocation equals c.IDcity
+                    where l.IDcontent == IDcontent
+                    orderby c.CityName
+                    select l).Include(l => l.City).ToList();
+                var pages = (from c in db.Contributor
+                    join p in db.Page on c.IDpage equals p.IDpage
+                    where c.IDuser == usernameAuthor.IDuser
+                    orderby p.name
+                    select p).ToList();
                 try
                 {
                     ContentDetails model = new ContentDetails()
@@ -193,7 +203,9 @@ namespace zavrsni.Controllers
                         Title = cont.Title,
                         Editor = usernameEditor.FirstOrDefault().Username,
                         TimeChanged = cont.TimeChanged,
-                        Text = cont.Text
+                        Text = cont.Text,
+                        Locations = locations,
+                        Page = new SelectList(pages, "IDpage", "name")
                     };
                     return View(model);
                 }
@@ -205,7 +217,8 @@ namespace zavrsni.Controllers
                         Author = usernameAuthor.Username,
                         Title = cont.Title,
                         ContentType = contType.Description,
-                        Text = cont.Text
+                        Text = cont.Text,
+                        Locations = locations
                     };
                     return View(model);
                 }
@@ -214,9 +227,24 @@ namespace zavrsni.Controllers
         }
 
         [HttpPost, ValidateInput(false), ActionName("Details")]
-        public async Task<ActionResult> ShowDetails(int IDcontent)
+        public async Task<ActionResult> ShowDetails(int IDcontent, ContentDetails model)
         {
-            return View();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var cont = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
+                var usernameAuthor = db.User.FirstOrDefault(u => u.IDuser.Equals(cont.IDauthor));
+                var contPage = db.ContentPage.Create();
+                contPage.IDcontent = IDcontent;
+                contPage.IDuser = usernameAuthor.IDuser;
+                if (Request["PageDropDown"].Any())
+                {
+                    var pageSel = Request["PageDropDown"];
+                    contPage.IDcontent = Convert.ToInt32(pageSel);
+                    db.ContentPage.Add(contPage);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Edit", new { IDcontent = IDcontent });
         }
 
         public ActionResult Delete(int IDcontent)
@@ -343,6 +371,16 @@ namespace zavrsni.Controllers
                 return RedirectToAction("ViewContent", "Content");
             }
             return View(model);
+        }
+
+        public void UploadNow (HttpPostedFileWrapper upload)
+        {
+            if (upload != null)
+            {
+                string ImageName = upload.FileName;
+                string path = System.IO.Path.Combine(Server.MapPath("~/Images/uploads"), ImageName);
+                upload.SaveAs(path);
+            }
         }
 
 
