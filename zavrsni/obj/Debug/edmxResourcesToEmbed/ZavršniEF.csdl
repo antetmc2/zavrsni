@@ -261,8 +261,7 @@
     <Property Name="IDlocation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IDcity" Type="Int32" Nullable="false" />
     <Property Name="IDlocationType" Type="Int32" Nullable="false" />
-    <Property Name="Latitude" Type="Double" Nullable="false" />
-    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="TimeChanged" Type="DateTime" Precision="3" />
     <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="Location" ToRole="City" />
     <NavigationProperty Name="LocationType" Relationship="ZavrsniEFmodel.FK_Lokacija_VrstaLokacije" FromRole="Location" ToRole="LocationType" />
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Lokacija" FromRole="Location" ToRole="LocationContent" />
@@ -385,7 +384,9 @@
     <NavigationProperty Name="PageReview" Relationship="ZavrsniEFmodel.FK_OcjenaStranice_Korisnik" FromRole="User" ToRole="PageReview" />
   </EntityType>
   <Association Name="FK_PripadaGrupi_Grupa">
-    <End Type="ZavrsniEFmodel.Group" Role="Group" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.Group" Role="Group" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Type="ZavrsniEFmodel.BelongsToGroup" Role="BelongsToGroup" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Group">

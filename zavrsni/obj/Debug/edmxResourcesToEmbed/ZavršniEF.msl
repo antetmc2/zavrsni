@@ -97,8 +97,7 @@
     <EntitySetMapping Name="Location">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.Location">
         <MappingFragment StoreEntitySet="Location">
-          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />
           <ScalarProperty Name="IDlocationType" ColumnName="IDlocationType" />
           <ScalarProperty Name="IDcity" ColumnName="IDcity" />
           <ScalarProperty Name="IDlocation" ColumnName="IDlocation" />

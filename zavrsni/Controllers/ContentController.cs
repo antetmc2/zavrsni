@@ -29,6 +29,8 @@ namespace zavrsni.Controllers
                 if (query.IDauthor != user.IDuser) return RedirectToAction("Index", "Home");
 
                 var query1 = (from p in db.Page
+                    join c in db.Contributor on p.IDpage equals c.IDpage
+                    where c.IDuser == user.IDuser
                               orderby p.name
                               select p).ToList();
                 model.Page = new SelectList(query1, "IDpage", "name");
@@ -326,7 +328,11 @@ namespace zavrsni.Controllers
             AddNewContentModel model = new AddNewContentModel();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+
                 var query1 = (from p in db.Page
+                              join c in db.Contributor on p.IDpage equals c.IDpage
+                              where c.IDuser == user.IDuser
                     orderby p.name
                     select p).ToList();
                 model.Page = new SelectList(query1, "IDpage", "name");

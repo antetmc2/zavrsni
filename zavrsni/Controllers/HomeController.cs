@@ -18,7 +18,7 @@ namespace zavrsni.Controllers
             {
                 var allContents = (from c in db.Content
                                    orderby c.TimeChanged descending 
-                                   select c).Include(c => c.ContentType).ToList();
+                                   select c).Include(c => c.ContentType).Take(10).ToList();
 
                 var model = new HomeContentModel()
                 {
@@ -75,6 +75,12 @@ namespace zavrsni.Controllers
                     newCity.IDcountry = Convert.ToInt32(countrySel);
 
                     db.City.Add(newCity);
+
+                    db.SaveChanges();
+                    var newLocation = db.Location.Create();
+                    newLocation.IDcity = newCity.IDcity;
+                    newLocation.IDlocationType = 1;
+                    db.Location.Add(newLocation);
                     db.SaveChanges();
 
                     return RedirectToAction("Cities", "Home");
