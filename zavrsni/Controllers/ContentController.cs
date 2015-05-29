@@ -206,34 +206,69 @@ namespace zavrsni.Controllers
                     select p).ToList();
                 try
                 {
-                    ContentDetails model = new ContentDetails()
+                    if (Request.IsAuthenticated)
                     {
-                        IDcontent = cont.IDcontent,
-                        Author = usernameAuthor.Username,
-                        ContentType = contType.Description,
-                        Title = cont.Title,
-                        Editor = usernameEditor.FirstOrDefault().Username,
-                        TimeChanged = cont.TimeChanged,
-                        Text = cont.Text,
-                        Locations = locations,
-                        Page = new SelectList(pages, "IDpage", "name"),
-                        Username = username
-                    };
-                    return View(model);
+                        ContentDetails model = new ContentDetails()
+                        {
+                            IDcontent = cont.IDcontent,
+                            Author = usernameAuthor.Username,
+                            ContentType = contType.Description,
+                            Title = cont.Title,
+                            Editor = usernameEditor.FirstOrDefault().Username,
+                            TimeChanged = cont.TimeChanged,
+                            Text = cont.Text,
+                            Locations = locations,
+                            Page = new SelectList(pages, "IDpage", "name"),
+                            Username = username
+                        };
+                        return View(model);
+                    }
+                    else
+                    {
+                        ContentDetails model = new ContentDetails()
+                        {
+                            IDcontent = cont.IDcontent,
+                            Author = usernameAuthor.Username,
+                            ContentType = contType.Description,
+                            Title = cont.Title,
+                            Editor = usernameEditor.FirstOrDefault().Username,
+                            TimeChanged = cont.TimeChanged,
+                            Text = cont.Text,
+                            Locations = locations,
+                            Page = new SelectList(pages, "IDpage", "name"),
+                        };
+                        return View(model);
+                    }
                 }
                 catch (NullReferenceException)
                 {
-                    ContentDetails model = new ContentDetails()
+                    if (Request.IsAuthenticated)
                     {
-                        IDcontent = cont.IDcontent,
-                        Author = usernameAuthor.Username,
-                        Title = cont.Title,
-                        ContentType = contType.Description,
-                        Text = cont.Text,
-                        Locations = locations,
-                        Username = username
-                    };
-                    return View(model);
+                        ContentDetails model = new ContentDetails()
+                        {
+                            IDcontent = cont.IDcontent,
+                            Author = usernameAuthor.Username,
+                            Title = cont.Title,
+                            ContentType = contType.Description,
+                            Text = cont.Text,
+                            Locations = locations,
+                            Username = username
+                        };
+                        return View(model);
+                    }
+                    else
+                    {
+                        ContentDetails model = new ContentDetails()
+                        {
+                            IDcontent = cont.IDcontent,
+                            Author = usernameAuthor.Username,
+                            Title = cont.Title,
+                            ContentType = contType.Description,
+                            Text = cont.Text,
+                            Locations = locations,
+                        };
+                        return View(model);
+                    }
                 }
 
             }

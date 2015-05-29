@@ -14,7 +14,10 @@
     <h4>New user? @Html.ActionLink("Click here to register!", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</h4>
     <br/>
     <h4>Don't forget to check some of our most popular pages:</h4>
-    <p>(coming soon ...)</p>
+    foreach (var item in Model.topPages)
+     {
+         <p>@item.name</p>
+     }
 }
 
 @if (Request.IsAuthenticated)

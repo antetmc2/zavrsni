@@ -24,6 +24,7 @@ namespace zavrsni.Controllers
             {
                 var currentUser = User.Identity.GetUserName();
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+                var current = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
                 var allPages = (from p in db.Page
                     join c in db.Contributor
                         on p.IDpage equals c.IDpage
@@ -31,10 +32,24 @@ namespace zavrsni.Controllers
                         //&& c.IsAuthor
                     select p).ToList();
 
+                var isContributor = (from a in allPages
+                    join c in db.Contributor on a.IDpage equals c.IDpage
+                    where c.IDuser == current.IDuser
+                    select a).ToList();
+
+                var pagesPublic = (from a in allPages
+                                   join c in db.Contributor on a.IDpage equals c.IDpage
+                                   where a.IDprivacy == 3
+                                   select a).Except(from a in allPages
+                                                    join c in db.Contributor on a.IDpage equals c.IDpage
+                                                    where c.IDuser == current.IDuser
+                                                    select a).ToList();
+
                 var model = new IndexPageModel()
                 {
-                    pages = allPages,
-                    Username = username
+                    pages = isContributor,
+                    Username = username,
+                    pagesPublic = pagesPublic
                 };
                 return View(model);
             }
@@ -191,7 +206,6 @@ namespace zavrsni.Controllers
             return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult Details(int IDpage, string username)
         {
@@ -206,18 +220,37 @@ namespace zavrsni.Controllers
                     where p.IDpage == IDpage
                     select p);
 
-                var model = new PageDetailModel
+                var selPage = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
+                var views = selPage.PageView;
+                views++;
+                selPage.PageView = views;
+                db.Entry(selPage).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (!Request.IsAuthenticated)
                 {
-                    PageContents = query,
-                    PageName = PageInfo.First().name,
-                    IDpage = PageInfo.First().IDpage,
-                    Username = username
-                };
-                return View(model);
+                    var model = new PageDetailModel
+                    {
+                        PageContents = query,
+                        PageName = PageInfo.First().name,
+                        IDpage = PageInfo.First().IDpage,
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    var model = new PageDetailModel
+                    {
+                        PageContents = query,
+                        PageName = PageInfo.First().name,
+                        IDpage = PageInfo.First().IDpage,
+                        Username = username
+                    };
+                    return View(model);
+                }
             }
         }
 
-        [Authorize]
         [HttpPost, ActionName("Details")]
         public async Task<ActionResult> ViewDetails(int IDpage, string username)
         {

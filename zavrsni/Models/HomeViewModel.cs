@@ -12,6 +12,7 @@ namespace zavrsni.Models
     {
         [Key]
         public IList<Content> contents { get; set; }
+        public IList<Page> topPages { get; set; }
     }
 
     public class CityCountryListModel

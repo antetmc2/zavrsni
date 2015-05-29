@@ -20,9 +20,15 @@ namespace zavrsni.Controllers
                                    orderby c.TimeChanged descending 
                                    select c).Include(c => c.ContentType).Take(10).ToList();
 
+                var mostViewedPages = (from p in db.Page
+                                       where p.IDprivacy == 3
+                                       orderby p.PageView
+                                       select p).Take(2).ToList();
+
                 var model = new HomeContentModel()
                 {
-                    contents = allContents
+                    contents = allContents,
+                    topPages = mostViewedPages
                 };
                 return View(model);
             }
