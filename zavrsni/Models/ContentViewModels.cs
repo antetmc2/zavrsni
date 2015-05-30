@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using PagedList;
+using PagedList.Mvc;
 
 namespace zavrsni.Models
 {
@@ -38,7 +40,7 @@ namespace zavrsni.Models
     public class IndexContentModel
     {
         [Key]
-        public IList<Content> contents { get; set; }
+        public IPagedList<Content> contents { get; set; }
         public string Username { get; set; }
     }
 

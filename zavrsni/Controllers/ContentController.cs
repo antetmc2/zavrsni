@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using zavrsni.Models;
 using System.Data.Entity.Infrastructure;
 using System.Text.RegularExpressions;
+using PagedList;
 
 namespace zavrsni.Controllers
 {
@@ -331,7 +332,7 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult ViewContent(string username)
+        public ActionResult ViewContent(string username, int page = 1, int pageSize = 10)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -340,19 +341,20 @@ namespace zavrsni.Controllers
                 var allContents = (from c in db.Content
                     where c.IDauthor == user.IDuser
                     orderby c.TimeChanged descending 
-                    select c).Include(c => c.ContentType).ToList();
+                    select c).Include(c => c.ContentType);
 
                 var model = new IndexContentModel()
                 {
-                    contents = allContents,
+                    contents = new PagedList<Content>(allContents, page, pageSize),
                     Username = username
                 };
+
                 return View(model);
             }
         }
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> ViewContent(string username, IndexContentModel model)
+        public async Task<ActionResult> ViewContent(string username, int? page, IndexContentModel model)
         {
             return View();
         }

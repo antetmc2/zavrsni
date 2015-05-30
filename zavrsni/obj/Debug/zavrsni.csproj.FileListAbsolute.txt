@@ -56,3 +56,7 @@ C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\obj\Debug\zavrsni.csprojResolveAs
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.dll
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.pdb
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\HtmlAgilityPack.xml
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.Mvc.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.xml
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.Mvc.xml
