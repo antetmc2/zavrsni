@@ -76,6 +76,13 @@ namespace zavrsni.Controllers
         [HttpGet]
         public ActionResult Delete(int IDgroup)
         {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        public async Task<ActionResult> DeleteConfirm(int IDgroup)
+        {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 if (IDgroup == 1) return RedirectToAction("Index", "Group");
@@ -85,7 +92,6 @@ namespace zavrsni.Controllers
             }
             return RedirectToAction("Index", "Group");
         }
-
         [Authorize]
         [HttpGet]
         public ActionResult Details(int IDgroup)

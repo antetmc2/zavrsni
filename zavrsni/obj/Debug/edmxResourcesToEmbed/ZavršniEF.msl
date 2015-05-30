@@ -171,15 +171,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Travel">
-      <EntityTypeMapping TypeName="ZavrsniEFmodel.Travel">
-        <MappingFragment StoreEntitySet="Travel">
-          <ScalarProperty Name="AlternateName" ColumnName="AlternateName" />
-          <ScalarProperty Name="IDlocation" ColumnName="IDlocation" />
-          <ScalarProperty Name="IDpage" ColumnName="IDpage" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="User">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.User">
         <MappingFragment StoreEntitySet="User">

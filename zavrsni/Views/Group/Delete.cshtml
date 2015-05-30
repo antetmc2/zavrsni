@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Delete";
+}
+
+<h2 class="text-center" style="margin-bottom: 30px;">Are you sure that you want to delete this group? If some of the pages were shared to this group only, no one will be able to see them!</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="text-center">
+        <input type="submit" class="btn btn-success" value="Yes, delete the selected group" />
+        <a href="@Url.Action("Index", "Group")"><span class="btn btn-danger">No, take me back to the list of groups</span></a>
+    </div>
+}
+<br />

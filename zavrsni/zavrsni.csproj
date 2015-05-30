@@ -237,9 +237,6 @@
     <Compile Include="Tag.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Travel.cs">
-      <DependentUpon>ZavršniEF.tt</DependentUpon>
-    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
@@ -642,6 +639,7 @@
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Contacts.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

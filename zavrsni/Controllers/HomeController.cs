@@ -22,8 +22,8 @@ namespace zavrsni.Controllers
 
                 var mostViewedPages = (from p in db.Page
                                        where p.IDprivacy == 3
-                                       orderby p.PageView
-                                       select p).Take(2).ToList();
+                                       orderby p.PageView ascending 
+                                       select p).Take(3).ToList();
 
                 var model = new HomeContentModel()
                 {

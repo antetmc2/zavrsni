@@ -159,15 +159,6 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="Travel">
-    <Key>
-      <PropertyRef Name="IDpage" />
-      <PropertyRef Name="IDlocation" />
-    </Key>
-    <Property Name="IDpage" Type="int" Nullable="false" />
-    <Property Name="IDlocation" Type="int" Nullable="false" />
-    <Property Name="AlternateName" Type="nvarchar" MaxLength="100" />
-  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="IDuser" />
@@ -391,32 +382,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Putovanje_Lokacija">
-    <End Role="Location" Type="Self.Location" Multiplicity="1" />
-    <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Location">
-        <PropertyRef Name="IDlocation" />
-      </Principal>
-      <Dependent Role="Travel">
-        <PropertyRef Name="IDlocation" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Putovanje_Stranica">
-    <End Role="Page" Type="Self.Page" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Travel" Type="Self.Travel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Page">
-        <PropertyRef Name="IDpage" />
-      </Principal>
-      <Dependent Role="Travel">
-        <PropertyRef Name="IDpage" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Sadrzaj_Korisnik">
     <End Role="User" Type="Self.User" Multiplicity="0..1" />
     <End Role="Content" Type="Self.Content" Multiplicity="*" />
@@ -576,7 +541,6 @@
     <EntitySet Name="PageTag" EntityType="Self.PageTag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Privacy" EntityType="Self.Privacy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Travel" EntityType="Self.Travel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Content_User" Association="Self.FK_Content_User">
       <End Role="User" EntitySet="User" />
@@ -645,14 +609,6 @@
     <AssociationSet Name="FK_PripadaGrupi_Korisnik" Association="Self.FK_PripadaGrupi_Korisnik">
       <End Role="User" EntitySet="User" />
       <End Role="BelongsToGroup" EntitySet="BelongsToGroup" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Putovanje_Lokacija" Association="Self.FK_Putovanje_Lokacija">
-      <End Role="Location" EntitySet="Location" />
-      <End Role="Travel" EntitySet="Travel" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Putovanje_Stranica" Association="Self.FK_Putovanje_Stranica">
-      <End Role="Page" EntitySet="Page" />
-      <End Role="Travel" EntitySet="Travel" />
     </AssociationSet>
     <AssociationSet Name="FK_Sadrzaj_Korisnik" Association="Self.FK_Sadrzaj_Korisnik">
       <End Role="User" EntitySet="User" />

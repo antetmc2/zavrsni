@@ -19,7 +19,6 @@
     <EntitySet Name="PageTag" EntityType="ZavrsniEFmodel.PageTag" />
     <EntitySet Name="Privacy" EntityType="ZavrsniEFmodel.Privacy" />
     <EntitySet Name="Tag" EntityType="ZavrsniEFmodel.Tag" />
-    <EntitySet Name="Travel" EntityType="ZavrsniEFmodel.Travel" />
     <EntitySet Name="User" EntityType="ZavrsniEFmodel.User" />
     <AssociationSet Name="FK_PripadaGrupi_Grupa" Association="ZavrsniEFmodel.FK_PripadaGrupi_Grupa">
       <End Role="Group" EntitySet="Group" />
@@ -109,17 +108,9 @@
       <End Role="Location" EntitySet="Location" />
       <End Role="LocationContent" EntitySet="LocationContent" />
     </AssociationSet>
-    <AssociationSet Name="FK_Putovanje_Lokacija" Association="ZavrsniEFmodel.FK_Putovanje_Lokacija">
-      <End Role="Location" EntitySet="Location" />
-      <End Role="Travel" EntitySet="Travel" />
-    </AssociationSet>
     <AssociationSet Name="FK_OcjenaStranice_Stranica" Association="ZavrsniEFmodel.FK_OcjenaStranice_Stranica">
       <End Role="Page" EntitySet="Page" />
       <End Role="PageReview" EntitySet="PageReview" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Putovanje_Stranica" Association="ZavrsniEFmodel.FK_Putovanje_Stranica">
-      <End Role="Page" EntitySet="Page" />
-      <End Role="Travel" EntitySet="Travel" />
     </AssociationSet>
     <AssociationSet Name="FK_Stranica_Korisnik" Association="ZavrsniEFmodel.FK_Stranica_Korisnik">
       <End Role="User" EntitySet="User" />
@@ -265,7 +256,6 @@
     <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="Location" ToRole="City" />
     <NavigationProperty Name="LocationType" Relationship="ZavrsniEFmodel.FK_Lokacija_VrstaLokacije" FromRole="Location" ToRole="LocationType" />
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Lokacija" FromRole="Location" ToRole="LocationContent" />
-    <NavigationProperty Name="Travel" Relationship="ZavrsniEFmodel.FK_Putovanje_Lokacija" FromRole="Location" ToRole="Travel" />
   </EntityType>
   <EntityType Name="LocationContent">
     <Key>
@@ -301,7 +291,6 @@
     <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Stranica" FromRole="Page" ToRole="ContentPage" />
     <NavigationProperty Name="Contributor" Relationship="ZavrsniEFmodel.FK_SudionikStranice_Stranica" FromRole="Page" ToRole="Contributor" />
     <NavigationProperty Name="PageReview" Relationship="ZavrsniEFmodel.FK_OcjenaStranice_Stranica" FromRole="Page" ToRole="PageReview" />
-    <NavigationProperty Name="Travel" Relationship="ZavrsniEFmodel.FK_Putovanje_Stranica" FromRole="Page" ToRole="Travel" />
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="Page" ToRole="User" />
     <NavigationProperty Name="Privacy" Relationship="ZavrsniEFmodel.FK_Stranica_Privatnost" FromRole="Page" ToRole="Privacy" />
     <NavigationProperty Name="PageTag" Relationship="ZavrsniEFmodel.FK_TagStranica_Stranica" FromRole="Page" ToRole="PageTag" />
@@ -346,17 +335,6 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="PageTag" Relationship="ZavrsniEFmodel.FK_TagStranica_Tag" FromRole="Tag" ToRole="PageTag" />
-  </EntityType>
-  <EntityType Name="Travel">
-    <Key>
-      <PropertyRef Name="IDpage" />
-      <PropertyRef Name="IDlocation" />
-    </Key>
-    <Property Name="IDpage" Type="Int32" Nullable="false" />
-    <Property Name="IDlocation" Type="Int32" Nullable="false" />
-    <Property Name="AlternateName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_Putovanje_Lokacija" FromRole="Travel" ToRole="Location" />
-    <NavigationProperty Name="Page" Relationship="ZavrsniEFmodel.FK_Putovanje_Stranica" FromRole="Travel" ToRole="Page" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -657,18 +635,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Putovanje_Lokacija">
-    <End Type="ZavrsniEFmodel.Location" Role="Location" Multiplicity="1" />
-    <End Type="ZavrsniEFmodel.Travel" Role="Travel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Location">
-        <PropertyRef Name="IDlocation" />
-      </Principal>
-      <Dependent Role="Travel">
-        <PropertyRef Name="IDlocation" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_OcjenaStranice_Stranica">
     <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -679,20 +645,6 @@
         <PropertyRef Name="IDpage" />
       </Principal>
       <Dependent Role="PageReview">
-        <PropertyRef Name="IDpage" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Putovanje_Stranica">
-    <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="ZavrsniEFmodel.Travel" Role="Travel" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Page">
-        <PropertyRef Name="IDpage" />
-      </Principal>
-      <Dependent Role="Travel">
         <PropertyRef Name="IDpage" />
       </Dependent>
     </ReferentialConstraint>

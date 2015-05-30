@@ -1,0 +1,29 @@
+
+Kolegice i kolege,
+ 
+ 
+Polako nam istječe vrijeme za izradu završnoga, pa da malo stavimo stvari u vremenski okvir.
+Ovaj petak očekujem zapravo vaše završne prezentacije, napravite ppt ili neku kratku prezentaciju trajanja cca 6 min.
+Dakle, do petka bi 90%+ trebalo biti gotovo, ostaje poliranje koje ćete raditi paraleleno s pisanjem rada kojeg trebate predati do 8.6., tako da ja počevši od ponedjeljka 8.6. mogu to čitati.
+Ja ću vam zatim potencijalno vratiti  rad na doradu, da stignete sve ispraviti do 14.6.
+ 
+Što se tiče pisanog dijela, pročitajte 5x onaj stari dokument, još sa seminara, kojeg ponavljam u privitku.
+I još jednom ističem:  koristiti alat za provjeru pravopisa. Nemojte niti predavati radove ako niste provjerili pravopis.
+ 
+ 
+Što se tiče rada, treba imati 40+/-10 stranica, pogledajte upute za formatiranje na ferwebu.
+Neka generalna struktura je:
+Uvod
+Opis problema (procesa), korisnički zahtjevi
+Opis podatkovnog modela rješenja (tipično neki relacijski dijagrami i sl.) i drugih karakterističnih dijelova rješenja
+Opis korištenih tehnologija (npr. Spring MVC, Angular, itd.)
+Opis samog rješenja, ostvarene funkcionalnosti, screenshotovi
+Zaključak
+Literatura/Reference
+ 
+ 
+Vidimo se u petak,
+ 
+LP,
+ 
+Igor Mekterović

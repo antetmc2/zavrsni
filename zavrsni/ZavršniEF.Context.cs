@@ -43,7 +43,6 @@ namespace zavrsni
         public virtual DbSet<PageTag> PageTag { get; set; }
         public virtual DbSet<Privacy> Privacy { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
-        public virtual DbSet<Travel> Travel { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

@@ -9,20 +9,24 @@
 {
     <h1>Welcome to <span style="font-family: Pacifico; color: #C40000; font-weight: 200;">Traveler</span>, the new web application for travel planning!</h1>
     <br/>
-    <h4>Are you interested in joining this site? If you are, @Html.ActionLink("don't forget to log in here!", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})</h4>
+    <h4>Already using Traveler? @Html.ActionLink("Log in here!", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", style = "font-size: 25px;" })</h4>
     <br/>
-    <h4>New user? @Html.ActionLink("Click here to register!", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</h4>
+    <h4>New to Traveler? @Html.ActionLink("Click here to register!", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink", style="font-size: 25px;"})</h4>
     <br/>
-    <h4>Don't forget to check some of our most popular pages:</h4>
-    foreach (var item in Model.topPages)
-     {
-         <p>@item.name</p>
-     }
+    <h4>Don't forget to check our 3 most popular public pages:</h4>
+    <table class="table">
+        @foreach (var item in Model.topPages)
+        {
+            <tr>
+                <td><a href="@Url.Action("Details", "Page", new {IDpage = item.IDpage, Username = User.Identity.GetUserName()})" style="font-size: 20px; font-weight: bold;">@item.name</a></td>
+            </tr>
+        }
+    </table>
 }
 
 @if (Request.IsAuthenticated)
 {
-    <h2>15 most recent contents:</h2>
+    <h2>10 most recent contents:</h2>
     <div class="row">
         <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 280, "itemSelector": ".item" }'>
             @foreach (Content c in Model.contents)
@@ -34,14 +38,15 @@
                             @Html.Raw(c.Text.ParseHTML().Truncate())
                             @if (c.Text.ParseHTML().Truncate().Contains("..."))
                             {
-                                <span>(<a href="@Url.Action("Details", "Content", new { IDcontent = c.IDcontent, Username = User.Identity.GetUserName() })">more</a>)</span>
+                                <span>(<a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent, Username = User.Identity.GetUserName()})">more</a>)</span>
                             }
-                            <div class="text-right"><a href="@Url.Action("Details", "Content", new { IDcontent = c.IDcontent, Username = User.Identity.GetUserName() })"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a></div>
+                            <div class="text-right"><a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent, Username = User.Identity.GetUserName()})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             }
         </div>
     </div>
-    <a href="@Url.Action("Insert", "Content")"><span class="btn btn-primary btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>
+    <a href="@Url.Action("Insert", "Content", new {Username = User.Identity.GetUserName()})"><span class="btn btn-danger btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>
 }
