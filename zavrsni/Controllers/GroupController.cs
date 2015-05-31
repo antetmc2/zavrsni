@@ -8,12 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
+using PagedList;
 
 namespace zavrsni.Controllers
 {
     public class GroupController : Controller
     {
-        public async Task<ActionResult> Index(GroupListModel model)
+        public async Task<ActionResult> Index(GroupListModel model, int page = 1, int pageSize = 20)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -23,9 +24,10 @@ namespace zavrsni.Controllers
                 var groups = (from u in db.Group
                               where u.IDgroupOwner == user.IDuser
                               || u.IDgroupOwner == null
-                              select u).Include(u => u.GroupType).Include(u => u.User).ToList();
+                              orderby u.Name
+                              select u).Include(u => u.GroupType).Include(u => u.User);
 
-                model.GroupList = groups;
+                model.GroupList = new PagedList<Group>(groups, page, pageSize);
 
                 return View(model);
 

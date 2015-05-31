@@ -332,7 +332,7 @@ namespace zavrsni.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult ViewContent(string username, int page = 1, int pageSize = 10)
+        public ActionResult ViewContent(string username, int page = 1, int pageSize = 16)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
@@ -342,6 +342,9 @@ namespace zavrsni.Controllers
                     where c.IDauthor == user.IDuser
                     orderby c.TimeChanged descending 
                     select c).Include(c => c.ContentType);
+
+                var test = allContents.Count();
+                if (test > 160) pageSize = 24;
 
                 var model = new IndexContentModel()
                 {

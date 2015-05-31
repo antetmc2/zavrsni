@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace zavrsni.Models
 {
     public class GroupListModel
     {
-        public IList<Group> GroupList { get; set; }
+        public IPagedList<Group> GroupList { get; set; }
     }
 
     public class AddNewGroupModel
