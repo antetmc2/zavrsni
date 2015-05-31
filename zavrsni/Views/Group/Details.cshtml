@@ -38,14 +38,14 @@
                     <a href="@Url.Action("DeleteMember", "Group", new {IDgroup = item.IDgroup, IDuser = item.IDuser})"><span class="btn btn-special glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                 }
                 <a href="@Url.Action("ViewContent", "Content", new {Username = item.User.Username})">Contents</a><span> | </span>
-                <a href="@Url.Action("Index", "Page", new { Username = item.User.Username })">Pages</a>
+                <a href="@Url.Action("Index", "Page", new {Username = item.User.Username})">Pages</a>
             </td>
         </tr>
     }
     <tr>
         <th colspan="4" class="text-center">Do you want to add a new member?</th>
     </tr>
-    @foreach (var item in Model.MembersNotInList)
+    @*@foreach (var item in Model.MembersNotInList)
     {
         <tr>
             <th>@item.Username</th>
@@ -54,11 +54,18 @@
             <td>
                 <a href="@Url.Action("AddMember", "Group", new {IDgroup = Model.IDgroup, IDuser = item.IDuser})"><span class="btn btn-special glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                 <a href="@Url.Action("ViewContent", "Content", new {Username = item.Username})">Contents</a><span> | </span>
-                <a href="@Url.Action("Index", "Page", new { Username = item.Username })">Pages</a>
+                <a href="@Url.Action("Index", "Page", new {Username = item.Username})">Pages</a>
             </td>
         </tr>
+    }*@
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <tr>
+            <td>@Html.LabelFor(model => model.MembersNotInList, htmlAttributes: new {@class = "control-label"})</td>
+            <td>@Html.DropDownList("MemberAddDropDown", Model.MembersNotInList, "Select 1 member:", new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.MembersNotInList, "", new {@class = "text-danger"})</td>
+            <td colspan="2"><input type="submit" class="btn btn-special" value="Add"/> @Html.ActionLink("Return", "Index", new { area = "" }, new { @class = "btn btn-special" })</td>
+        </tr>
     }
-    <tr>
-        <td colspan="4" class="text-center">@Html.ActionLink("Return", "Index", new { area = "" }, new { @class = "btn btn-special" })</td>
-    </tr>
 </table>

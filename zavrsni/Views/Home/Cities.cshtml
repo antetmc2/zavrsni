@@ -1,9 +1,9 @@
 ﻿@model zavrsni.Models.CityCountryListModel
 @{
-    ViewBag.Title = "Cities";
+    ViewBag.Title = "Locations";
 }
 
-<h2>Cities</h2>
+<h2>Locations</h2>
 
 <div class="row">
     <div class="col-md-3 scrollbar">
@@ -41,11 +41,23 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-5">
-                        @Html.LabelFor(model => model.Country, htmlAttributes: new {@class = "control-label"})
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label" })
                     </div>
                     <div class="col-md-7">
-                        @Html.DropDownList("CountryDropDown", Model.Country, "Select your country:", new {@class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.Country, "", new {@class = "text-danger"})
+                        @Html.DropDownList("CountryDropDown", Model.Country, "Select your country:", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5">
+                        @Html.LabelFor(model => model.LocationType, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-7">
+                        @Html.DropDownList("LocationTypeDropDown", Model.LocationType, "Select your location:", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LocationType, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>

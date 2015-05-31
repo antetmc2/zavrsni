@@ -116,9 +116,32 @@ namespace zavrsni.Controllers
                         join s in db.User on b.IDuser equals s.IDuser
                                          where b.IDgroup == IDgroup
                                          select s).ToList();
-                model.MembersNotInList = otherUsers;
+                model.MembersNotInList = new SelectList(otherUsers, "IDuser", "Username");
             }
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Details")]
+        public ActionResult AddMember(int IDgroup)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                if (IDgroup == 1) return RedirectToAction("Index", "Group");
+
+                var newGroupMember = db.BelongsToGroup.Create();
+                newGroupMember.IDgroup = IDgroup;
+                if (Request["MemberAddDropDown"].Any())
+                {
+                    var memberSel = Request["MemberAddDropDown"];
+                    var IDuser = Convert.ToInt32(memberSel);
+                    newGroupMember.IDuser = IDuser;
+                }
+                newGroupMember.TimeChanged = DateTime.Now;
+                db.BelongsToGroup.Add(newGroupMember);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", new { IDgroup = IDgroup });
         }
 
         [Authorize]
@@ -131,24 +154,6 @@ namespace zavrsni.Controllers
 
                 var groupMemberDelete = db.BelongsToGroup.Find(IDgroup, IDuser);
                 db.BelongsToGroup.Remove(groupMemberDelete);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Details", new { IDgroup = IDgroup });
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult AddMember(int IDgroup, int IDuser)
-        {
-            using (ZavrsniEFentities db = new ZavrsniEFentities())
-            {
-                if (IDgroup == 1) return RedirectToAction("Index", "Group");
-
-                var newGroupMember = db.BelongsToGroup.Create();
-                newGroupMember.IDgroup = IDgroup;
-                newGroupMember.IDuser = IDuser;
-                newGroupMember.TimeChanged = DateTime.Now;
-                db.BelongsToGroup.Add(newGroupMember);
                 db.SaveChanges();
             }
             return RedirectToAction("Details", new { IDgroup = IDgroup });

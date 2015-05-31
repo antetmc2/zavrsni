@@ -27,5 +27,7 @@ namespace zavrsni.Models
 
         [Display(Name = "Country name")]
         public string CountryName { get; set; }
+        [Display(Name = "Choose 1 location type")]
+        public SelectList LocationType { get; set; }
     }
 }

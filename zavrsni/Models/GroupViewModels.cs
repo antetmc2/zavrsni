@@ -29,7 +29,8 @@ namespace zavrsni.Models
         public string GroupType { get; set; }
         public string Name { get; set; }
         public IList<BelongsToGroup> Members { get; set; }
-        public IList<User> MembersNotInList { get; set; } 
+        [Display(Name = "Add the new member to the list: ")]
+        public SelectList MembersNotInList { get; set; } 
     }
 
     public class GroupEditDetailsModel

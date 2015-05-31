@@ -48,9 +48,14 @@ namespace zavrsni.Controllers
                     orderby c.CountryName
                     select c).ToList();
 
+                var locTypes = (from l in db.LocationType
+                    orderby l.Name
+                    select l).ToList();
+
                 var model = new CityCountryListModel()
                 {
                     Cities = allCities,
+                    LocationType = new SelectList(locTypes, "ID", "Name")
                 };
                 model.Country = new SelectList(availableCountries, "ID", "CountryName");
                 return View(model);
@@ -63,7 +68,7 @@ namespace zavrsni.Controllers
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
-                if (model.CountryName != null && model.CityName == null && Request["CountryDropDown"] == null)
+                if (model.CountryName != null && model.CityName == null && Request["CountryDropDown"] == null && Request["LocationTypeDropDown"] == null)
                 {
                     var newCountry = db.Country.Create();
                     newCountry.CountryName = model.CountryName;
@@ -73,7 +78,7 @@ namespace zavrsni.Controllers
                     return RedirectToAction("Cities", "Home");
                 }
 
-                if (model.CountryName == null && model.CityName != null && Request["CountryDropDown"] != null)
+                if (model.CountryName == null && model.CityName != null && Request["LocationTypeDropDown"] != null && Request["CountryDropDown"] != null)
                 {
                     var newCity = db.City.Create();
                     newCity.CityName = model.CityName;
@@ -85,7 +90,8 @@ namespace zavrsni.Controllers
                     db.SaveChanges();
                     var newLocation = db.Location.Create();
                     newLocation.IDcity = newCity.IDcity;
-                    newLocation.IDlocationType = 1;
+                    var locTypeSel = Request["LocationTypeDropDown"];
+                    newLocation.IDlocationType = Convert.ToInt32(locTypeSel);
                     db.Location.Add(newLocation);
                     db.SaveChanges();
 
