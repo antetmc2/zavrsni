@@ -7,18 +7,19 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
+using PagedList;
 
 namespace zavrsni.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 20)
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var allContents = (from c in db.Content
                                    orderby c.TimeChanged descending 
-                                   select c).Include(c => c.ContentType).Take(10).ToList();
+                                   select c).Include(c => c.ContentType);
 
                 var mostViewedPages = (from p in db.Page
                                        where p.IDprivacy == 3
@@ -27,7 +28,7 @@ namespace zavrsni.Controllers
 
                 var model = new HomeContentModel()
                 {
-                    contents = allContents,
+                    contents = new PagedList<Content>(allContents, page, pageSize),
                     topPages = mostViewedPages
                 };
                 return View(model);

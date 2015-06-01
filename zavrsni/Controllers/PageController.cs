@@ -234,32 +234,66 @@ namespace zavrsni.Controllers
                 selPage.PageView = views;
                 db.Entry(selPage).State = EntityState.Modified;
                 db.SaveChanges();
-                var average = (from p in db.PageReview
+                var marksExist = (from p in db.PageReview
                     where p.IDpage == IDpage
-                    select p).Average(p => p.Mark);
-
-                if (!Request.IsAuthenticated)
+                    select p).ToList();
+                if (marksExist.Any())
                 {
-                    var model = new PageDetailModel
+                    var average = (from p in db.PageReview
+                        where p.IDpage == IDpage
+                        select p).Average(p => p.Mark);
+
+                    if (!Request.IsAuthenticated)
                     {
-                        PageContents = query,
-                        PageName = PageInfo.First().name,
-                        IDpage = PageInfo.First().IDpage,
-                        AverageGrade = average
-                    };
-                    return View(model);
+                        var model = new PageDetailModel
+                        {
+                            PageContents = query,
+                            PageName = PageInfo.First().name,
+                            IDpage = PageInfo.First().IDpage,
+                            AverageGrade = average
+                        };
+                        return View(model);
+                    }
+                    else
+                    {
+                        var model = new PageDetailModel
+                        {
+                            PageContents = query,
+                            PageName = PageInfo.First().name,
+                            IDpage = PageInfo.First().IDpage,
+                            Username = username,
+                            AverageGrade = average
+                        };
+                        return View(model);
+                    }
                 }
                 else
                 {
-                    var model = new PageDetailModel
+                    double average = 0;
+
+                    if (!Request.IsAuthenticated)
                     {
-                        PageContents = query,
-                        PageName = PageInfo.First().name,
-                        IDpage = PageInfo.First().IDpage,
-                        Username = username,
-                        AverageGrade = average
-                    };
-                    return View(model);
+                        var model = new PageDetailModel
+                        {
+                            PageContents = query,
+                            PageName = PageInfo.First().name,
+                            IDpage = PageInfo.First().IDpage,
+                            AverageGrade = average
+                        };
+                        return View(model);
+                    }
+                    else
+                    {
+                        var model = new PageDetailModel
+                        {
+                            PageContents = query,
+                            PageName = PageInfo.First().name,
+                            IDpage = PageInfo.First().IDpage,
+                            Username = username,
+                            AverageGrade = average
+                        };
+                        return View(model);
+                    }
                 }
             }
         }

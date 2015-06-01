@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using PagedList;
 
 namespace zavrsni.Models
 {
     public class HomeContentModel
     {
         [Key]
-        public IList<Content> contents { get; set; }
+        public IPagedList<Content> contents { get; set; }
         public IList<Page> topPages { get; set; }
     }
 

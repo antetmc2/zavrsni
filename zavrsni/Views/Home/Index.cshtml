@@ -1,6 +1,7 @@
 ﻿@model zavrsni.Models.HomeContentModel
 @using Microsoft.AspNet.Identity
 @using zavrsni.Helpers
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Home Page";
 }
@@ -26,7 +27,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h2>10 most recent contents:</h2>
+    <h2>Add some of these contents to your pages:</h2>
     <div class="row">
         <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 280, "itemSelector": ".item" }'>
             @foreach (Content c in Model.contents)
@@ -46,6 +47,12 @@
                     </div>
                 </div>
             }
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="text-center">
+            @Html.PagedListPager(Model.contents, page => Url.Action("Index", new { page, pageSize = Model.contents.PageSize }))
+            Showing @Model.contents.FirstItemOnPage to @Model.contents.LastItemOnPage of @Model.contents.TotalItemCount Contents
         </div>
     </div>
     <a href="@Url.Action("Insert", "Content", new {Username = User.Identity.GetUserName()})"><span class="btn btn-danger btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>
