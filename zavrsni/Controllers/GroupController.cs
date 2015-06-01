@@ -70,6 +70,14 @@ namespace zavrsni.Controllers
                 newGroup.IDgroupOwner = user.IDuser;
                 db.Group.Add(newGroup);
                 db.SaveChanges();
+
+                var authorToGroup = db.BelongsToGroup.Create();
+                authorToGroup.IDgroup = newGroup.IDgroup;
+                authorToGroup.IDuser = user.IDuser;
+                authorToGroup.TimeChanged = DateTime.Now;
+                db.BelongsToGroup.Add(authorToGroup);
+                db.SaveChanges();
+
                 return RedirectToAction("Index", "Group");
             }
         }

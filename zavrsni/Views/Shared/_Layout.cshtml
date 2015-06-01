@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 
     <link href="@Url.Content("~/Content/masonry-docs.css")" rel="stylesheet" type="text/css"/>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css"/>
@@ -71,7 +72,6 @@
 </footer>-->
 
 
-@Scripts.Render("~/bundles/bootstrap")
 @RenderSection("scripts", required: false)
 <script type="text/javascript">
     $(document).ready(function() {

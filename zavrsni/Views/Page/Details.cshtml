@@ -4,17 +4,43 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.PageName</h2>
 
+<h2>@Model.PageName (avg. @Model.AverageGrade)</h2>
 @if (Request.IsAuthenticated)
-{
-    <div class="form-group">
-        <div class="col-md-12">
-            <a href="@Url.Action("Index", "Page", new {Username = Model.Username})"><span class="btn btn-default">Return to pages list</span></a>
-        </div>
-    </div>
-}
-else
+        {
+    using (Html.BeginForm())
+     {
+         @Html.AntiForgeryToken()
+         <div class="row">
+             <div class="col-md-3" style="margin-top: 18px;">
+                 @Html.DropDownListFor(model => model.Grade, new SelectList(
+                     new List<Object>
+                     {
+                         new {value = 1, text = "1"},
+                         new {value = 2, text = "2"},
+                         new {value = 3, text = "3"},
+                         new {value = 4, text = "4"},
+                         new {value = 5, text = "5"}
+                     },
+                     "value",
+                     "text",
+                     2), "Select your mark:", new {@class = "form-control"})
+             </div>
+             <div class="col-md-4" style="margin-top: 18px;">
+
+                 <div class="form-group">
+                     <div class="col-md-12">
+                         <input type="submit" class="btn btn-default" value="Submit"/>
+                         <a href="@Url.Action("Index", "Page", new {Username = Model.Username})"><span class="btn btn-default">Return to pages list</span></a>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     }
+        }
+
+
+@if (!Request.IsAuthenticated)
 {
     <div class="form-group">
         <div class="col-md-12">

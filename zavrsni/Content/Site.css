@@ -21,6 +21,7 @@ body {
 
 .caption img {
     max-width: 90%;
+    height: auto;
     max-height: 200px;
     display: block;
     margin-left: auto;
@@ -327,4 +328,9 @@ a.socialIcon:hover, .socialHoverClass {
 
 .table {
     background-color: white;
+}
+
+.uploadPartialImg {
+    max-width: 500px !important;
+    max-height: 500px !important;
 }

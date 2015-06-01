@@ -90,8 +90,19 @@
         </div>
         }
 
-        <script type="text/javascript">
- CKEDITOR.replace("@Html.IdFor(m => m.Text)", {
-     filebrowserImageBrowseUrl: '/home/uploadPartial',
-     filebrowserImageUploadUrl: '/home/uploadnow'
- });</script>
+    <script type="text/javascript">
+     CKEDITOR.replace("@Html.IdFor(m => m.Text)", {
+         filebrowserImageBrowseUrl: '/Content/UploadPartial',
+         filebrowserImageUploadUrl: '/Content/UploadNow'
+     });
+
+        function updateValue(id, value) {
+            var dialog = CKEDITOR.dialog.getCurrent();
+            if (dialog != null) {
+                dialog.setValueOf('info', 'txtUrl', value);
+            }
+            else {
+                document.getElementById('cke_Extend_textInput_ID').value = value;
+            }
+        }</script>
+

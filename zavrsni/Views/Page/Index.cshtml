@@ -6,6 +6,8 @@
 
 <h2 style="margin-bottom: 30px;">All pages with @Model.Username as contributor:</h2>
 
+@Model.IsMember
+
 <table class="table">
     <tr>
         <th colspan="3" class="text-center">Pages where @User.Identity.GetUserName() is the contributor:</th>
@@ -53,17 +55,20 @@
 
     @foreach (var item in Model.pagesPublic)
     {
-        <tr>
-            <td>
-                @item.name
-            </td>
-            <td>
-                @item.CreatedAt
-            </td>
-            <td style="width: 150px;">
-                <a href="@Url.Action("Details", "Page", new {IDpage = item.IDpage, Username = Model.Username})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
-            </td>
-        </tr>
+        if ((Model.IsMember && item.IDprivacy == 2) || item.IDprivacy == 3)
+        {
+            <tr>
+                <td>
+                    @item.name
+                </td>
+                <td>
+                    @item.CreatedAt
+                </td>
+                <td style="width: 150px;">
+                    <a href="@Url.Action("Details", "Page", new {IDpage = item.IDpage, Username = Model.Username})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        }
     }
 
 </table>

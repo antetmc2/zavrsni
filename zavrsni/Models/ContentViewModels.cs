@@ -32,9 +32,11 @@ namespace zavrsni.Models
 
         [Display(Name = "Choose a location")]
         public SelectList Location { get; set; }
+    }
 
+    public class ImagesViewModel
+    {
         public string Url { get; set; }
-
     }
 
     public class IndexContentModel

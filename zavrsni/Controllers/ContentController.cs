@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Text.RegularExpressions;
 using PagedList;
 
@@ -458,6 +459,26 @@ namespace zavrsni.Controllers
             {
                 return controllerContext.RouteData.Values[parameterName] != null;
             }
+        }
+
+        public void UploadNow(HttpPostedFileWrapper upload)
+        {
+            if (upload != null)
+            {
+                string ImageName = upload.FileName;
+                string path = System.IO.Path.Combine(Server.MapPath("~/Images/Uploads"), ImageName);
+                upload.SaveAs(path);
+            }
+        }
+
+        public ActionResult UploadPartial()
+        {
+            var appData = Server.MapPath("~/Images/Uploads");
+            var images = Directory.GetFiles(appData).Select(x => new ImagesViewModel
+            {
+                Url = Url.Content("/Images/Uploads/" + Path.GetFileName(x))
+            });
+            return View(images);
         }
 
     }

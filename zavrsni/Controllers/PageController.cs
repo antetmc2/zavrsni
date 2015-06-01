@@ -39,17 +39,25 @@ namespace zavrsni.Controllers
 
                 var pagesPublic = (from a in allPages
                                    join c in db.Contributor on a.IDpage equals c.IDpage
-                                   where a.IDprivacy == 3
+                                   where a.IDprivacy >=2
                                    select a).Except(from a in allPages
                                                     join c in db.Contributor on a.IDpage equals c.IDpage
                                                     where c.IDuser == current.IDuser
                                                     select a).ToList();
 
+                var isGroupMember = (from g in db.Group
+                    join b in db.BelongsToGroup on g.IDgroup equals b.IDgroup
+                    where g.IDgroupOwner == user.IDuser
+                          && b.IDuser == current.IDuser
+                          && g.IDgroup > 1
+                    select b).ToList();
+
                 var model = new IndexPageModel()
                 {
                     pages = isContributor,
                     Username = username,
-                    pagesPublic = pagesPublic
+                    pagesPublic = pagesPublic,
+                    IsMember = isGroupMember.Any()
                 };
                 return View(model);
             }
@@ -226,6 +234,9 @@ namespace zavrsni.Controllers
                 selPage.PageView = views;
                 db.Entry(selPage).State = EntityState.Modified;
                 db.SaveChanges();
+                var average = (from p in db.PageReview
+                    where p.IDpage == IDpage
+                    select p).Average(p => p.Mark);
 
                 if (!Request.IsAuthenticated)
                 {
@@ -234,6 +245,7 @@ namespace zavrsni.Controllers
                         PageContents = query,
                         PageName = PageInfo.First().name,
                         IDpage = PageInfo.First().IDpage,
+                        AverageGrade = average
                     };
                     return View(model);
                 }
@@ -244,7 +256,8 @@ namespace zavrsni.Controllers
                         PageContents = query,
                         PageName = PageInfo.First().name,
                         IDpage = PageInfo.First().IDpage,
-                        Username = username
+                        Username = username,
+                        AverageGrade = average
                     };
                     return View(model);
                 }
@@ -252,9 +265,37 @@ namespace zavrsni.Controllers
         }
 
         [HttpPost, ActionName("Details")]
-        public async Task<ActionResult> ViewDetails(int IDpage, string username)
+        public async Task<ActionResult> ViewDetails(int IDpage, string username, PageDetailModel model)
         {
-            return View();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var currentUser = User.Identity.GetUserName();
+                var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+                var current = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+
+                var reviewExists = (from p in db.PageReview
+                    where p.IDpage == IDpage
+                    && p.IDreviewer == current.IDuser
+                    select p).ToList();
+
+                if (reviewExists.Any())
+                {
+                    var selReview = db.PageReview.Find(IDpage, current.IDuser);
+                    selReview.Mark = model.Grade;
+                    db.Entry(selReview).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                if (!reviewExists.Any())
+                {
+                    var selReview = db.PageReview.Create();
+                    selReview.IDpage = IDpage;
+                    selReview.IDreviewer = current.IDuser;
+                    selReview.Mark = model.Grade;
+                    db.PageReview.Add(selReview);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Details", new { IDpage = IDpage, Username = username });
         }
 
         [Authorize]

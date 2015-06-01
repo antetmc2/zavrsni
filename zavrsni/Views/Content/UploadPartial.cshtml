@@ -1,0 +1,18 @@
+﻿@model IEnumerable<zavrsni.Models.ImagesViewModel>
+
+@foreach (var image in Model)
+{
+    <a href="#" class="returnImage" data-url="@Request.Url.GetLeftPart(UriPartial.Authority)@image.Url">
+        <img src="@image.Url" class="uploadPartialImg" data-source="@image.Url"/>
+    </a>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".returnImage").on("click", function (e) {
+            var urlImage = $(this).attr("data-url");
+            //This takes the data value and id of the editor and sends the data(i.e.,image url) back to the caller page
+            window.opener.updateValue("cke_72_textInput", urlImage);
+            window.close();
+        });
+    });
+</script>

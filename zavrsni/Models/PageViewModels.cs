@@ -14,6 +14,7 @@ namespace zavrsni.Models
         public IList<Page> pages { get; set; }
         public IList<Page> pagesPublic { get; set; }
         public string Username { get; set; }
+        public bool IsMember { get; set; }
     }
 
     public class NewPageModel
@@ -58,6 +59,8 @@ namespace zavrsni.Models
         public string PageName { get; set; }
         public int IDpage { get; set; }
         public string Username { get; set; }
+        public short Grade { get; set; }
+        public double AverageGrade { get; set; }
     }
 
     public class PageRemoveModel

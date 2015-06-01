@@ -649,9 +649,11 @@
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Contacts.cshtml" />
     <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Content\UploadPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
