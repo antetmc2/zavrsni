@@ -341,4 +341,23 @@ a.socialIcon:hover, .socialHoverClass {
     background-color: #ffffff !important;
     word-wrap: break-word;
     list-style-type: none;
+    padding: 5px 5px 5px 5px;
+}
+
+.gridster-el img {
+    max-width: 85%;
+    height: auto;
+    max-height: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gridster-el iframe {
+    max-width: 90%;
+    max-height: 65%;
+}
+
+.gridster h2 {
+    font-size: 22px;
 }

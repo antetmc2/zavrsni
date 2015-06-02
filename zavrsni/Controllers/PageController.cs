@@ -11,7 +11,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
 using System.Data.Entity.Infrastructure;
+using System.Text.RegularExpressions;
 using System.Web.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace zavrsni.Controllers
 {
@@ -336,6 +339,47 @@ namespace zavrsni.Controllers
                 }
             }
             return RedirectToAction("Details", new { IDpage = IDpage, Username = username });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateLayout(string Values, int IDpage)
+        {
+            var array = JArray.Parse(Values);
+            IList<Serialized> objectsList = new List<Serialized>();
+
+            foreach (var item in array)
+            {
+                objectsList.Add(item.ToObject<Serialized>());
+            }
+
+            var numberObjects = objectsList.Count();
+
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var query = (from c in db.LocationContent
+                                               join p in db.ContentPage on c.IDcontent equals p.IDcontent
+                                               where p.IDpage == IDpage
+                                               select c).Include(c => c.Content).Include(c => c.Location).Include(c => c.City).GroupBy(c => c.IDlocation).ToList();
+
+                int brojac = 0;
+                foreach (var el in query)
+                {
+                    if (el.Count() != numberObjects) continue;
+                    foreach (var element in el)
+                    {
+                        var currentContent = db.Content.Find(element.Content.IDcontent);
+                        currentContent.DataSizeX = objectsList[brojac].size_x;
+                        currentContent.DataSizeY = objectsList[brojac].size_y;
+                        currentContent.DataCol = objectsList[brojac].col;
+                        currentContent.DataRow = objectsList[brojac].row;
+                        db.Entry(currentContent).State = EntityState.Modified;
+                        db.SaveChanges();
+                        brojac++;
+                    }
+                }
+
+            }
+            return RedirectToAction("Details", new { IDpage = IDpage, Username = "ante" });
         }
 
         [Authorize]

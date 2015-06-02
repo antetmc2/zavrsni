@@ -44,6 +44,10 @@
           <Property Name="TimeChanged" Type="datetime" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
           <Property Name="IsCopied" Type="bit" />
+          <Property Name="DataRow" Type="int" />
+          <Property Name="DataCol" Type="int" />
+          <Property Name="DataSizeX" Type="int" />
+          <Property Name="DataSizeY" Type="int" />
         </EntityType>
         <EntityType Name="ContentPage">
           <Key>
@@ -844,13 +848,17 @@
           <Property Name="IDeditor" Type="Int32" />
           <Property Name="TimeChanged" Type="DateTime" Precision="3" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsCopied" Type="Boolean" />
+          <Property Name="DataRow" Type="Int32" />
+          <Property Name="DataCol" Type="Int32" />
+          <Property Name="DataSizeX" Type="Int32" />
+          <Property Name="DataSizeY" Type="Int32" />
           <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Content_User" FromRole="Content" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Korisnik_Sadrzaj" FromRole="Content" ToRole="User" />
           <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Sadrzaj" FromRole="Content" ToRole="LocationContent" />
           <NavigationProperty Name="User2" Relationship="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" FromRole="Content" ToRole="User" />
           <NavigationProperty Name="ContentType" Relationship="ZavrsniEFmodel.FK_Sadrzaj_VrstaSadrzaja" FromRole="Content" ToRole="ContentType" />
           <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj" FromRole="Content" ToRole="ContentPage" />
-          <Property Name="IsCopied" Type="Boolean" />
         </EntityType>
         <EntityType Name="ContentPage">
           <Key>
@@ -1413,6 +1421,10 @@
           <EntitySetMapping Name="Content">
             <EntityTypeMapping TypeName="ZavrsniEFmodel.Content">
               <MappingFragment StoreEntitySet="Content">
+                <ScalarProperty Name="DataSizeY" ColumnName="DataSizeY" />
+                <ScalarProperty Name="DataSizeX" ColumnName="DataSizeX" />
+                <ScalarProperty Name="DataCol" ColumnName="DataCol" />
+                <ScalarProperty Name="DataRow" ColumnName="DataRow" />
                 <ScalarProperty Name="IsCopied" ColumnName="IsCopied" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />

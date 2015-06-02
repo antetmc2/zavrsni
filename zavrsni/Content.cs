@@ -30,6 +30,10 @@ namespace zavrsni
         public Nullable<System.DateTime> TimeChanged { get; set; }
         public string Title { get; set; }
         public Nullable<bool> IsCopied { get; set; }
+        public Nullable<int> DataRow { get; set; }
+        public Nullable<int> DataCol { get; set; }
+        public Nullable<int> DataSizeX { get; set; }
+        public Nullable<int> DataSizeY { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<User> User1 { get; set; }

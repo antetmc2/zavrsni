@@ -81,8 +81,8 @@ namespace zavrsni.Controllers
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var query = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
-                //var queryLocation = db.LocationContent.FirstOrDefault(l => l.IDcontent.Equals(IDcontent));
-                //var queryPage = db.ContentPage.FirstOrDefault(l => l.IDcontent.Equals(IDcontent));
+                var currentUser = User.Identity.GetUserName();
+                var usernameCurrent = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
                 if (ModelState.IsValid)
                 {
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
@@ -95,7 +95,7 @@ namespace zavrsni.Controllers
                     query.IDeditor = user.IDuser;
                     query.TimeChanged = DateTime.Now;
 
-                    if (Request["PageDropDown"].Any())
+                    /*if (Request["PageDropDown"].Any())
                     {
                         var pageSel = Request["PageDropDown"];
                         var page = Convert.ToInt32(pageSel);
@@ -117,6 +117,40 @@ namespace zavrsni.Controllers
                         {
                             return Content("The selected page already contains this content.", "text/html");
                         }
+                    }*/
+
+                    if (Request["PageDropDown"].Any())
+                    {
+                        var contCopy = db.Content.Create();
+                        contCopy.IDcontentType = query.IDcontentType;
+                        contCopy.IDauthor = usernameCurrent.IDuser;
+                        contCopy.Text = query.Text;
+                        contCopy.Title = query.Title;
+                        contCopy.IsCopied = true;
+                        db.Content.Add(contCopy);
+                        db.SaveChanges();
+
+                        var contCopyLoc = (from l in db.LocationContent
+                                           where l.IDcontent == query.IDcontent
+                                           select l.IDlocation).ToList();
+
+                        foreach (var a in contCopyLoc)
+                        {
+                            var contLoc = db.LocationContent.Create();
+                            contLoc.IDlocation = a;
+                            contLoc.IDcontent = contCopy.IDcontent;
+                            contLoc.TimeChanged = DateTime.Now;
+                            db.LocationContent.Add(contLoc);
+                            db.SaveChanges();
+                        }
+
+                        var contPage = db.ContentPage.Create();
+                        contPage.IDcontent = contCopy.IDcontent;
+                        contPage.IDuser = usernameCurrent.IDuser;
+                        var pageSel = Request["PageDropDown"];
+                        contPage.IDpage = Convert.ToInt32(pageSel);
+                        db.ContentPage.Add(contPage);
+                        db.SaveChanges();
                     }
 
                     if (Request["ContentTypeDropDown"].Any())

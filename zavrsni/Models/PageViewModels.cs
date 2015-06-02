@@ -67,4 +67,12 @@ namespace zavrsni.Models
     {
         public int IDpage { get; set; }
     }
+
+    public class Serialized
+    {
+        public int col { get; set; }
+        public int row { get; set; }
+        public int size_x { get; set; }
+        public int size_y { get; set; }
+    }
 }

@@ -4,8 +4,9 @@
 }
 
 <h2>Edit existing group info:</h2>
+<div id="result" class="alert alert-info"></div>
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "result", OnSuccess = "setTimeout(function () { window.location.reload() }, 3000);" }))
 {
     @Html.AntiForgeryToken()
 

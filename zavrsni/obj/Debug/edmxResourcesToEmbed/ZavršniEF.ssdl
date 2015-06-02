@@ -39,6 +39,10 @@
     <Property Name="TimeChanged" Type="datetime" />
     <Property Name="Title" Type="nvarchar" MaxLength="100" />
     <Property Name="IsCopied" Type="bit" />
+    <Property Name="DataRow" Type="int" />
+    <Property Name="DataCol" Type="int" />
+    <Property Name="DataSizeX" Type="int" />
+    <Property Name="DataSizeY" Type="int" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>

@@ -31,6 +31,10 @@
     <EntitySetMapping Name="Content">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.Content">
         <MappingFragment StoreEntitySet="Content">
+          <ScalarProperty Name="DataSizeY" ColumnName="DataSizeY" />
+          <ScalarProperty Name="DataSizeX" ColumnName="DataSizeX" />
+          <ScalarProperty Name="DataCol" ColumnName="DataCol" />
+          <ScalarProperty Name="DataRow" ColumnName="DataRow" />
           <ScalarProperty Name="IsCopied" ColumnName="IsCopied" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />

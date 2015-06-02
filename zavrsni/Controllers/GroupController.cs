@@ -207,7 +207,8 @@ namespace zavrsni.Controllers
                     db.SaveChanges();
                 }
             }
-            return RedirectToAction("Edit", new { IDgroup = IDgroup });
+            return Content("Changes are successfully saved!", "text/html");
+            //return RedirectToAction("Edit", new { IDgroup = IDgroup });
         }
     }
 }
