@@ -43,6 +43,7 @@
           <Property Name="IDeditor" Type="int" />
           <Property Name="TimeChanged" Type="datetime" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsCopied" Type="bit" />
         </EntityType>
         <EntityType Name="ContentPage">
           <Key>
@@ -849,6 +850,7 @@
           <NavigationProperty Name="User2" Relationship="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" FromRole="Content" ToRole="User" />
           <NavigationProperty Name="ContentType" Relationship="ZavrsniEFmodel.FK_Sadrzaj_VrstaSadrzaja" FromRole="Content" ToRole="ContentType" />
           <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj" FromRole="Content" ToRole="ContentPage" />
+          <Property Name="IsCopied" Type="Boolean" />
         </EntityType>
         <EntityType Name="ContentPage">
           <Key>
@@ -1411,6 +1413,7 @@
           <EntitySetMapping Name="Content">
             <EntityTypeMapping TypeName="ZavrsniEFmodel.Content">
               <MappingFragment StoreEntitySet="Content">
+                <ScalarProperty Name="IsCopied" ColumnName="IsCopied" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />
                 <ScalarProperty Name="IDeditor" ColumnName="IDeditor" />

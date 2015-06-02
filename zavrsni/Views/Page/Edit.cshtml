@@ -6,8 +6,9 @@
 }
 
 <h2>Edit existing content:</h2>
+<div id="result" class="alert alert-info"></div>
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "result", OnSuccess = "setTimeout(function () { window.location.reload() }, 3000);" }))
 {
     @Html.AntiForgeryToken()
 
@@ -86,9 +87,19 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            <input type="submit" class="btn btn-default" value="Save" />
+            <input type="submit" class="btn btn-default" id="submitButton" value="Save" />
             <a href="@Url.Action("Index", "Page", new { Username = Model.Username })"><span class="btn btn-default">Return to pages list</span></a>
 
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        $("#result").hide();
+
+        $("#submitButton").on("click", function () {
+            $("#result").show();
+        });
+    });
+</script>

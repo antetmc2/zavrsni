@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
@@ -15,10 +16,30 @@ namespace zavrsni.Controllers
     {
         public ActionResult Index(int page = 1, int pageSize = 20)
         {
+            HomeContentModel model = new HomeContentModel();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
+                if (Request.IsAuthenticated)
+                {
+                    var currentUser = User.Identity.GetUserName();
+                    var user = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+
+                    var groupContents = (from g in db.Group
+                                         join b in db.BelongsToGroup on g.IDgroup equals b.IDgroup
+                                         join u in db.User on b.IDuser equals u.IDuser
+                                         join c in db.Content on u.IDuser equals c.IDauthor
+                                         where g.IDgroupOwner == user.IDuser
+                                         && g.IDgroup != 1
+                                         && g.IDgroup == b.IDgroup
+                                         && c.IsCopied == false
+                                         orderby c.TimeChanged descending
+                                         select c);
+                    model.contents = new PagedList<Content>(groupContents, page, pageSize);
+                }
+
                 var allContents = (from c in db.Content
                                    orderby c.TimeChanged descending 
+                                   where c.IsCopied == false
                                    select c).Include(c => c.ContentType);
 
                 var mostViewedPages = (from p in db.Page
@@ -26,13 +47,35 @@ namespace zavrsni.Controllers
                                        orderby p.PageView ascending 
                                        select p).Take(3).ToList();
 
-                var model = new HomeContentModel()
-                {
-                    contents = new PagedList<Content>(allContents, page, pageSize),
-                    topPages = mostViewedPages
-                };
+                model.contentsGuest = new PagedList<Content>(allContents, page, pageSize);
+                model.topPages = mostViewedPages;
                 return View(model);
             }
+        }
+
+        [HttpPost, ActionName("Index")]
+        public async Task<ActionResult> Index(HomeContentModel model, int page = 1, int pageSize = 20)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                return RedirectToAction("Search", new { keyword = model.keyword, page = page, pageSize = pageSize });
+            }
+        }
+
+        public ActionResult Search(string keyword, int page = 1, int pageSize = 20)
+        {
+            SearchModel model = new SearchModel();
+
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var searchResults = (from c in db.Content
+                                     where c.Text.ToLower().Contains(keyword.ToLower())
+                                           || c.Title.ToLower().Contains(keyword.ToLower())
+                                     orderby c.TimeChanged descending
+                                     select c);
+                model.results = new PagedList<Content>(searchResults, page, pageSize);
+            }
+            return View(model);
         }
 
         [Authorize]

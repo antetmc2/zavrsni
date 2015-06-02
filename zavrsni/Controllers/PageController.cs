@@ -153,7 +153,11 @@ namespace zavrsni.Controllers
                             where u.Username == model.Contributor
                             select u;
 
-                        if (!userExists.Any()) return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
+                        if (!userExists.Any())
+                        {
+                            //return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
+                            return Content("User does not exist, please try again!", "text/html");
+                        }
 
                         var exists = from t in db.Contributor
                             join u in db.User on t.IDuser equals u.IDuser
@@ -176,10 +180,12 @@ namespace zavrsni.Controllers
 
                     db.Entry(selPage).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
+                    //return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
+                    return Content("Changes are successfully saved!", "text/html");
                 }
             }
-            return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
+            return Content("Edit failed, please try again!", "text/html");
+            //return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
         }
 
         [Authorize]

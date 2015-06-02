@@ -185,6 +185,7 @@
     <NavigationProperty Name="User2" Relationship="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" FromRole="Content" ToRole="User" />
     <NavigationProperty Name="ContentType" Relationship="ZavrsniEFmodel.FK_Sadrzaj_VrstaSadrzaja" FromRole="Content" ToRole="ContentType" />
     <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj" FromRole="Content" ToRole="ContentPage" />
+    <Property Name="IsCopied" Type="Boolean" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>

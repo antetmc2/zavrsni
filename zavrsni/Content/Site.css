@@ -334,3 +334,11 @@ a.socialIcon:hover, .socialHoverClass {
     max-width: 500px !important;
     max-height: 500px !important;
 }
+
+.gridster ul li {
+    margin: 5px 0 20px 0;
+    border: 1px solid #D1D1D1 !important;
+    background-color: #ffffff !important;
+    word-wrap: break-word;
+    list-style-type: none;
+}

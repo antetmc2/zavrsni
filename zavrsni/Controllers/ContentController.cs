@@ -46,7 +46,7 @@ namespace zavrsni.Controllers
                               orderby c.CityName
                               select c).ToList();
                 if (queryLocation != null)
-                    model.Location = new SelectList(query3, "IDcity", "CityName", queryLocation.IDlocation);
+                    model.Location = new SelectList(query3, "IDcity", "CityName");
                 else model.Location = new SelectList(query3, "IDcity", "CityName");
 
                 var query4 = (from c in db.Content
@@ -115,8 +115,7 @@ namespace zavrsni.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "The selected page already contains this content.");
-                            return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
+                            return Content("The selected page already contains this content.", "text/html");
                         }
                     }
 
@@ -154,8 +153,8 @@ namespace zavrsni.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "The selected location already contains this content.");
                             //return RedirectToAction("Edit", new { IDcontent = IDcontent });
+                            return Content("The selected location already contains this content.", "text/html");
                         }
 
                     }
@@ -164,7 +163,8 @@ namespace zavrsni.Controllers
                     //db.Entry(queryPage).State = EntityState.Modified;
 
                     db.SaveChanges();
-                    return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
+                    //return RedirectToAction("Edit", new { IDcontent = IDcontent, Username = username });
+                    return Content("Changes are successfully saved!", "text/html");
                 }
             }
             return View(model);
@@ -281,13 +281,38 @@ namespace zavrsni.Controllers
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
+                var currentUser = User.Identity.GetUserName();
                 var cont = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
                 var usernameAuthor = db.User.FirstOrDefault(u => u.IDuser.Equals(cont.IDauthor));
-                var contPage = db.ContentPage.Create();
-                contPage.IDcontent = IDcontent;
-                contPage.IDuser = usernameAuthor.IDuser;
+                var usernameCurrent = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
                 if (Request["PageDropDown"].Any())
                 {
+                    var contCopy = db.Content.Create();
+                    contCopy.IDcontentType = cont.IDcontentType;
+                    contCopy.IDauthor = usernameCurrent.IDuser;
+                    contCopy.Text = cont.Text;
+                    contCopy.Title = cont.Title;
+                    contCopy.IsCopied = true;
+                    db.Content.Add(contCopy);
+                    db.SaveChanges();
+
+                    var contCopyLoc = (from l in db.LocationContent
+                        where l.IDcontent == cont.IDcontent
+                        select l.IDlocation).ToList();
+
+                    foreach (var a in contCopyLoc)
+                    {
+                        var contLoc = db.LocationContent.Create();
+                        contLoc.IDlocation = a;
+                        contLoc.IDcontent = contCopy.IDcontent;
+                        contLoc.TimeChanged = DateTime.Now;
+                        db.LocationContent.Add(contLoc);
+                        db.SaveChanges();
+                    }
+
+                    var contPage = db.ContentPage.Create();
+                    contPage.IDcontent = contCopy.IDcontent;
+                    contPage.IDuser = usernameCurrent.IDuser;
                     var pageSel = Request["PageDropDown"];
                     contPage.IDpage = Convert.ToInt32(pageSel);
                     db.ContentPage.Add(contPage);
@@ -341,6 +366,7 @@ namespace zavrsni.Controllers
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                 var allContents = (from c in db.Content
                     where c.IDauthor == user.IDuser
+                                   && c.IsCopied == false
                     orderby c.TimeChanged descending 
                     select c).Include(c => c.ContentType);
 

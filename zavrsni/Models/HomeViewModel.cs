@@ -13,7 +13,15 @@ namespace zavrsni.Models
     {
         [Key]
         public IPagedList<Content> contents { get; set; }
+        public IPagedList<Content> contentsGuest { get; set; }
         public IList<Page> topPages { get; set; }
+        [Display(Name = "Enter search keyword(s)")]
+        public string keyword { get; set; }
+    }
+
+    public class SearchModel
+    {
+        public IPagedList<Content> results { get; set; }
     }
 
     public class CityCountryListModel

@@ -29,6 +29,7 @@ namespace zavrsni
         public Nullable<int> IDeditor { get; set; }
         public Nullable<System.DateTime> TimeChanged { get; set; }
         public string Title { get; set; }
+        public Nullable<bool> IsCopied { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<User> User1 { get; set; }

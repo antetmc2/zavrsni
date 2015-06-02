@@ -8,7 +8,7 @@
 
 @if (!Request.IsAuthenticated)
 {
-    <h1>Welcome to <span style="font-family: Pacifico; color: #C40000; font-weight: 200;">Traveler</span>, the new web application for travel planning!</h1>
+    @*<h1>Welcome to <span style="font-family: Pacifico; color: #C40000; font-weight: 200;">Traveler</span>, the new web application for travel planning!</h1>
     <br/>
     <h4>Already using Traveler? @Html.ActionLink("Log in here!", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", style = "font-size: 25px;" })</h4>
     <br/>
@@ -22,12 +22,54 @@
                 <td><a href="@Url.Action("Details", "Page", new {IDpage = item.IDpage, Username = User.Identity.GetUserName()})" style="font-size: 20px; font-weight: bold;">@item.name</a></td>
             </tr>
         }
-    </table>
+    </table>*@
+    <div class="row">
+        <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 280, "itemSelector": ".item" }'>
+            @foreach (Content c in Model.contentsGuest)
+            {
+                <div class="col-md-4 col-sm-6 item">
+                    <div class="thumbnail content" style="padding: 2px 2px 2px 2px !important;">
+                        <div class="caption" style="padding: 3px 3px 3px 3px !important;">
+                            <h2>@c.Title</h2>
+                            @Html.Raw(c.Text.ParseHTML().Truncate())
+                            @if (c.Text.ParseHTML().Truncate().Contains("..."))
+                            {
+                                <span>(<a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent})">more</a>)</span>
+                            }
+                            <div class="text-right">
+                                <a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 }
 
 @if (Request.IsAuthenticated)
 {
-    <h2>Add some of these contents to your pages:</h2>
+    using (Html.BeginForm())
+     {
+         @Html.AntiForgeryToken()
+
+        <div class="form-group" style="margin-top: 10px !important;">
+            <div class="row" style="margin-top: 25px;">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.keyword, new { @class = "control-label" })
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.keyword, new { @class = "form-control" })
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" class="btn btn-default" value="Submit" />
+                </div>
+            </div>
+        </div>
+
+     }
+
+    <h2>Add some of contents published by your group members to your pages:</h2>
     <div class="row">
         <div id="container" class="js-masonry" data-masonry-options='{ "columnWidth": 280, "itemSelector": ".item" }'>
             @foreach (Content c in Model.contents)

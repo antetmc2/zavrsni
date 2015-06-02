@@ -60,3 +60,7 @@ C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.dll
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.Mvc.dll
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.xml
 C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\PagedList.Mvc.xml
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\Omu.Awesome.Core.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\Omu.Awesome.Mvc.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\WebActivator.dll
+C:\Users\Ante\Documents\GitHub\zavrsni\zavrsni\bin\WebActivator.pdb
