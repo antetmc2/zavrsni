@@ -224,6 +224,8 @@ namespace zavrsni.Controllers
         {
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
+                var currentUser = User.Identity.GetUserName();
+                var userInfo = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
                 var cont = db.Content.FirstOrDefault(u => u.IDcontent.Equals(IDcontent));
                 var usernameAuthor = db.User.FirstOrDefault(u => u.IDuser.Equals(cont.IDauthor));
                 var usernameEditor = (from u in db.User
@@ -237,7 +239,7 @@ namespace zavrsni.Controllers
                     select l).Include(l => l.City).ToList();
                 var pages = (from c in db.Contributor
                     join p in db.Page on c.IDpage equals p.IDpage
-                    where c.IDuser == usernameAuthor.IDuser
+                    where c.IDuser == userInfo.IDuser
                     orderby p.name
                     select p).ToList();
                 try
@@ -459,6 +461,9 @@ namespace zavrsni.Controllers
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
+                var currentUser = User.Identity.GetUserName();
+                var usernameCurrent = db.User.FirstOrDefault(u => u.Username.Equals(currentUser));
+                
                 var newContent = db.Content.Create();
                 if (!Request["ContentTypeDropDown"].Any())
                 {
@@ -469,24 +474,13 @@ namespace zavrsni.Controllers
                 newContent.IDcontentType = Convert.ToInt32(contSel);
                 newContent.Text = model.Text;
                 newContent.IDauthor = user.IDuser;
+                newContent.IsCopied = false;
                 if (model.Title != null) newContent.Title = model.Title;
                 else newContent.Title = "(no title)";
                 newContent.IDeditor = user.IDuser;
                 newContent.TimeChanged = DateTime.Now;
 
                 db.Content.Add(newContent);
-
-
-                if (Request["PageDropDown"].Any())
-                {
-                    var content = db.ContentPage.Create();
-                    var pageSel = Request["PageDropDown"];
-                    content.IDuser = user.IDuser;
-                    content.IDpage = Convert.ToInt32(pageSel);
-                    content.IDcontent = newContent.IDcontent;
-                    db.ContentPage.Add(content);
-                    db.SaveChanges();
-                }
 
                 if (Request["LocationInsert"].Any())
                 {
@@ -498,8 +492,39 @@ namespace zavrsni.Controllers
                     db.LocationContent.Add(location);
                     db.SaveChanges();
                 }
-
                 db.SaveChanges();
+
+                if (Request["PageDropDown"].Any())
+                {
+                    var contCopy = db.Content.Create();
+                    contCopy.IDcontentType = newContent.IDcontentType;
+                    contCopy.IDauthor = usernameCurrent.IDuser;
+                    contCopy.Text = newContent.Text;
+                    contCopy.Title = newContent.Title;
+                    contCopy.IsCopied = true;
+                    db.Content.Add(contCopy);
+                    db.SaveChanges();
+
+                    if (Request["LocationInsert"].Any())
+                    {
+                        var locCopy = db.LocationContent.Create();
+                        var locationSelect = Request["LocationInsert"];
+                        locCopy.IDlocation = Convert.ToInt32(locationSelect);
+                        locCopy.IDcontent = contCopy.IDcontent;
+                        locCopy.TimeChanged = DateTime.Now;
+                        db.LocationContent.Add(locCopy);
+                        db.SaveChanges();
+                    }
+
+                    var content = db.ContentPage.Create();
+                    var pageSel = Request["PageDropDown"];
+                    content.IDuser = user.IDuser;
+                    content.IDpage = Convert.ToInt32(pageSel);
+                    content.IDcontent = contCopy.IDcontent;
+                    db.ContentPage.Add(content);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("ViewContent", new { Username = username });
             }
             return View(model);

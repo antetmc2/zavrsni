@@ -165,6 +165,7 @@ namespace zavrsni.Controllers
                         var exists = from t in db.Contributor
                             join u in db.User on t.IDuser equals u.IDuser
                             where u.Username == model.Contributor
+                            && t.IDpage == IDpage
                             select t;
 
                         if (!exists.Any())
@@ -226,18 +227,35 @@ namespace zavrsni.Controllers
         [HttpGet]
         public ActionResult Details(int IDpage, string username)
         {
+            PageDetailModel model = new PageDetailModel();
             using (ZavrsniEFentities db = new ZavrsniEFentities())
             {
                 List<LocationContent> query = (from c in db.LocationContent
                     join p in db.ContentPage on c.IDcontent equals p.IDcontent
                     where p.IDpage == IDpage
-                    select c).Include(c => c.Content).Include(c => c.Location).Include(c => c.City).ToList();
+                    select c).Include(c => c.Content).Include(c => c.Location).Include(c => c.City).Include("Content.User").ToList();
+                model.PageContents = query;
+
+                var contributors = (from c in db.Contributor
+                    join u in db.User on c.IDuser equals u.IDuser
+                    where c.IDpage == IDpage
+                    && c.IsAuthor == false
+                    select u).ToList();
+                model.Contributors = contributors;
 
                 var PageInfo = (from p in db.Page
                     where p.IDpage == IDpage
                     select p);
+                model.PageName = PageInfo.First().name;
+                model.IDpage = PageInfo.First().IDpage;
 
                 var selPage = db.Page.FirstOrDefault(u => u.IDpage.Equals(IDpage));
+                var pageAuthor = (from p in db.Contributor
+                    join u in db.User on p.IDuser equals u.IDuser
+                    where p.IDpage == IDpage
+                          && p.IsAuthor == true
+                    select u);
+                model.PageAuthor = pageAuthor.FirstOrDefault().Username;
                 var views = selPage.PageView;
                 views++;
                 selPage.PageView = views;
@@ -254,25 +272,14 @@ namespace zavrsni.Controllers
 
                     if (!Request.IsAuthenticated)
                     {
-                        var model = new PageDetailModel
-                        {
-                            PageContents = query,
-                            PageName = PageInfo.First().name,
-                            IDpage = PageInfo.First().IDpage,
-                            AverageGrade = average
-                        };
+
+                        model.AverageGrade = average;
                         return View(model);
                     }
                     else
                     {
-                        var model = new PageDetailModel
-                        {
-                            PageContents = query,
-                            PageName = PageInfo.First().name,
-                            IDpage = PageInfo.First().IDpage,
-                            Username = username,
-                            AverageGrade = average
-                        };
+                        model.Username = username;
+                        model.AverageGrade = average;
                         return View(model);
                     }
                 }
@@ -282,25 +289,13 @@ namespace zavrsni.Controllers
 
                     if (!Request.IsAuthenticated)
                     {
-                        var model = new PageDetailModel
-                        {
-                            PageContents = query,
-                            PageName = PageInfo.First().name,
-                            IDpage = PageInfo.First().IDpage,
-                            AverageGrade = average
-                        };
+                        model.AverageGrade = average;
                         return View(model);
                     }
                     else
                     {
-                        var model = new PageDetailModel
-                        {
-                            PageContents = query,
-                            PageName = PageInfo.First().name,
-                            IDpage = PageInfo.First().IDpage,
-                            Username = username,
-                            AverageGrade = average
-                        };
+                        model.Username = username;
+                        model.AverageGrade = average;
                         return View(model);
                     }
                 }

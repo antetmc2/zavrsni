@@ -59,6 +59,8 @@ namespace zavrsni.Models
         public string PageName { get; set; }
         public int IDpage { get; set; }
         public string Username { get; set; }
+        public string PageAuthor { get; set; }
+        public IList<User> Contributors { get; set; } 
         public short Grade { get; set; }
         public double AverageGrade { get; set; }
     }

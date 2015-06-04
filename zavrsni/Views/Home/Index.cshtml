@@ -37,6 +37,7 @@
                                 <span>(<a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent})">more</a>)</span>
                             }
                             <div class="text-right">
+                                <span class="btn btn-special glyphicon glyphicon-user" aria-hidden="true" style="word-spacing: -10px; padding: 0 0 0 0;"> @c.User.Username</span>
                                 <a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
                             </div>
                         </div>
@@ -83,7 +84,9 @@
                             {
                                 <span>(<a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent, Username = User.Identity.GetUserName()})">more</a>)</span>
                             }
-                            <div class="text-right"><a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent, Username = User.Identity.GetUserName()})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                            <div class="text-right">
+                                <span class="btn btn-special glyphicon glyphicon-user" aria-hidden="true" style="word-spacing: -10px; padding: 0 0 0 0;"> @c.User.Username</span>
+                                <a href="@Url.Action("Details", "Content", new {IDcontent = c.IDcontent, Username = User.Identity.GetUserName()})"><span class="btn btn-special glyphicon glyphicon-list" aria-hidden="true"></span></a>
                             </div>
                         </div>
                     </div>

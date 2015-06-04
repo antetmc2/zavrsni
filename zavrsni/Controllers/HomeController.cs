@@ -33,14 +33,14 @@ namespace zavrsni.Controllers
                                          && g.IDgroup == b.IDgroup
                                          && c.IsCopied == false
                                          orderby c.TimeChanged descending
-                                         select c);
+                                         select c).Include(c => c.User);
                     model.contents = new PagedList<Content>(groupContents, page, pageSize);
                 }
 
                 var allContents = (from c in db.Content
                                    orderby c.TimeChanged descending 
                                    where c.IsCopied == false
-                                   select c).Include(c => c.ContentType);
+                                   select c).Include(c => c.ContentType).Include(c => c.User);
 
                 var mostViewedPages = (from p in db.Page
                                        where p.IDprivacy == 3
