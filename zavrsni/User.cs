@@ -26,6 +26,7 @@ namespace zavrsni
             this.Group = new HashSet<Group>();
             this.Page = new HashSet<Page>();
             this.PageReview = new HashSet<PageReview>();
+            this.Page1 = new HashSet<Page>();
         }
     
         public int IDuser { get; set; }
@@ -49,5 +50,6 @@ namespace zavrsni
         public virtual ICollection<Group> Group { get; set; }
         public virtual ICollection<Page> Page { get; set; }
         public virtual ICollection<PageReview> PageReview { get; set; }
+        public virtual ICollection<Page> Page1 { get; set; }
     }
 }

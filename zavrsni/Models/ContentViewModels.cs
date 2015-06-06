@@ -16,10 +16,10 @@ namespace zavrsni.Models
         public string Username { get; set; }
 
         [Required]
-        [Display(Name = "Choose content type")]
+        [Display(Name = "Content type")]
         public SelectList ContentType { get; set; }
 
-        [Display(Name = "Title of your content")]
+        [Display(Name = "Content title")]
         public string Title { get; set; }
 
         [Required]
@@ -27,10 +27,10 @@ namespace zavrsni.Models
         [DataType(DataType.Text)]
         public string Text { get; set; }
 
-        [Display(Name = "Choose a page")]
+        [Display(Name = "Page")]
         public SelectList Page { get; set; }
 
-        [Display(Name = "Choose a location")]
+        [Display(Name = "Location")]
         public SelectList Location { get; set; }
     }
 
@@ -92,10 +92,10 @@ namespace zavrsni.Models
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Display(Name = "Choose content type")]
+        [Display(Name = "Content type")]
         public SelectList ContentType { get; set; }
 
-        [Display(Name = "Title of your content")]
+        [Display(Name = "Content title")]
         public string Title { get; set; }
 
         [Required]
@@ -109,10 +109,10 @@ namespace zavrsni.Models
         [Display(Name = "Changed")]
         public DateTime TimeChanged { get; set; }
 
-        [Display(Name = "Choose a page")]
+        [Display(Name = "Page")]
         public SelectList Page { get; set; }
 
-        [Display(Name = "Choose a location")]
+        [Display(Name = "Location")]
         public SelectList Location { get; set; }
 
         public IList<ContentPage> Pages { get; set; }

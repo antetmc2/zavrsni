@@ -132,6 +132,10 @@
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PageTag" EntitySet="PageTag" />
     </AssociationSet>
+    <AssociationSet Name="FK_Page_User" Association="ZavrsniEFmodel.FK_Page_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Page" EntitySet="Page" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="BelongsToGroup">
     <Key>
@@ -299,6 +303,8 @@
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="Page" ToRole="User" />
     <NavigationProperty Name="Privacy" Relationship="ZavrsniEFmodel.FK_Stranica_Privatnost" FromRole="Page" ToRole="Privacy" />
     <NavigationProperty Name="PageTag" Relationship="ZavrsniEFmodel.FK_TagStranica_Stranica" FromRole="Page" ToRole="PageTag" />
+    <Property Name="IDauthor" Type="Int32" />
+    <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="Page" ToRole="User" />
   </EntityType>
   <EntityType Name="PageReview">
     <Key>
@@ -365,6 +371,7 @@
     <NavigationProperty Name="Group" Relationship="ZavrsniEFmodel.FK_Grupa_Korisnik" FromRole="User" ToRole="Group" />
     <NavigationProperty Name="Page" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="User" ToRole="Page" />
     <NavigationProperty Name="PageReview" Relationship="ZavrsniEFmodel.FK_OcjenaStranice_Korisnik" FromRole="User" ToRole="PageReview" />
+    <NavigationProperty Name="Page1" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="User" ToRole="Page" />
   </EntityType>
   <Association Name="FK_PripadaGrupi_Grupa">
     <End Type="ZavrsniEFmodel.Group" Role="Group" Multiplicity="1">
@@ -713,6 +720,18 @@
       </Principal>
       <Dependent Role="PageTag">
         <PropertyRef Name="IDtag" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Page_User">
+    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="0..1" />
+    <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Page">
+        <PropertyRef Name="IDauthor" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

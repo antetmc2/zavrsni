@@ -8,12 +8,14 @@
 
 <table class="table">
     <tr>
-        <th colspan="3" class="text-center">Pages where @User.Identity.GetUserName() is the contributor:</th>
+        <th colspan="5" class="text-center">Pages where @User.Identity.GetUserName() is the contributor:</th>
     </tr>
     <tr>
-        <th>Page title</th>
-        <th>Created at</th>
-        <th>Actions</th>
+        <th style="width: 25%;">Page title</th>
+        <th style="width: 15%;">Owner</th>
+        <th style="width: 15%;">Number of contributors</th>
+        <th style="width: 20%;">Created at</th>
+        <th style="width: 25%;">Actions</th>
     </tr>
 
     @foreach (var item in Model.pages)
@@ -21,6 +23,12 @@
         <tr>
             <td>
                 @item.name
+            </td>
+            <td>
+                @item.User1.Username
+            </td>
+            <td>
+                @item.Contributor.Count
             </td>
             <td>
                 @item.CreatedAt
@@ -43,12 +51,14 @@
 
 <table class="table">
     <tr>
-        <th colspan="3" class="text-center">Other pages that are available to you:</th>
+        <th colspan="5" class="text-center">Other pages that are available to you:</th>
     </tr>
     <tr>
-        <th>Page title</th>
-        <th>Created at</th>
-        <th>Actions</th>
+        <th style="width: 25%;">Page title</th>
+        <th style="width: 15%;">Owner</th>
+        <th style="width: 15%;">Number of contributors</th>
+        <th style="width: 20%;">Created at</th>
+        <th style="width: 25%;">Actions</th>
     </tr>
 
     @foreach (var item in Model.pagesPublic)
@@ -58,6 +68,12 @@
             <tr>
                 <td>
                     @item.name
+                </td>
+                <td>
+                    @item.User1.Username
+                </td>
+                <td>
+                    @item.Contributor.Count
                 </td>
                 <td>
                     @item.CreatedAt

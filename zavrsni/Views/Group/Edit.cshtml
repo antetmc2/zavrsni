@@ -18,20 +18,28 @@
     </div>
 
     <div class="form-group">
-        <div class="row">
             @Html.LabelFor(model => model.GroupType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("GroupTypeDropDown", Model.GroupType, "Select 1 group type:", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.GroupType, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-10">
+            @Html.DropDownList("GroupTypeDropDown", Model.GroupType, "Select 1 group type:", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.GroupType, "", new {@class = "text-danger"})
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-12">
+        <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Save" />
             @Html.ActionLink("Return to group list", "Index", new { area = "" }, new { @class = "btn btn-default" })
             <a href="@Url.Action("Details", "Group", new { IDgroup = Model.IDgroup })"><span class="btn btn-default">Edit page details and add/remove users</span></a>
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        $("#result").hide();
+
+        $("#submitButton").on("click", function () {
+            $("#result").show();
+        });
+    });
+</script>

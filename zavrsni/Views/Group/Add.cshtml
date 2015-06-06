@@ -1,14 +1,13 @@
 ﻿@model zavrsni.Models.AddNewGroupModel
 @{
-    ViewBag.Title = "NewPage";
+    ViewBag.Title = "NewGroup";
 }
 
-<h2>Add a new page:</h2>
+<h2>Add the new group:</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new group:</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">

@@ -33,12 +33,13 @@ namespace zavrsni.Controllers
                         on p.IDpage equals c.IDpage
                         where c.IDuser == user.IDuser
                         //&& c.IsAuthor
-                    select p).ToList();
+                    select p).Include(p => p.User1).Include(p => p.Contributor);
 
                 var isContributor = (from a in allPages
                     join c in db.Contributor on a.IDpage equals c.IDpage
+                    join u in db.User on c.IDuser equals u.IDuser
                     where c.IDuser == current.IDuser
-                    select a).ToList();
+                    select a).Include(a => a.User1).Include(a => a.Contributor).ToList();
 
                 var pagesPublic = (from a in allPages
                                    join c in db.Contributor on a.IDpage equals c.IDpage
@@ -46,7 +47,7 @@ namespace zavrsni.Controllers
                                    select a).Except(from a in allPages
                                                     join c in db.Contributor on a.IDpage equals c.IDpage
                                                     where c.IDuser == current.IDuser
-                                                    select a).ToList();
+                                                    select a).Include(a => a.User1).Include(a => a.Contributor).ToList();
 
                 var isGroupMember = (from g in db.Group
                     join b in db.BelongsToGroup on g.IDgroup equals b.IDgroup

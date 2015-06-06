@@ -27,7 +27,7 @@ namespace zavrsni.Helpers
 
         public static string Truncate(this string text)
         {
-            if (text.Length > 200 && !text.Contains("<img"))
+            if (text.Length > 200 && !text.Contains("<img") && text.Contains(" "))
             {
                 return text.Substring(0, 200) + "...";
             }

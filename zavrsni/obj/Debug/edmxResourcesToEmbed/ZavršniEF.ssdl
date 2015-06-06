@@ -128,6 +128,7 @@
     <Property Name="PageView" Type="int" Nullable="false" />
     <Property Name="IDeditor" Type="int" />
     <Property Name="TimeChanged" Type="datetime" />
+    <Property Name="IDauthor" Type="int" />
   </EntityType>
   <EntityType Name="PageReview">
     <Key>
@@ -358,6 +359,18 @@
       </Principal>
       <Dependent Role="PageReview">
         <PropertyRef Name="IDpage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Page_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Page" Type="Self.Page" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Page">
+        <PropertyRef Name="IDauthor" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -606,6 +619,10 @@
     <AssociationSet Name="FK_OcjenaStranice_Stranica" Association="Self.FK_OcjenaStranice_Stranica">
       <End Role="Page" EntitySet="Page" />
       <End Role="PageReview" EntitySet="PageReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Page_User" Association="Self.FK_Page_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Page" EntitySet="Page" />
     </AssociationSet>
     <AssociationSet Name="FK_PripadaGrupi_Grupa" Association="Self.FK_PripadaGrupi_Grupa">
       <End Role="Group" EntitySet="Group" />

@@ -5,7 +5,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit existing content:</h2>
+<h2>Edit existing page:</h2>
 <div id="result" class="alert alert-info"></div>
 
 @using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "result", OnSuccess = "setTimeout(function () { window.location.reload() }, 3000);" }))

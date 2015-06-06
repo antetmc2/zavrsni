@@ -129,6 +129,7 @@
     <EntitySetMapping Name="Page">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.Page">
         <MappingFragment StoreEntitySet="Page">
+          <ScalarProperty Name="IDauthor" ColumnName="IDauthor" />
           <ScalarProperty Name="TimeChanged" ColumnName="TimeChanged" />
           <ScalarProperty Name="IDeditor" ColumnName="IDeditor" />
           <ScalarProperty Name="PageView" ColumnName="PageView" />

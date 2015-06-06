@@ -29,6 +29,7 @@ namespace zavrsni
         public int PageView { get; set; }
         public Nullable<int> IDeditor { get; set; }
         public Nullable<System.DateTime> TimeChanged { get; set; }
+        public Nullable<int> IDauthor { get; set; }
     
         public virtual ICollection<ContentPage> ContentPage { get; set; }
         public virtual ICollection<Contributor> Contributor { get; set; }
@@ -36,5 +37,6 @@ namespace zavrsni
         public virtual User User { get; set; }
         public virtual Privacy Privacy { get; set; }
         public virtual ICollection<PageTag> PageTag { get; set; }
+        public virtual User User1 { get; set; }
     }
 }
