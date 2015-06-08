@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Antlr.Runtime;
 using Microsoft.AspNet.Identity;
 using zavrsni.Models;
 using PagedList;
@@ -42,13 +43,7 @@ namespace zavrsni.Controllers
                                    where c.IsCopied == false
                                    select c).Include(c => c.ContentType).Include(c => c.User);
 
-                var mostViewedPages = (from p in db.Page
-                                       where p.IDprivacy == 3
-                                       orderby p.PageView ascending 
-                                       select p).Take(3).ToList();
-
                 model.contentsGuest = new PagedList<Content>(allContents, page, pageSize);
-                model.topPages = mostViewedPages;
                 return View(model);
             }
         }
@@ -74,6 +69,39 @@ namespace zavrsni.Controllers
                                      orderby c.TimeChanged descending
                                      select c);
                 model.results = new PagedList<Content>(searchResults, page, pageSize);
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult TopList()
+        {
+            TopListModel model = new TopListModel();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var mostViewedPages = (from p in db.Page
+                                       where p.IDprivacy == 3
+                                       orderby p.PageView ascending
+                                       select p).Take(5).ToList();
+
+                var topRatedPages = db.PageReview
+                    .GroupBy(r => r.IDpage)
+                    .Select(p => new TopPag()
+                    {
+                        Page = p.FirstOrDefault().IDpage,
+                        Avg = p.Average(r => r.Mark),
+                        TopPageName = p.FirstOrDefault().Page.name
+                    })
+                    .OrderByDescending(x => x.Avg)
+                    .Take(10)
+                    .ToList();
+
+                var topRatedPublicPages = (from t in topRatedPages
+                    join p in db.Page on t.Page equals p.IDpage
+                    where p.IDprivacy == 3
+                    select t).ToList();
+                model.topPages = mostViewedPages;
+                model.topRatedPages = topRatedPublicPages;
             }
             return View(model);
         }

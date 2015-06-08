@@ -27,8 +27,8 @@ namespace zavrsni
     
         public virtual DbSet<BelongsToGroup> BelongsToGroup { get; set; }
         public virtual DbSet<City> City { get; set; }
-        public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<Content> Content { get; set; }
+        public virtual DbSet<ContentComment> ContentComment { get; set; }
         public virtual DbSet<ContentPage> ContentPage { get; set; }
         public virtual DbSet<ContentType> ContentType { get; set; }
         public virtual DbSet<Contributor> Contributor { get; set; }

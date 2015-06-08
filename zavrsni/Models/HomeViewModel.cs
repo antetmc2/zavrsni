@@ -14,9 +14,24 @@ namespace zavrsni.Models
         [Key]
         public IPagedList<Content> contents { get; set; }
         public IPagedList<Content> contentsGuest { get; set; }
-        public IList<Page> topPages { get; set; }
         [Display(Name = "Enter search keyword(s)")]
         public string keyword { get; set; }
+    }
+
+    public interface Top { }
+
+    public class TopPag : Top
+    {
+        public int Page { get; set; }
+        public double Avg { get; set; }
+        public string TopPageName{ get; set; }
+    }
+
+    public class TopListModel
+    {
+        public IList<Page> topPages { get; set; }
+        public IList<TopPag> topRatedPages { get; set; } 
+
     }
 
     public class SearchModel

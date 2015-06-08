@@ -35,8 +35,8 @@ namespace zavrsni
         public virtual ICollection<Contributor> Contributor { get; set; }
         public virtual ICollection<PageReview> PageReview { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         public virtual Privacy Privacy { get; set; }
         public virtual ICollection<PageTag> PageTag { get; set; }
-        public virtual User User1 { get; set; }
     }
 }

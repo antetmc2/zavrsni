@@ -63,6 +63,8 @@ namespace zavrsni.Models
         public IList<User> Contributors { get; set; } 
         public short Grade { get; set; }
         public double AverageGrade { get; set; }
+        public IList<ContentComment> AllComments { get; set; }
+        public string Comment { get; set; }
     }
 
     public class PageRemoveModel

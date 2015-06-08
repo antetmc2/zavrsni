@@ -46,29 +46,32 @@
             }
         </div>
     </div>
-}
 
+    <div class="col-md-12">
+        <div class="text-center">
+            @Html.PagedListPager(Model.contentsGuest, page => Url.Action("Index", new { page, pageSize = 20 }))
+            Showing @Model.contentsGuest.FirstItemOnPage to @Model.contentsGuest.LastItemOnPage of @Model.contentsGuest.TotalItemCount Contents
+        </div>
+    </div>
+}
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm())
-     {
-         @Html.AntiForgeryToken()
-
-        <div class="form-group" style="margin-top: 10px !important;">
-            <div class="row" style="margin-top: 25px;">
-                <div class="col-md-2">
-                    @Html.LabelFor(model => model.keyword, new { @class = "control-label" })
-                </div>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.keyword, new { @class = "form-control" })
-                </div>
-                <div class="col-md-6">
-                    <input type="submit" class="btn btn-default" value="Submit" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        @Html.TextBoxFor(model => model.keyword, new { @class = "form-control input-lg", id = "searchingContent", placeholder = "Search for contents ..." })
+                        <span class="input-group-btn" id="searchContent">
+                            <button class="btn btn-info btn-lg" id="searchContent" type="button">
+                                <i class="glyphicon glyphicon-search" id="searchContent"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-
-     }
+    </div>
 
     <h2>Add some of contents published by your group members to your pages:</h2>
     <div class="row">
@@ -102,3 +105,10 @@
     </div>
     <a href="@Url.Action("Insert", "Content", new {Username = User.Identity.GetUserName()})"><span class="btn btn-danger btn-circle btn-lg glyphicon glyphicon-plus" style="position: fixed; top: 90%; right: 20px;"></span></a>
 }
+
+<script>
+    $("#searchContent").on("click", function () {
+        keyword = $("#searchingContent").val();
+        document.location.href = "/Home/Search?keyword=" + keyword + "&page=1&pageSize=20";
+    });
+</script>

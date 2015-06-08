@@ -3,8 +3,8 @@
   <EntityContainer Name="ZavrsniEFentities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="BelongsToGroup" EntityType="ZavrsniEFmodel.BelongsToGroup" />
     <EntitySet Name="City" EntityType="ZavrsniEFmodel.City" />
-    <EntitySet Name="Contacts" EntityType="ZavrsniEFmodel.Contacts" />
     <EntitySet Name="Content" EntityType="ZavrsniEFmodel.Content" />
+    <EntitySet Name="ContentComment" EntityType="ZavrsniEFmodel.ContentComment" />
     <EntitySet Name="ContentPage" EntityType="ZavrsniEFmodel.ContentPage" />
     <EntitySet Name="ContentType" EntityType="ZavrsniEFmodel.ContentType" />
     <EntitySet Name="Contributor" EntityType="ZavrsniEFmodel.Contributor" />
@@ -44,17 +44,13 @@
       <End Role="City" EntitySet="City" />
       <End Role="Location" EntitySet="Location" />
     </AssociationSet>
-    <AssociationSet Name="FK_Kontakti_Korisnik" Association="ZavrsniEFmodel.FK_Kontakti_Korisnik">
-      <End Role="User" EntitySet="User" />
-      <End Role="Contacts" EntitySet="Contacts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kontakti_Korisnik1" Association="ZavrsniEFmodel.FK_Kontakti_Korisnik1">
-      <End Role="User" EntitySet="User" />
-      <End Role="Contacts" EntitySet="Contacts" />
-    </AssociationSet>
     <AssociationSet Name="FK_Content_User" Association="ZavrsniEFmodel.FK_Content_User">
       <End Role="User" EntitySet="User" />
       <End Role="Content" EntitySet="Content" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentComment_Content" Association="ZavrsniEFmodel.FK_ContentComment_Content">
+      <End Role="Content" EntitySet="Content" />
+      <End Role="ContentComment" EntitySet="ContentComment" />
     </AssociationSet>
     <AssociationSet Name="FK_Korisnik_Sadrzaj" Association="ZavrsniEFmodel.FK_Korisnik_Sadrzaj">
       <End Role="Content" EntitySet="Content" />
@@ -75,6 +71,10 @@
     <AssociationSet Name="FK_SadrzajStranica_Sadrzaj" Association="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj">
       <End Role="Content" EntitySet="Content" />
       <End Role="ContentPage" EntitySet="ContentPage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentComment_User" Association="ZavrsniEFmodel.FK_ContentComment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="ContentComment" EntitySet="ContentComment" />
     </AssociationSet>
     <AssociationSet Name="FK_SadrzajStranica_Korisnik" Association="ZavrsniEFmodel.FK_SadrzajStranica_Korisnik">
       <End Role="User" EntitySet="User" />
@@ -112,6 +112,10 @@
       <End Role="Page" EntitySet="Page" />
       <End Role="PageReview" EntitySet="PageReview" />
     </AssociationSet>
+    <AssociationSet Name="FK_Page_User" Association="ZavrsniEFmodel.FK_Page_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Page" EntitySet="Page" />
+    </AssociationSet>
     <AssociationSet Name="FK_Stranica_Korisnik" Association="ZavrsniEFmodel.FK_Stranica_Korisnik">
       <End Role="User" EntitySet="User" />
       <End Role="Page" EntitySet="Page" />
@@ -131,10 +135,6 @@
     <AssociationSet Name="FK_TagStranica_Tag" Association="ZavrsniEFmodel.FK_TagStranica_Tag">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="PageTag" EntitySet="PageTag" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Page_User" Association="ZavrsniEFmodel.FK_Page_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="Page" EntitySet="Page" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="BelongsToGroup">
@@ -160,17 +160,6 @@
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LocationContent_City" FromRole="City" ToRole="LocationContent" />
     <NavigationProperty Name="Location" Relationship="ZavrsniEFmodel.FK_Lokacija_Grad" FromRole="City" ToRole="Location" />
   </EntityType>
-  <EntityType Name="Contacts">
-    <Key>
-      <PropertyRef Name="IDrecipient" />
-      <PropertyRef Name="IDsender" />
-    </Key>
-    <Property Name="IDrecipient" Type="Int32" Nullable="false" />
-    <Property Name="IDsender" Type="Int32" Nullable="false" />
-    <Property Name="Accepted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Kontakti_Korisnik" FromRole="Contacts" ToRole="User" />
-    <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Kontakti_Korisnik1" FromRole="Contacts" ToRole="User" />
-  </EntityType>
   <EntityType Name="Content">
     <Key>
       <PropertyRef Name="IDcontent" />
@@ -189,11 +178,24 @@
     <Property Name="DataSizeX" Type="Int32" />
     <Property Name="DataSizeY" Type="Int32" />
     <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Content_User" FromRole="Content" ToRole="User" />
+    <NavigationProperty Name="ContentComment" Relationship="ZavrsniEFmodel.FK_ContentComment_Content" FromRole="Content" ToRole="ContentComment" />
     <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Korisnik_Sadrzaj" FromRole="Content" ToRole="User" />
     <NavigationProperty Name="LocationContent" Relationship="ZavrsniEFmodel.FK_LokacijaSadrzaj_Sadrzaj" FromRole="Content" ToRole="LocationContent" />
     <NavigationProperty Name="User2" Relationship="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" FromRole="Content" ToRole="User" />
     <NavigationProperty Name="ContentType" Relationship="ZavrsniEFmodel.FK_Sadrzaj_VrstaSadrzaja" FromRole="Content" ToRole="ContentType" />
     <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Sadrzaj" FromRole="Content" ToRole="ContentPage" />
+  </EntityType>
+  <EntityType Name="ContentComment">
+    <Key>
+      <PropertyRef Name="IDcontent" />
+      <PropertyRef Name="IDuser" />
+    </Key>
+    <Property Name="IDcontent" Type="Int32" Nullable="false" />
+    <Property Name="IDuser" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Timestamp" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Content" Relationship="ZavrsniEFmodel.FK_ContentComment_Content" FromRole="ContentComment" ToRole="Content" />
+    <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_ContentComment_User" FromRole="ContentComment" ToRole="User" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>
@@ -297,14 +299,14 @@
     <Property Name="PageView" Type="Int32" Nullable="false" />
     <Property Name="IDeditor" Type="Int32" />
     <Property Name="TimeChanged" Type="DateTime" Precision="3" />
+    <Property Name="IDauthor" Type="Int32" />
     <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Stranica" FromRole="Page" ToRole="ContentPage" />
     <NavigationProperty Name="Contributor" Relationship="ZavrsniEFmodel.FK_SudionikStranice_Stranica" FromRole="Page" ToRole="Contributor" />
     <NavigationProperty Name="PageReview" Relationship="ZavrsniEFmodel.FK_OcjenaStranice_Stranica" FromRole="Page" ToRole="PageReview" />
-    <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="Page" ToRole="User" />
+    <NavigationProperty Name="User" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="Page" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="Page" ToRole="User" />
     <NavigationProperty Name="Privacy" Relationship="ZavrsniEFmodel.FK_Stranica_Privatnost" FromRole="Page" ToRole="Privacy" />
     <NavigationProperty Name="PageTag" Relationship="ZavrsniEFmodel.FK_TagStranica_Stranica" FromRole="Page" ToRole="PageTag" />
-    <Property Name="IDauthor" Type="Int32" />
-    <NavigationProperty Name="User1" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="Page" ToRole="User" />
   </EntityType>
   <EntityType Name="PageReview">
     <Key>
@@ -361,17 +363,16 @@
     <Property Name="IDcityFrom" Type="Int32" Nullable="false" />
     <NavigationProperty Name="BelongsToGroup" Relationship="ZavrsniEFmodel.FK_PripadaGrupi_Korisnik" FromRole="User" ToRole="BelongsToGroup" />
     <NavigationProperty Name="City" Relationship="ZavrsniEFmodel.FK_Korisnik_Grad" FromRole="User" ToRole="City" />
-    <NavigationProperty Name="Contacts" Relationship="ZavrsniEFmodel.FK_Kontakti_Korisnik" FromRole="User" ToRole="Contacts" />
-    <NavigationProperty Name="Contacts1" Relationship="ZavrsniEFmodel.FK_Kontakti_Korisnik1" FromRole="User" ToRole="Contacts" />
     <NavigationProperty Name="Content" Relationship="ZavrsniEFmodel.FK_Content_User" FromRole="User" ToRole="Content" />
     <NavigationProperty Name="Content1" Relationship="ZavrsniEFmodel.FK_Korisnik_Sadrzaj" FromRole="User" ToRole="Content" />
     <NavigationProperty Name="Content2" Relationship="ZavrsniEFmodel.FK_Sadrzaj_Korisnik" FromRole="User" ToRole="Content" />
+    <NavigationProperty Name="ContentComment" Relationship="ZavrsniEFmodel.FK_ContentComment_User" FromRole="User" ToRole="ContentComment" />
     <NavigationProperty Name="ContentPage" Relationship="ZavrsniEFmodel.FK_SadrzajStranica_Korisnik" FromRole="User" ToRole="ContentPage" />
     <NavigationProperty Name="Contributor" Relationship="ZavrsniEFmodel.FK_SudionikStranice_Korisnik" FromRole="User" ToRole="Contributor" />
     <NavigationProperty Name="Group" Relationship="ZavrsniEFmodel.FK_Grupa_Korisnik" FromRole="User" ToRole="Group" />
-    <NavigationProperty Name="Page" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="User" ToRole="Page" />
+    <NavigationProperty Name="Page" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="User" ToRole="Page" />
+    <NavigationProperty Name="Page1" Relationship="ZavrsniEFmodel.FK_Stranica_Korisnik" FromRole="User" ToRole="Page" />
     <NavigationProperty Name="PageReview" Relationship="ZavrsniEFmodel.FK_OcjenaStranice_Korisnik" FromRole="User" ToRole="PageReview" />
-    <NavigationProperty Name="Page1" Relationship="ZavrsniEFmodel.FK_Page_User" FromRole="User" ToRole="Page" />
   </EntityType>
   <Association Name="FK_PripadaGrupi_Grupa">
     <End Type="ZavrsniEFmodel.Group" Role="Group" Multiplicity="1">
@@ -447,30 +448,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Kontakti_Korisnik">
-    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="1" />
-    <End Type="ZavrsniEFmodel.Contacts" Role="Contacts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="IDuser" />
-      </Principal>
-      <Dependent Role="Contacts">
-        <PropertyRef Name="IDrecipient" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Kontakti_Korisnik1">
-    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="1" />
-    <End Type="ZavrsniEFmodel.Contacts" Role="Contacts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="IDuser" />
-      </Principal>
-      <Dependent Role="Contacts">
-        <PropertyRef Name="IDsender" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Content_User">
     <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="1" />
     <End Type="ZavrsniEFmodel.Content" Role="Content" Multiplicity="*" />
@@ -480,6 +457,18 @@
       </Principal>
       <Dependent Role="Content">
         <PropertyRef Name="IDauthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentComment_Content">
+    <End Type="ZavrsniEFmodel.Content" Role="Content" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.ContentComment" Role="ContentComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="IDcontent" />
+      </Principal>
+      <Dependent Role="ContentComment">
+        <PropertyRef Name="IDcontent" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -544,6 +533,18 @@
       </Principal>
       <Dependent Role="ContentPage">
         <PropertyRef Name="IDcontent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentComment_User">
+    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="1" />
+    <End Type="ZavrsniEFmodel.ContentComment" Role="ContentComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="ContentComment">
+        <PropertyRef Name="IDuser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -661,6 +662,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Page_User">
+    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="0..1" />
+    <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="Page">
+        <PropertyRef Name="IDauthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Stranica_Korisnik">
     <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="0..1" />
     <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="*" />
@@ -720,18 +733,6 @@
       </Principal>
       <Dependent Role="PageTag">
         <PropertyRef Name="IDtag" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Page_User">
-    <End Type="ZavrsniEFmodel.User" Role="User" Multiplicity="0..1" />
-    <End Type="ZavrsniEFmodel.Page" Role="Page" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="IDuser" />
-      </Principal>
-      <Dependent Role="Page">
-        <PropertyRef Name="IDauthor" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

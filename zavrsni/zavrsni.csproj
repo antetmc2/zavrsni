@@ -191,10 +191,10 @@
     <Compile Include="City.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Contacts.cs">
+    <Compile Include="Content.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
-    <Compile Include="Content.cs">
+    <Compile Include="ContentComment.cs">
       <DependentUpon>ZavršniEF.tt</DependentUpon>
     </Compile>
     <Compile Include="ContentPage.cs">
@@ -554,6 +554,7 @@
     <Content Include="Content\pins.min.css" />
     <Content Include="Content\redox_01.png" />
     <Content Include="Content\select2.css" />
+    <Content Include="Content\star-rating.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -599,6 +600,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\star-rating.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\Awesome\AjaxCheckBoxList.ascx" />
     <Content Include="Views\Shared\Awesome\AjaxDropdown.ascx" />
@@ -687,6 +689,7 @@
     <Content Include="Views\Group\Delete.cshtml" />
     <Content Include="Views\Content\UploadPartial.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\TopList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

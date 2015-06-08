@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@model zavrsni.Models.TopListModel
+
+<table class="table">
+    <tr>
+        <th style="font-size: 20px; font-weight: bold;">Most-viewed public pages:</th>
+    </tr>
+    @foreach (var item in Model.topPages)
+    {
+        <tr>
+            <td><a href="@Url.Action("Details", "Page", new {IDpage = item.IDpage, Username = User.Identity.GetUserName()})" style="font-size: 20px; font-weight: bold;">@item.name</a></td>
+        </tr>
+    }
+</table>
+
+<table class="table">
+    <tr>
+        <th style="font-size: 20px; font-weight: bold;">Top-rated public pages:</th>
+    </tr>
+    @foreach (var item in Model.topRatedPages)
+    {
+        <tr>
+            <td><a href="@Url.Action("Details", "Page", new {IDpage = item.Page, Username = User.Identity.GetUserName()})" style="font-size: 20px; font-weight: bold;">@item.TopPageName (avg. @item.Avg)</a></td>
+        </tr>
+    }
+</table>
+
+<div class="form-group">
+    <div class="col-md-12 text-center">
+        <a href="@Url.Action("Index", "Home")"><span class="btn btn-default">Return to Homepage</span></a>
+    </div>
+</div>

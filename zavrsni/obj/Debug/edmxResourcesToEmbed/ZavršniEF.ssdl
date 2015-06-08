@@ -17,15 +17,6 @@
     <Property Name="IDcountry" Type="int" Nullable="false" />
     <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="Contacts">
-    <Key>
-      <PropertyRef Name="IDrecipient" />
-      <PropertyRef Name="IDsender" />
-    </Key>
-    <Property Name="IDrecipient" Type="int" Nullable="false" />
-    <Property Name="IDsender" Type="int" Nullable="false" />
-    <Property Name="Accepted" Type="bit" Nullable="false" />
-  </EntityType>
   <EntityType Name="Content">
     <Key>
       <PropertyRef Name="IDcontent" />
@@ -43,6 +34,16 @@
     <Property Name="DataCol" Type="int" />
     <Property Name="DataSizeX" Type="int" />
     <Property Name="DataSizeY" Type="int" />
+  </EntityType>
+  <EntityType Name="ContentComment">
+    <Key>
+      <PropertyRef Name="IDcontent" />
+      <PropertyRef Name="IDuser" />
+    </Key>
+    <Property Name="IDcontent" Type="int" Nullable="false" />
+    <Property Name="IDuser" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="ContentPage">
     <Key>
@@ -190,6 +191,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ContentComment_Content">
+    <End Role="Content" Type="Self.Content" Multiplicity="1" />
+    <End Role="ContentComment" Type="Self.ContentComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="IDcontent" />
+      </Principal>
+      <Dependent Role="ContentComment">
+        <PropertyRef Name="IDcontent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentComment_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ContentComment" Type="Self.ContentComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="IDuser" />
+      </Principal>
+      <Dependent Role="ContentComment">
+        <PropertyRef Name="IDuser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Grad_Drzava">
     <End Role="Country" Type="Self.Country" Multiplicity="1" />
     <End Role="City" Type="Self.City" Multiplicity="*" />
@@ -223,30 +248,6 @@
       </Principal>
       <Dependent Role="Group">
         <PropertyRef Name="IDgroupType" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Kontakti_Korisnik">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="IDuser" />
-      </Principal>
-      <Dependent Role="Contacts">
-        <PropertyRef Name="IDrecipient" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Kontakti_Korisnik1">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="IDuser" />
-      </Principal>
-      <Dependent Role="Contacts">
-        <PropertyRef Name="IDsender" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -543,8 +544,8 @@
   <EntityContainer Name="ZavrsniEFmodelStoreContainer">
     <EntitySet Name="BelongsToGroup" EntityType="Self.BelongsToGroup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentComment" EntityType="Self.ContentComment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContentPage" EntityType="Self.ContentPage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContentType" EntityType="Self.ContentType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contributor" EntityType="Self.Contributor" Schema="dbo" store:Type="Tables" />
@@ -564,6 +565,14 @@
       <End Role="User" EntitySet="User" />
       <End Role="Content" EntitySet="Content" />
     </AssociationSet>
+    <AssociationSet Name="FK_ContentComment_Content" Association="Self.FK_ContentComment_Content">
+      <End Role="Content" EntitySet="Content" />
+      <End Role="ContentComment" EntitySet="ContentComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentComment_User" Association="Self.FK_ContentComment_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="ContentComment" EntitySet="ContentComment" />
+    </AssociationSet>
     <AssociationSet Name="FK_Grad_Drzava" Association="Self.FK_Grad_Drzava">
       <End Role="Country" EntitySet="Country" />
       <End Role="City" EntitySet="City" />
@@ -575,14 +584,6 @@
     <AssociationSet Name="FK_Grupa_VrstaGrupe" Association="Self.FK_Grupa_VrstaGrupe">
       <End Role="GroupType" EntitySet="GroupType" />
       <End Role="Group" EntitySet="Group" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kontakti_Korisnik" Association="Self.FK_Kontakti_Korisnik">
-      <End Role="User" EntitySet="User" />
-      <End Role="Contacts" EntitySet="Contacts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kontakti_Korisnik1" Association="Self.FK_Kontakti_Korisnik1">
-      <End Role="User" EntitySet="User" />
-      <End Role="Contacts" EntitySet="Contacts" />
     </AssociationSet>
     <AssociationSet Name="FK_Korisnik_Grad" Association="Self.FK_Korisnik_Grad">
       <End Role="City" EntitySet="City" />

@@ -117,7 +117,7 @@ namespace zavrsni.Controllers
                 var query = (from c in db.City
                              orderby c.CityName
                              select c).ToList();
-                model.City = new SelectList(query, "IDcity", "CityName");
+                model.City = new SelectList(query, "IDcity", "CityName", user.IDcityFrom);
             }
             return View(model);
         }

@@ -19,15 +19,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Contacts">
-      <EntityTypeMapping TypeName="ZavrsniEFmodel.Contacts">
-        <MappingFragment StoreEntitySet="Contacts">
-          <ScalarProperty Name="Accepted" ColumnName="Accepted" />
-          <ScalarProperty Name="IDsender" ColumnName="IDsender" />
-          <ScalarProperty Name="IDrecipient" ColumnName="IDrecipient" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Content">
       <EntityTypeMapping TypeName="ZavrsniEFmodel.Content">
         <MappingFragment StoreEntitySet="Content">
@@ -43,6 +34,16 @@
           <ScalarProperty Name="Text" ColumnName="Text" />
           <ScalarProperty Name="IDauthor" ColumnName="IDauthor" />
           <ScalarProperty Name="IDcontentType" ColumnName="IDcontentType" />
+          <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContentComment">
+      <EntityTypeMapping TypeName="ZavrsniEFmodel.ContentComment">
+        <MappingFragment StoreEntitySet="ContentComment">
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="IDuser" ColumnName="IDuser" />
           <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -16,6 +16,7 @@ namespace zavrsni
     {
         public Content()
         {
+            this.ContentComment = new HashSet<ContentComment>();
             this.User1 = new HashSet<User>();
             this.LocationContent = new HashSet<LocationContent>();
             this.ContentPage = new HashSet<ContentPage>();
@@ -36,6 +37,7 @@ namespace zavrsni
         public Nullable<int> DataSizeY { get; set; }
     
         public virtual User User { get; set; }
+        public virtual ICollection<ContentComment> ContentComment { get; set; }
         public virtual ICollection<User> User1 { get; set; }
         public virtual ICollection<LocationContent> LocationContent { get; set; }
         public virtual User User2 { get; set; }
