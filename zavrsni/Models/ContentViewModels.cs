@@ -150,4 +150,18 @@ namespace zavrsni.Models
         public string Username { get; set; }
 
     }
+
+    public class ContentComments
+    {
+        public int IDcontent { get; set; }
+        public int IDpage { get; set; }
+        public string ContentText { get; set; }
+        public string Title { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Display(Name = "Add the new comment:")]
+        public string UserComment { get; set; }
+        public string ContentOwner { get; set; }
+        public string Username { get; set; }
+        public IList<ContentComment> AllComments { get; set; } 
+    }
 }

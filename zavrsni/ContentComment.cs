@@ -14,6 +14,7 @@ namespace zavrsni
     
     public partial class ContentComment
     {
+        public int IDcomment { get; set; }
         public int IDcontent { get; set; }
         public int IDuser { get; set; }
         public string Comment { get; set; }

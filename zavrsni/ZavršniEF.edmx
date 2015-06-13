@@ -42,9 +42,9 @@
         </EntityType>
         <EntityType Name="ContentComment">
           <Key>
-            <PropertyRef Name="IDcontent" />
-            <PropertyRef Name="IDuser" />
+            <PropertyRef Name="IDcomment" />
           </Key>
+          <Property Name="IDcomment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDcontent" Type="int" Nullable="false" />
           <Property Name="IDuser" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
@@ -874,9 +874,9 @@
         </EntityType>
         <EntityType Name="ContentComment">
           <Key>
-            <PropertyRef Name="IDcontent" />
-            <PropertyRef Name="IDuser" />
+            <PropertyRef Name="IDcomment" />
           </Key>
+          <Property Name="IDcomment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDcontent" Type="Int32" Nullable="false" />
           <Property Name="IDuser" Type="Int32" Nullable="false" />
           <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1473,6 +1473,7 @@
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="IDuser" ColumnName="IDuser" />
                 <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+                <ScalarProperty Name="IDcomment" ColumnName="IDcomment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

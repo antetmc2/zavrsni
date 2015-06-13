@@ -37,9 +37,9 @@
   </EntityType>
   <EntityType Name="ContentComment">
     <Key>
-      <PropertyRef Name="IDcontent" />
-      <PropertyRef Name="IDuser" />
+      <PropertyRef Name="IDcomment" />
     </Key>
+    <Property Name="IDcomment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IDcontent" Type="int" Nullable="false" />
     <Property Name="IDuser" Type="int" Nullable="false" />
     <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />

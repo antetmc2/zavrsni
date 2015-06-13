@@ -18,6 +18,7 @@ namespace zavrsni.Controllers
 {
     public class ContentController : Controller
     {
+        [Authorize]
         public ActionResult Edit(int IDcontent, string username)
         {
             Contents model = new Contents();
@@ -75,6 +76,7 @@ namespace zavrsni.Controllers
 
         }
 
+        [Authorize]
         [HttpPost, ValidateInput(false)]
         public async Task<ActionResult> Edit(int IDcontent, string username, Contents model)
         {
@@ -329,6 +331,8 @@ namespace zavrsni.Controllers
                     contCopy.Text = cont.Text;
                     contCopy.Title = cont.Title;
                     contCopy.IsCopied = true;
+                    contCopy.IDeditor = usernameCurrent.IDuser;
+                    contCopy.TimeChanged = DateTime.Now;
                     db.Content.Add(contCopy);
                     db.SaveChanges();
 
@@ -356,6 +360,51 @@ namespace zavrsni.Controllers
                 }
             }
             return RedirectToAction("Details", new { IDcontent = IDcontent, Username = username });
+        }
+
+        public ActionResult Comments(int IDcontent, int IDpage, string Username)
+        {
+            ContentComments model = new ContentComments();
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                var selectedContent = (from c in db.Content
+                                           where c.IDcontent == IDcontent
+                                           select c).Include(c => c.User).ToList();
+                var user = db.User.Find(selectedContent.FirstOrDefault().IDauthor);
+                model.ContentText = selectedContent.FirstOrDefault().Text;
+                model.ContentOwner = user.Username;
+                model.Title = selectedContent.FirstOrDefault().Title;
+                model.IDcontent = IDcontent;
+                model.IDpage = IDpage;
+                model.Username = Username;
+                var allComments = (from c in db.ContentComment
+                    where c.IDcontent == IDcontent
+                    orderby c.Timestamp descending 
+                    select c).Include(c => c.User).ToList();
+                model.AllComments = allComments;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Comments(ContentComments model, int IDcontent, int IDpage, string Username)
+        {
+            using (ZavrsniEFentities db = new ZavrsniEFentities())
+            {
+                if (model.UserComment == null) return Content("The comment cannot be empty!", "text/html");
+                var user = User.Identity.GetUserName();
+                var userInfo = (from u in db.User
+                    where u.Username == user
+                    select u);
+                var newComment = db.ContentComment.Create();
+                newComment.IDcontent = IDcontent;
+                newComment.IDuser = userInfo.FirstOrDefault().IDuser;
+                newComment.Comment = model.UserComment;
+                newComment.Timestamp = DateTime.Now;
+                db.ContentComment.Add(newComment);
+                db.SaveChanges();
+            }
+            return Content("The comment was successfully added!", "text/html");
         }
 
         public ActionResult Delete(int IDcontent, string username)

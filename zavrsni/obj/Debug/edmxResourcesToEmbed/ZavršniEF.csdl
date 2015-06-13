@@ -187,9 +187,9 @@
   </EntityType>
   <EntityType Name="ContentComment">
     <Key>
-      <PropertyRef Name="IDcontent" />
-      <PropertyRef Name="IDuser" />
+      <PropertyRef Name="IDcomment" />
     </Key>
+    <Property Name="IDcomment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IDcontent" Type="Int32" Nullable="false" />
     <Property Name="IDuser" Type="Int32" Nullable="false" />
     <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />

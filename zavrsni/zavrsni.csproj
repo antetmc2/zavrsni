@@ -690,6 +690,7 @@
     <Content Include="Views\Content\UploadPartial.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\TopList.cshtml" />
+    <Content Include="Views\Content\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

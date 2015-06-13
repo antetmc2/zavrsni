@@ -5,25 +5,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9a522f054921488aad5c704beb633754" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="ZavrsniEFmodel.BelongsToGroup" Width="1.5" PointX="10.5" PointY="12.125" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.City" Width="1.5" PointX="6" PointY="16.875" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Content" Width="1.5" PointX="3" PointY="10.625" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentComment" Width="1.5" PointX="5.25" PointY="9" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentPage" Width="1.5" PointX="10.5" PointY="9" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentType" Width="1.5" PointX="0.75" PointY="12.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Contributor" Width="1.5" PointX="10.5" PointY="15.125" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Country" Width="1.5" PointX="3.75" PointY="17.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Group" Width="1.5" PointX="13.5" PointY="11.875" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.GroupType" Width="1.5" PointX="11.25" PointY="18.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Location" Width="1.5" PointX="3" PointY="6.875" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.LocationContent" Width="1.5" PointX="5.25" PointY="12" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.LocationType" Width="1.5" PointX="0.75" PointY="7.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Page" Width="1.5" PointX="13.5" PointY="7.125" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.PageReview" Width="1.5" PointX="15.75" PointY="11.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.PageTag" Width="1.5" PointX="15.75" PointY="8.125" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Privacy" Width="1.5" PointX="11.25" PointY="6.125" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.Tag" Width="1.5" PointX="13.5" PointY="4.25" />
-        <EntityTypeShape EntityType="ZavrsniEFmodel.User" Width="1.5" PointX="8.25" PointY="10.625" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.BelongsToGroup" Width="1.5" PointX="15.75" PointY="12.125" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.City" Width="1.5" PointX="6" PointY="7" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Content" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentComment" Width="1.5" PointX="10.5" PointY="12" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentPage" Width="1.5" PointX="12.75" PointY="15.875" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.ContentType" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Contributor" Width="1.5" PointX="10.5" PointY="9.125" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Country" Width="1.5" PointX="3.75" PointY="7.375" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Group" Width="1.5" PointX="13.5" PointY="12" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.GroupType" Width="1.5" PointX="11.25" PointY="6.375" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Location" Width="1.5" PointX="3" PointY="17" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.LocationContent" Width="1.5" PointX="5.25" PointY="12.125" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.LocationType" Width="1.5" PointX="0.75" PointY="17.375" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Page" Width="1.5" PointX="10.5" PointY="15.25" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.PageReview" Width="1.5" PointX="15.75" PointY="15.875" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.PageTag" Width="1.5" PointX="12.75" PointY="19.125" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Privacy" Width="1.5" PointX="8.25" PointY="17.125" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.Tag" Width="1.5" PointX="10.5" PointY="20.375" />
+        <EntityTypeShape EntityType="ZavrsniEFmodel.User" Width="1.5" PointX="8.25" PointY="10.75" />
         <AssociationConnector Association="ZavrsniEFmodel.FK_PripadaGrupi_Grupa" />
         <AssociationConnector Association="ZavrsniEFmodel.FK_PripadaGrupi_Korisnik" />
         <AssociationConnector Association="ZavrsniEFmodel.FK_Grad_Drzava" />

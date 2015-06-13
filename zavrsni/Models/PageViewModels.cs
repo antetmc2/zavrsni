@@ -29,6 +29,8 @@ namespace zavrsni.Models
         [Required]
         [Display(Name = "Number of Views")]
         public int PageViews { get; set; }
+        [Required]
+        [Display(Name = "Privacy settings")]
         public SelectList Privacy { get; set; }
         public string Username { get; set; }
     }

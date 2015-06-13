@@ -158,14 +158,23 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-.details-text img {
+.details-text img, .contentComment img {
     max-width: 80%;
     max-height: 80%;
 }
 
-.details-text iframe {
+.details-text iframe, .contentComment iframe {
     max-width: 500px;
     max-height: 300px;
+}
+
+.contentComment {
+    width: 100%;
+}
+
+.contentComment iframe {
+    max-width: 800px;
+    max-height: 600px;
 }
 
 .form-control {
@@ -394,4 +403,8 @@ a.socialIcon:hover, .socialHoverClass {
 
 #custom-search-input .glyphicon-search{
     font-size: 23px;
+}
+
+.modal, .modal-backdrop, .modal-content {
+  z-index: -1;
 }

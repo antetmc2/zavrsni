@@ -45,6 +45,7 @@
           <ScalarProperty Name="Comment" ColumnName="Comment" />
           <ScalarProperty Name="IDuser" ColumnName="IDuser" />
           <ScalarProperty Name="IDcontent" ColumnName="IDcontent" />
+          <ScalarProperty Name="IDcomment" ColumnName="IDcomment" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

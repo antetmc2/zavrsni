@@ -112,6 +112,8 @@ namespace zavrsni.Controllers
                     var user = db.User.FirstOrDefault(u => u.Username.Equals(username));
                     selPage.name = model.PageTitle;
 
+                    if (model.PageTitle == null) return Content("Page title cannot be empty!", "text/html");
+
                     if (Request["PrivacyDropDown"].Any())
                     {
                         var privSel = Request["PrivacyDropDown"];
@@ -186,7 +188,7 @@ namespace zavrsni.Controllers
                     db.Entry(selPage).State = EntityState.Modified;
                     db.SaveChanges();
                     //return RedirectToAction("Edit", new { IDpage = IDpage, Username = username });
-                    return Content("Changes are successfully saved!", "text/html");
+                    return Content("Changes were successfully saved!", "text/html");
                 }
             }
             return Content("Edit failed, please try again!", "text/html");
@@ -453,6 +455,10 @@ namespace zavrsni.Controllers
                     var privacy = Convert.ToInt32(privSel);
 
                     newPage.IDprivacy = privacy;
+                }
+                else
+                {
+                    return RedirectToAction("NewPage", new { Username = username });
                 }
                 newPage.CreatedAt = DateTime.Now;
                 newPage.PageView = 0;
